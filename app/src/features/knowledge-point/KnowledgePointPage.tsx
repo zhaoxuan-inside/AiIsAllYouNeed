@@ -25,7 +25,7 @@ function DepMiniGraph({ pointId }: { pointId: string }) {
       </div>
       <div className="flex items-center gap-0 text-dim" aria-hidden>
         <span>→</span>
-        <span className="mx-2 h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
+        <span className="mx-2 h-2.5 w-2.5 rounded-none" style={{ backgroundColor: color }} />
         <span>→</span>
       </div>
       <div className="flex flex-col items-start gap-1.5">
@@ -106,7 +106,7 @@ export function KnowledgePointPage() {
           <h2 className="font-display text-base">关键论文</h2>
           <ul className="mt-3 space-y-2">
             {papers.map((paper) => (
-              <li key={paper.id} className="rounded-lg border border-edge bg-panel px-4 py-3 text-sm">
+              <li key={paper.id} className="rounded-lg border-2 border-edge bg-panel px-4 py-3 text-sm">
                 <span className="text-star">{paper.title}</span>
                 <span className="ml-2 font-mono text-xs text-dim">
                   {paper.authors.slice(0, 2).join(', ')}
@@ -124,7 +124,7 @@ export function KnowledgePointPage() {
         </section>
       )}
 
-      <section className="mt-8 rounded-[var(--radius-card)] border border-edge bg-panel p-5">
+      <section className="mt-8 rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-5">
         <h2 className="font-display text-base">依赖关系</h2>
         <p className="mb-4 mt-1 text-xs text-dim">左：需要先懂的前置 · 右：建立在其上的衍生/相关</p>
         <DepMiniGraph pointId={point.id} />
@@ -144,7 +144,7 @@ export function KnowledgePointPage() {
                 <Link
                   key={id}
                   to={`/point/${id}`}
-                  className="rounded-full border border-edge px-3 py-1.5 text-xs text-star transition-colors hover:border-gold/60"
+                  className="rounded-none border-2 border-edge px-3 py-1.5 text-xs text-star transition-colors hover:border-gold/60"
                   style={{ borderLeft: `2px solid ${relColor}` }}
                 >
                   {rel.title}
@@ -156,7 +156,7 @@ export function KnowledgePointPage() {
       )}
 
       {point.trend && (
-        <section className="mt-8 rounded-[var(--radius-card)] border border-gold/30 bg-gold/5 p-5">
+        <section className="mt-8 rounded-[var(--radius-card)] pixel-shadow border border-gold/30 bg-gold/5 p-5">
           <p className="text-xs text-gold">发展方向（编辑标注）</p>
           <p className="mt-1 text-sm leading-relaxed text-star">{point.trend}</p>
           {trend && (
@@ -175,7 +175,7 @@ export function KnowledgePointPage() {
           onBlur={(e) => setNote(point.id, e.target.value)}
           rows={3}
           placeholder="写下你的理解、疑问或联想…（失焦即保存）"
-          className="mt-2 w-full resize-y rounded-lg border border-edge bg-panel px-3 py-2 text-sm text-star outline-none placeholder:text-dim/50 focus:border-gold/60"
+          className="mt-2 w-full resize-y rounded-lg border-2 border-edge bg-panel px-3 py-2 text-sm text-star outline-none placeholder:text-dim/50 focus:border-gold/60"
         />
       </section>
     </article>

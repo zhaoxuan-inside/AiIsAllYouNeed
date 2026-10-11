@@ -37,7 +37,7 @@ export function Shell() {
 
   return (
     <div className="min-h-dvh bg-void text-star">
-      <header className="sticky top-0 z-40 border-b border-edge bg-void/85 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-edge bg-void">
         <div className="mx-auto flex h-16 max-w-[1120px] items-center gap-4 px-4 lg:px-6">
           <NavLink to="/" className="flex items-center gap-2">
             <span className="text-lg text-gold" aria-hidden>
@@ -47,7 +47,7 @@ export function Shell() {
           </NavLink>
           <button
             onClick={() => setSearchOpen(true)}
-            className="ml-auto flex h-9 min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-edge bg-panel px-3 text-sm text-dim transition-colors hover:border-gold/60"
+            className="ml-auto flex h-9 min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border-2 border-edge bg-panel px-3 text-sm text-dim transition-colors hover:border-gold/60"
           >
             <span aria-hidden>⌕</span>
             <span className="truncate">搜索知识点…</span>
@@ -56,14 +56,14 @@ export function Shell() {
           <button
             onClick={toggleTheme}
             aria-label="切换主题"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-edge text-sm text-dim hover:border-gold/60 hover:text-star"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border-2 border-edge text-sm text-dim hover:border-gold/60 hover:text-star"
           >
             {theme === 'night' ? '☾' : '☀'}
           </button>
           <NavLink
             to="/profile"
             aria-label="本地档案"
-            className="hidden h-9 w-9 shrink-0 place-items-center rounded-full text-xs text-gold-ink sm:grid"
+            className="hidden h-9 w-9 shrink-0 place-items-center rounded-none text-xs text-gold-ink sm:grid"
             style={{ backgroundColor: profileColor }}
           >
             {profileName.slice(0, 1)}
@@ -87,7 +87,7 @@ export function Shell() {
               >
                 {({ isActive }) => (
                   <>
-                    {isActive && <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-gold" />}
+                    {isActive && <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-none bg-gold" />}
                     <span className="w-5 text-center text-base" aria-hidden>
                       {item.icon}
                     </span>
@@ -109,7 +109,7 @@ export function Shell() {
         </main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-edge bg-void/90 backdrop-blur lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-edge bg-void lg:hidden">
         {NAV.map((item) => (
           <NavLink
             key={item.to}

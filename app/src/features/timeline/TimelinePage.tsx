@@ -44,7 +44,7 @@ export function TimelinePage() {
               <div className="flex items-center gap-4">
                 <span className="w-[40px] shrink-0 text-right font-mono text-sm text-star sm:w-[52px] sm:text-base">{entry.year}</span>
                 <span
-                  className="relative z-10 h-2.5 w-2.5 shrink-0 rounded-full ring-4 ring-void"
+                  className="relative z-10 h-2.5 w-2.5 shrink-0 rounded-none ring-4 ring-void"
                   style={{ backgroundColor: 'var(--gold)' }}
                   aria-hidden
                 />
@@ -60,7 +60,7 @@ export function TimelinePage() {
                       to={`/point/${p.id}`}
                       className="group flex items-baseline gap-3 rounded-lg border border-transparent px-3 py-2 transition-colors hover:border-edge hover:bg-panel"
                     >
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: category.color }} aria-hidden />
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-none" style={{ backgroundColor: category.color }} aria-hidden />
                       <span className="text-sm text-star group-hover:text-gold">{p.title}</span>
                       <span className="hidden truncate text-xs text-dim sm:inline">{p.summary}</span>
                       <span className="ml-auto shrink-0">

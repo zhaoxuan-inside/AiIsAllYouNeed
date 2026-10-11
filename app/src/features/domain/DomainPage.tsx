@@ -19,7 +19,7 @@ export function DomainPage() {
 
   return (
     <div className="rise-in">
-      <header className="rounded-[var(--radius-card)] border border-edge bg-panel p-6" style={{ borderLeft: `3px solid ${category.color}` }}>
+      <header className="rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-6" style={{ borderLeft: `3px solid ${category.color}` }}>
         <p className="text-xs" style={{ color: category.color }}>
           领域 · {category.nameEn}
         </p>
@@ -31,7 +31,7 @@ export function DomainPage() {
         </div>
       </header>
 
-      <section className="mt-6 rounded-[var(--radius-card)] border border-edge bg-panel p-5">
+      <section className="mt-6 rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-5">
         <p className="text-xs" style={{ color: category.color }}>
           发展趋势预测（编辑标注）
         </p>

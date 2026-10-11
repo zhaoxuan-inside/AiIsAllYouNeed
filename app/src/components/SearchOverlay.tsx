@@ -42,7 +42,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]" style={{ background: 'var(--overlay)' }} onClick={onClose}>
       <div
-        className="w-full max-w-xl rounded-[var(--radius-card)] border border-edge bg-panel shadow-2xl"
+        className="w-full max-w-xl rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel pixel-shadow"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-label="搜索知识"

@@ -19,7 +19,7 @@ export function RoadmapPage() {
       <p className="mt-1 text-sm text-dim">每个领域的学习与演化路径：从基础概念到前沿突破，按依赖顺序编排。</p>
 
       {/* 领域 Tab */}
-      <div className="mt-5 flex flex-wrap gap-1 rounded-lg border border-edge p-1">
+      <div className="mt-5 flex flex-wrap gap-1 rounded-lg border-2 border-edge p-1">
         {kb.categories.map((c) => (
           <button
             key={c.id}
@@ -29,7 +29,7 @@ export function RoadmapPage() {
             }`}
             style={activeId === c.id ? { backgroundColor: `${c.color}1f`, color: c.color } : undefined}
           >
-            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c.color }} />
+            <span className="h-1.5 w-1.5 rounded-none" style={{ backgroundColor: c.color }} />
             {c.name}
           </button>
         ))}
@@ -39,14 +39,14 @@ export function RoadmapPage() {
       {(() => {
         const trend = kb.trendByCategory.get(activeId)!
         return (
-          <section className="mt-5 rounded-[var(--radius-card)] border border-edge bg-panel p-5">
+          <section className="mt-5 rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-5">
             <p className="text-xs text-dim" style={{ color: category.color }}>
               发展趋势预测（编辑标注）
             </p>
             <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {trend.directions.map((d) => (
-                <div key={d.title} className="rounded-lg border border-edge p-3">
+                <div key={d.title} className="rounded-lg border-2 border-edge p-3">
                   <p className="text-sm text-star">↗ {d.title}</p>
                   <p className="mt-1 text-xs leading-relaxed text-dim">{d.description}</p>
                 </div>
@@ -65,7 +65,7 @@ export function RoadmapPage() {
       {/* 阶段泳道 */}
       <div className="mt-6 grid gap-5 lg:grid-cols-3">
         {roadmap.stages.map((stage, stageIdx) => (
-          <section key={stage.name} className="rounded-[var(--radius-card)] border border-edge bg-panel p-4">
+          <section key={stage.name} className="rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-4">
             <div className="flex items-baseline justify-between">
               <h2 className="font-display text-base">
                 <span className="mr-2 font-mono text-dim">{stageIdx + 1}</span>
