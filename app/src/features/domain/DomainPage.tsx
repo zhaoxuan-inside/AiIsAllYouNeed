@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { getDomainView } from '@/backend/knowledge-service'
-import { KnowledgeCard, EmptyState } from '@/components/ui'
+import { KnowledgeCard, EmptyState, HelpHint } from '@/components/ui'
 
 /** 领域页：概览 + 路线速览 + 知识点列表 */
 export function DomainPage() {
@@ -15,9 +15,11 @@ export function DomainPage() {
 
   return (
     <div className="rise-in">
-      <header className="pb-2" style={{ borderLeft: `3px solid ${category.color}` }}>
-
-        <h1 className="font-display mt-1 text-2xl">{category.name}</h1>
+      <header>
+        <h1 className="font-display flex items-center gap-2.5 text-2xl">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: category.color }} />
+          {category.name}
+        </h1>
         <p className="mt-2 max-w-xl text-sm text-dim">{category.description}</p>
         <div className="mt-3 flex gap-5 font-mono text-xs text-dim">
           <span>{points.length} 个知识点</span>
@@ -26,18 +28,21 @@ export function DomainPage() {
       </header>
 
       {trend && (
-      <section className="mt-10">
-        <p className="text-xs text-dim">发展趋势预测（编辑标注）</p>
+      <section className="mt-12">
+        <p className="flex items-center gap-1 text-xs text-dim">
+          趋势预测
+          <HelpHint label="趋势预测说明" text="由编辑整理的方向判断，非算法生成。" />
+        </p>
         <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
         <ul className="mt-3 space-y-2">
           {trend.directions.map((d) => (
             <li key={d.title} className="text-sm leading-relaxed">
-              <span className="text-star">↗ {d.title}</span>
+              <span className="font-bold text-star">{d.title}</span>
               <span className="text-dim"> — {d.description}</span>
             </li>
           ))}
         </ul>
-        <Link to="/roadmap" className="mt-3 inline-block text-xs text-accent underline underline-offset-2">
+        <Link to="/roadmap" className="mt-4 inline-block text-xs text-accent underline underline-offset-2">
           查看完整发展路线 →
         </Link>
       </section>
@@ -47,7 +52,7 @@ export function DomainPage() {
         <h2 className="font-display text-xl">知识脉络</h2>
         <div className="mt-4 space-y-5">
           {points.map((p) => (
-            <KnowledgeCard key={p.id} point={p} category={category} />
+            <KnowledgeCard key={p.id} point={p} category={category} showCategory={false} />
           ))}
         </div>
       </section>

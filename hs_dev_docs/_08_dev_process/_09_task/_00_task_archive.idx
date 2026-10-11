@@ -15,3 +15,4 @@
 {"id": "user-icon-line-style", "title": "用户图标改为线条人形，与全站 icon 统一", "path": "_02_task_detail/_01_user-icon-line-style/_00_task_detail.md", "status": "COMPLETED", "digest": "365cd27b", "updated_at": "2026-10-11T07:41:06Z", "last_note": "已提交"}
 {"id": "point-detail-v2", "title": "详情与图谱 v2：依赖/应用拆分、图谱定位、论文跳转、正文自动关联、已学状态", "path": "_02_task_detail/_01_point-detail-v2/_00_task_detail.md", "status": "COMPLETED", "digest": "f501e42a", "updated_at": "2026-10-11T08:30:22Z", "last_note": "已提交"}
 {"id": "ia-layout-audit", "title": "iA 版式合规审查：单列流/矮顶栏/UI行高/字号收敛", "path": "_02_task_detail/_01_ia-layout-audit/_00_task_detail.md", "status": "COMPLETED", "digest": "46171a26", "updated_at": "2026-10-11T08:41:17Z", "last_note": "已提交"}
+{"id": "domain-page-ia-conform", "title": "领域页去花哨：彩条/↗箭头/冗余圆点清除，趋势标签对齐 ?角标", "path": "_02_task_detail/_01_domain-page-ia-conform/_00_task_detail.md", "status": "COMPLETED", "digest": "d53e00c7", "updated_at": "2026-10-11T09:12:59Z", "last_note": "已提交"}

@@ -70,8 +70,16 @@ export function EmptyState({ title, hint, action }: { title: string; hint?: stri
   )
 }
 
-/** 知识点条目（iA 式列表行：发丝线分隔，无卡片） */
-export function KnowledgeCard({ point, category }: { point: KnowledgePoint; category: Category }) {
+/** 知识点条目（iA 式列表行：留白分隔）。showCategory=false 用于领域页（上下文已含领域，免冗余） */
+export function KnowledgeCard({
+  point,
+  category,
+  showCategory = true,
+}: {
+  point: KnowledgePoint
+  category: Category
+  showCategory?: boolean
+}) {
   return (
     <Link
       to={`/point/${point.id}`}
@@ -82,10 +90,12 @@ export function KnowledgeCard({ point, category }: { point: KnowledgePoint; cate
         <span className="shrink-0 font-mono text-xs text-faint">{point.year}</span>
       </div>
       <div className="mt-1 flex items-center gap-3">
-        <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-dim">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: category.color }} />
-          {category.name}
-        </span>
+        {showCategory && (
+          <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-dim">
+            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: category.color }} />
+            {category.name}
+          </span>
+        )}
         <span className="truncate text-sm text-dim">{point.summary}</span>
       </div>
     </Link>

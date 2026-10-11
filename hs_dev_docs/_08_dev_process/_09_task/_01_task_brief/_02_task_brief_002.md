@@ -72,3 +72,15 @@
 - **更新时间**：`2026-10-11T08:41:17Z`
 ---
 
+### 任务简述：domain-page-ia-conform
+- **标题**：领域页去花哨：彩条/↗箭头/冗余圆点清除，趋势标签对齐 ?角标
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：领域页去花哨：彩条/↗箭头/冗余圆点清除，趋势标签对齐 ?角标
+- **详情索引**：`_02_task_detail/_01_domain-page-ia-conform/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_domain-page-ia-conform/_00_context_pack.md`
+- **更新时间**：`2026-10-11T09:12:59Z`
+---
+
