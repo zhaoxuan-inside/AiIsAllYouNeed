@@ -9,8 +9,8 @@ import { RoadmapPage } from '@/features/roadmap/RoadmapPage'
 import { DomainPage } from '@/features/domain/DomainPage'
 import { KnowledgePointPage } from '@/features/knowledge-point/KnowledgePointPage'
 import { ProfilePage } from '@/features/profile/ProfilePage'
-import { getKnowledgeBase } from '@/data/knowledge-context'
-import { usePreferenceStore } from '@/store/preference'
+import { getHomeView } from '@/backend/knowledge-service'
+import { usePreferenceStore } from '@/backend/preference-store'
 
 // 兼容两种历史调用形态；页面一律经完整路由树渲染（含 useParams）
 function renderWithRouter(_ui?: React.ReactElement, { path = '/' }: { path?: string } = {}) {
@@ -53,11 +53,11 @@ describe('Shell 冒烟', () => {
 })
 
 describe('页面冒烟（真实种子数据）', () => {
-  const kb = getKnowledgeBase()
+  const { stats } = getHomeView()
 
   it('首页：统计、领域入口与双列表', () => {
     renderWithRouter(<HomePage />)
-    expect(screen.getByText(`${kb.points.length}`)).toBeInTheDocument()
+    expect(screen.getByText(`${stats.points}`)).toBeInTheDocument()
     expect(screen.getByText(/机器学习基础/)).toBeInTheDocument()
     expect(screen.getByText(/高影响力/)).toBeInTheDocument()
   })

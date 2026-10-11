@@ -1,15 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getSearchIndex } from '@/data/knowledge-context'
-import { getKnowledgeBase } from '@/data/knowledge-context'
-import { query, snippet } from '@/domain/search'
+import { searchKnowledge } from '@/backend/knowledge-service'
 
 /** 全局搜索浮层：中文 bigram 索引，回车跳第一个结果 */
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const navigate = useNavigate()
   const [text, setText] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
-  const kb = getKnowledgeBase()
 
   useEffect(() => {
     if (open) {
@@ -27,10 +24,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
     return () => window.removeEventListener('keydown', onKey)
   }, [open, onClose])
 
-  const hits = useMemo(() => {
-    if (!text.trim()) return []
-    return query(getSearchIndex(), text, 8)
-  }, [text])
+  const hits = useMemo(() => searchKnowledge(text, 8), [text])
 
   if (!open) return null
 
@@ -66,26 +60,22 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
               未找到相关知识点，试试：<button className="text-accent underline underline-offset-2" onClick={() => setText('Transformer')}>Transformer</button>
             </div>
           )}
-          {hits.map((hit) => {
-            const point = kb.pointById.get(hit.id)!
-            const category = kb.categoryById.get(point.categoryId)!
-            return (
-              <button
-                key={hit.id}
-                onClick={() => go(hit.id)}
-                className="flex w-full items-baseline justify-between gap-4 border-t border-edge px-5 py-3 text-left first:border-t-0 hover:bg-void/40"
-              >
-                <span>
-                  <span className="text-sm" style={{ color: category.color }}>
-                    ●{' '}
-                  </span>
-                  <span className="text-sm text-star">{point.title}</span>
-                  <span className="ml-2 text-xs text-dim">{snippet(point.summary, text, 10)}</span>
+          {hits.map((hit) => (
+            <button
+              key={hit.id}
+              onClick={() => go(hit.id)}
+              className="flex w-full items-baseline justify-between gap-4 border-t border-edge px-5 py-3 text-left first:border-t-0 hover:bg-void/40"
+            >
+              <span>
+                <span className="text-sm" style={{ color: hit.categoryColor }}>
+                  ●{' '}
                 </span>
-                <span className="shrink-0 font-mono text-xs text-dim">{point.year}</span>
-              </button>
-            )
-          })}
+                <span className="text-sm text-star">{hit.title}</span>
+                <span className="ml-2 text-xs text-dim">{hit.snippet}</span>
+              </span>
+              <span className="shrink-0 font-mono text-xs text-dim">{hit.year}</span>
+            </button>
+          ))}
         </div>
       </div>
     </div>

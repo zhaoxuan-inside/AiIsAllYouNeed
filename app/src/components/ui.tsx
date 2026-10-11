@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import type { Category, KnowledgePoint } from '@/domain/schema'
+import type { Category, KnowledgePoint } from '@/backend'
 
 /** 领域徽章（iA 式）：彩色圆点承担领域标识，文字一律墨色，1px 发丝边 */
 export function CategoryBadge({ category }: { category: Category }) {

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { getKnowledgeBase, getFullTimeline } from '@/data/knowledge-context'
+import { getHomeView } from '@/backend/knowledge-service'
 import { KnowledgeCard } from '@/components/ui'
 
 /** iA 式细线星座：静态 SVG 线稿，墨色极淡，不与文字争夺注意力 */
@@ -24,11 +24,7 @@ function Constellation({ className }: { className?: string }) {
 }
 
 export function HomePage() {
-  const kb = getKnowledgeBase()
-  const timeline = getFullTimeline()
-  const years = timeline.map((t) => t.year)
-  const latest = [...kb.points].sort((a, b) => b.year - a.year).slice(0, 6)
-  const top = [...kb.points].sort((a, b) => b.importance - a.importance || b.year - a.year).slice(0, 6)
+  const { stats, domainRows, latest, top } = getHomeView()
 
   return (
     <div className="rise-in">
@@ -43,7 +39,7 @@ export function HomePage() {
             绘成一张可漫游的星图
           </h1>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-dim">
-            以知识点为星、依赖关系为星线、时间为轨道——浏览 {kb.points.length} 个 AI 核心知识点的发展脉络、
+            以知识点为星、依赖关系为星线、时间为轨道——浏览 {stats.points} 个 AI 核心知识点的发展脉络、
             领域路线与趋势预测。
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -63,10 +59,10 @@ export function HomePage() {
       {/* 统计行：大数字 + 灰标签，发丝线分栏 */}
       <section className="mt-10 grid grid-cols-2 border-b border-edge sm:grid-cols-4">
         {[
-          { label: '知识点', value: kb.points.length },
-          { label: '领域', value: kb.categories.length },
-          { label: '关键论文', value: kb.papers.length },
-          { label: '年份跨度', value: `${years[0]}–${years.at(-1)}` },
+          { label: '知识点', value: stats.points },
+          { label: '领域', value: stats.categories },
+          { label: '关键论文', value: stats.papers },
+          { label: '年份跨度', value: stats.yearSpan },
         ].map((item, i) => (
           <div key={item.label} className={`py-5 pr-6 ${i > 0 ? 'sm:border-l sm:border-edge sm:pl-6' : ''}`}>
             <div className="font-mono text-2xl text-star">{item.value}</div>
@@ -79,8 +75,7 @@ export function HomePage() {
       <section className="mt-12">
         <h2 className="font-display text-xl">六大领域</h2>
         <div className="mt-3">
-          {kb.categories.map((c) => {
-            const count = kb.points.filter((p) => p.categoryId === c.id).length
+          {domainRows.map(({ category: c, count }) => {
             return (
               <Link
                 key={c.id}
@@ -108,8 +103,8 @@ export function HomePage() {
             </Link>
           </div>
           <div className="mt-2">
-            {latest.map((p) => (
-              <KnowledgeCard key={p.id} point={p} category={kb.categoryById.get(p.categoryId)!} />
+            {latest.map(({ point, category }) => (
+              <KnowledgeCard key={point.id} point={point} category={category} />
             ))}
           </div>
         </div>
@@ -121,8 +116,8 @@ export function HomePage() {
             </Link>
           </div>
           <div className="mt-2">
-            {top.map((p) => (
-              <KnowledgeCard key={p.id} point={p} category={kb.categoryById.get(p.categoryId)!} />
+            {top.map(({ point, category }) => (
+              <KnowledgeCard key={point.id} point={point} category={category} />
             ))}
           </div>
         </div>

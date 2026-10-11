@@ -1,21 +1,17 @@
 import { Link, useParams } from 'react-router-dom'
-import { getKnowledgeBase } from '@/data/knowledge-context'
-import { buildRoadmap } from '@/domain/roadmap'
+import { getDomainView } from '@/backend/knowledge-service'
 import { KnowledgeCard, EmptyState } from '@/components/ui'
 
 /** 领域页：概览 + 路线速览 + 知识点列表 */
 export function DomainPage() {
   const { categoryId } = useParams()
-  const kb = getKnowledgeBase()
-  const category = categoryId ? kb.categoryById.get(categoryId) : undefined
+  const view = categoryId ? getDomainView(categoryId) : null
 
-  if (!category) {
+  if (!view) {
     return <EmptyState title="未找到该领域" action={{ to: '/', label: '回到首页' }} />
   }
 
-  const points = kb.points.filter((p) => p.categoryId === category.id).sort((a, b) => a.year - b.year)
-  const trend = kb.trendByCategory.get(category.id)!
-  const roadmap = buildRoadmap(kb, category.id)
+  const { category, points, trend, roadmap } = view
 
   return (
     <div className="rise-in">
@@ -31,10 +27,9 @@ export function DomainPage() {
         </div>
       </header>
 
+      {trend && (
       <section className="mt-6 border-y border-edge py-5">
-        <p className="text-xs text-dim">
-          发展趋势预测（编辑标注）
-        </p>
+        <p className="text-xs text-dim">发展趋势预测（编辑标注）</p>
         <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
         <ul className="mt-3 space-y-2">
           {trend.directions.map((d) => (
@@ -48,6 +43,7 @@ export function DomainPage() {
           查看完整发展路线 →
         </Link>
       </section>
+      )}
 
       <section className="mt-8">
         <h2 className="font-display text-xl">知识脉络（按诞生年份）</h2>

@@ -1,25 +1,32 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useProfileStore } from '@/store/profile'
-import { getKnowledgeBase } from '@/data/knowledge-context'
+import { useProfileStore } from '@/backend/profile-store'
+import { getPointSummary } from '@/backend/knowledge-service'
 import { EmptyState } from '@/components/ui'
 
 const COLORS = ['#E5B85C', '#5B8DEF', '#3FBEA8', '#E0705A', '#9D7BE8', '#D46A9E']
 
 /** 本地档案：昵称/头像色、收藏、阅读进度、笔记——信息只存本机 */
 export function ProfilePage() {
-  const kb = getKnowledgeBase()
   const profile = useProfileStore((s) => s.profile)
   const renameProfile = useProfileStore((s) => s.renameProfile)
   const toggleFavorite = useProfileStore((s) => s.toggleFavorite)
   const [tab, setTab] = useProfileStoreSafeTab()
 
-  const favorites = profile.favorites.map((id) => kb.pointById.get(id)!).filter(Boolean)
+  const favorites = profile.favorites.flatMap((id) => {
+    const summary = getPointSummary(id)
+    return summary ? [summary] : []
+  })
   const progressList = Object.entries(profile.progress)
     .filter(([, done]) => done)
-    .map(([id]) => kb.pointById.get(id)!)
-    .filter(Boolean)
-  const notes = Object.entries(profile.notes).map(([id, text]) => ({ point: kb.pointById.get(id)!, text })).filter((n) => n.point)
+    .flatMap(([id]) => {
+      const summary = getPointSummary(id)
+      return summary ? [summary] : []
+    })
+  const notes = Object.entries(profile.notes).flatMap(([id, text]) => {
+    const summary = getPointSummary(id)
+    return summary ? [{ point: summary, text }] : []
+  })
 
   return (
     <div className="rise-in">
@@ -82,7 +89,7 @@ export function ProfilePage() {
           ) : (
             <ul className="space-y-2">
               {favorites.map((p) => (
-                <PointRow key={p.id} id={p.id} title={p.title} year={p.year} onRemove={() => toggleFavorite(p.id)} />
+                <PointRow key={p.point.id} id={p.point.id} title={p.point.title} year={p.point.year} onRemove={() => toggleFavorite(p.point.id)} />
               ))}
             </ul>
           ))}
@@ -93,7 +100,7 @@ export function ProfilePage() {
           ) : (
             <ul className="space-y-2">
               {progressList.map((p) => (
-                <PointRow key={p.id} id={p.id} title={p.title} year={p.year} />
+                <PointRow key={p.point.id} id={p.point.id} title={p.point.title} year={p.point.year} />
               ))}
             </ul>
           ))}
@@ -104,9 +111,9 @@ export function ProfilePage() {
           ) : (
             <ul className="space-y-3">
               {notes.map(({ point, text }) => (
-                <li key={point.id} className="border-b border-edge py-4">
-                  <Link to={`/point/${point.id}`} className="text-sm text-star hover:text-accent">
-                    {point.title}
+                <li key={point.point.id} className="border-b border-edge py-4">
+                  <Link to={`/point/${point.point.id}`} className="text-sm text-star hover:text-accent">
+                    {point.point.title}
                   </Link>
                   <p className="mt-1 whitespace-pre-wrap text-sm text-dim">{text}</p>
                 </li>

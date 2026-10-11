@@ -65,7 +65,19 @@ scripts/validate-knowledge.mjs   # 构建期校验（Node，知识区 → 应用
 knowledge/               # 知识数据源（Git 更新入口）
 ```
 
-## 5. 测试面（阶段 5 seam）
+## 5.5 应用后端边界（v1.1 分层收敛，2026-10-11）
+
+**规则**：`src/backend/` = 应用后端（数据管理的唯一所有者）；`features/ components/ app/` = 展示层。
+
+- 展示层**只允许** `import { … } from '@/backend'`（公共出口 index.ts = seam）。
+- `backend/` 内部：`knowledge-service`（加载/校验缓存/派生/搜索/视图模型装配）、`filter-store`（查询参数）、
+  `profile-store`/`preference-store`（本地持久化）、`types`（视图契约）；`domain/*` 与 `data/*` 是 backend 内部实现，视图不可见。
+- 视图拿到的是**渲染就绪的视图模型**（HomeView/GraphView/TimelineView/RoadmapView/DomainView/PointDetailView/SearchHitView），
+  不再做排序、过滤、ID 解析、索引构建。
+- 深模块自检：knowledge-service 接口 9 个函数，背后藏校验+缓存+派生+检索；删除它，这些逻辑会散回 7 个视图（在赚深度）。
+- **v2 服务器化通道**：knowledge-service 的函数签名即未来服务 API 的镜像；届时仅替换 backend 内部实现为 HTTP Adapter（+离线快照回退），展示层零改动。
+
+## 5.9 测试面（阶段 5 seam）
 
 1. `domain`：schema 校验（合法/非法样例）、引用完整性报错、roadmap 拓扑排序（含环检测）、timeline 排序分组。
 2. `domain/search`：中文 bigram 命中、别名/标签命中、空查询、评分排序、高亮切片。

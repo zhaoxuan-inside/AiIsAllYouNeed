@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { useProfileStore } from '@/store/profile'
-import { usePreferenceStore } from '@/store/preference'
+import { useProfileStore } from '@/backend/profile-store'
+import { usePreferenceStore } from '@/backend/preference-store'
 
 beforeEach(() => {
   localStorage.clear()

@@ -60,13 +60,16 @@ knowledge/
 ## 架构速览
 
 ```text
-knowledge/ (数据仓库) ──构建期校验──▶ app/src/domain (schema/校验/派生)
-                                      ├─ search/  自研中文 bigram 倒排索引
-                                      ├─ graph/timeline/roadmap  派生纯函数
-app/src/store   本地档案（localStorage，无服务器）
-app/src/features  home · graph · timeline · roadmap · domain · knowledge-point · profile
+knowledge/ (数据仓库) ──构建期校验──▶ app/src/backend（应用后端 · 数据管理唯一入口）
+                                      ├─ knowledge-service  加载/校验缓存/派生/搜索/视图模型
+                                      ├─ filter-store  查询参数；profile/preference-store  本地持久化
+                                      └─ domain/* data/*  内部实现（视图不可见）
+app/src/features  home · graph · timeline · roadmap · domain · knowledge-point · profile（纯展示）
 app/src-tauri     六端壳（desktop + mobile）
 ```
+
+**分层边界**：展示层只允许 `import from '@/backend'`；数据管理的加载、校验、派生、检索全部在应用后端内。
+v2 服务器化时仅替换 backend 内部实现为 HTTP Adapter，视图层零改动（详见 `hs_dev_docs/_03_architecture_design/arch_v1.md` §5.5）。
 
 - 设计契约：根目录 [DESIGN.md](DESIGN.md)（星夜/纸面双主题、领域色环、衬线标题）
 - 开发过程文档：`hs_dev_docs/`（PRD、原型、ADR、架构、任务）

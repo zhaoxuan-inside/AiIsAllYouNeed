@@ -9,10 +9,10 @@ import {
   type Simulation,
   type SimulationLinkDatum,
 } from 'd3-force'
-import { getFullGraph, getKnowledgeBase, useFilterStore } from '@/data/knowledge-context'
-import { buildGraph } from '@/domain/graph'
+import { getGraphView, getPointSummary } from '@/backend/knowledge-service'
+import { useFilterStore } from '@/backend/filter-store'
 import { CategoryFilter, EmptyState } from '@/components/ui'
-import type { GraphEdge, GraphNode } from '@/domain/graph'
+import type { GraphEdge, GraphNode } from '@/backend'
 
 interface PositionedNode extends GraphNode {
   x: number
@@ -29,7 +29,6 @@ const VIEW = { w: 960, h: 640 }
 
 /** 力导向知识图谱：领域着色、依赖实线箭头、相关虚线；支持拖拽与缩放 */
 export function GraphPage() {
-  const kb = getKnowledgeBase()
   const navigate = useNavigate()
   const selected = useFilterStore((s) => s.selectedCategories)
   const toggleCategory = useFilterStore((s) => s.toggleCategory)
@@ -37,9 +36,10 @@ export function GraphPage() {
   const [edgeKind, setEdgeKind] = useState<'prerequisite' | 'related' | 'all'>('prerequisite')
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
 
-  const graph = useMemo(
-    () => (selected.length === 0 ? getFullGraph() : buildGraph(kb, { categoryIds: selected })),
-    [kb, selected],
+  const { categories, graph } = useMemo(() => getGraphView(selected), [selected])
+  const categoryColorById = useMemo(
+    () => new Map(categories.map((c) => [c.id, c.color])),
+    [categories],
   )
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -112,7 +112,8 @@ export function GraphPage() {
     setNodes((ns) => ns.map((n) => ({ ...n, fx: null, fy: null })))
   }
 
-  const selectedPoint = selectedNode ? kb.pointById.get(selectedNode) : null
+  const selectedPoint = selectedNode ? getPointSummary(selectedNode) : null
+  const selectedDetail = selectedPoint?.point ?? null
 
   return (
     <div className="rise-in">
@@ -143,7 +144,7 @@ export function GraphPage() {
       </div>
 
       <div className="mt-4">
-        <CategoryFilter categories={kb.categories} selected={selected} onToggle={toggleCategory} onClear={clearCategories} />
+        <CategoryFilter categories={categories} selected={selected} onToggle={toggleCategory} onClear={clearCategories} />
       </div>
 
       {nodes.length === 0 ? (
@@ -184,7 +185,7 @@ export function GraphPage() {
                 )
               })}
               {nodes.map((n) => {
-                const color = kb.categoryById.get(n.categoryId)!.color
+                const color = categoryColorById.get(n.categoryId)!
                 const r = 4 + n.importance * 2
                 const active = selectedNode === n.id
                 return (
@@ -215,27 +216,24 @@ export function GraphPage() {
           </svg>
 
           {/* 详情侧栏（桌面）/ 底部抽屉（移动，样式简化为同组件） */}
-          {selectedPoint && (
+          {selectedDetail && selectedPoint && (
             <aside className="absolute right-0 top-0 h-full w-full max-w-xs overflow-y-auto border-l border-edge bg-panel p-5">
               <button onClick={() => setSelectedNode(null)} className="float-right text-dim hover:text-star" aria-label="关闭">
                 ✕
               </button>
-              <span
-                className="text-xs"
-                style={{ color: "var(--star-dim)" }}
-              >
-                ● {kb.categoryById.get(selectedPoint.categoryId)!.name}
+              <span className="text-xs text-dim">
+                <span style={{ color: selectedPoint.category.color }}>●</span> {selectedPoint.category.name}
               </span>
-              <h2 className="font-display mt-2 text-lg">{selectedPoint.title}</h2>
+              <h2 className="font-display mt-2 text-lg">{selectedDetail.title}</h2>
               <p className="mt-1 font-mono text-xs text-dim">
-                {selectedPoint.year} · 影响力 {selectedPoint.importance}/5
+                {selectedDetail.year} · 影响力 {selectedDetail.importance}/5
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-dim">{selectedPoint.summary}</p>
+              <p className="mt-3 text-sm leading-relaxed text-dim">{selectedDetail.summary}</p>
               <div className="mt-4 text-xs text-dim">
-                前置依赖 {selectedPoint.prerequisites.length} · 衍生/相关 {selectedPoint.related.length + kb.points.filter((p) => p.prerequisites.includes(selectedPoint.id)).length}
+                前置依赖 {selectedPoint.prerequisiteCount} · 衍生/相关 {selectedPoint.relatedCount}
               </div>
               <button
-                onClick={() => navigate(`/point/${selectedPoint.id}`)}
+                onClick={() => navigate(`/point/${selectedDetail.id}`)}
                 className="mt-4 w-full rounded-lg border border-accent/60 px-4 py-2 text-sm text-accent hover:bg-accent/10"
               >
                 查看完整详情 →
@@ -247,7 +245,7 @@ export function GraphPage() {
 
       {/* 图例 */}
       <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-dim">
-        {kb.categories.map((c) => (
+        {categories.map((c) => (
           <span key={c.id} className="inline-flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c.color }} />
             {c.name}

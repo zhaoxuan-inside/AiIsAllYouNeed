@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { usePreferenceStore } from '@/store/preference'
+import { usePreferenceStore } from '@/backend/preference-store'
 import { SearchOverlay } from '@/components/SearchOverlay'
 
 const NAV = [

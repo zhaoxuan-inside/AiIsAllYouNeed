@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { getKnowledgeBase, getFullTimeline, useFilterStore } from '@/data/knowledge-context'
-import { buildTimeline } from '@/domain/timeline'
+import { getTimelineView } from '@/backend/knowledge-service'
+import { useFilterStore } from '@/backend/filter-store'
 import { CategoryFilter, ImportanceStars } from '@/components/ui'
 
 const ERA_ANCHORS = [
@@ -14,15 +14,12 @@ const ERA_ANCHORS = [
 
 /** 编年时间线：纵向轨道 + 时代锚点，按领域筛选 */
 export function TimelinePage() {
-  const kb = getKnowledgeBase()
   const selected = useFilterStore((s) => s.selectedCategories)
   const toggleCategory = useFilterStore((s) => s.toggleCategory)
   const clearCategories = useFilterStore((s) => s.clearCategories)
 
-  const timeline = useMemo(
-    () => (selected.length === 0 ? getFullTimeline() : buildTimeline(kb, { categoryIds: selected })),
-    [kb, selected],
-  )
+  const { categories, entries: timeline } = useMemo(() => getTimelineView(selected), [selected])
+  const categoryById = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories])
 
   return (
     <div className="rise-in">
@@ -30,7 +27,7 @@ export function TimelinePage() {
       <p className="mt-1 text-sm text-dim">AI 知识的编年长河：每个节点是一个知识点的诞生时刻。</p>
 
       <div className="mt-4">
-        <CategoryFilter categories={kb.categories} selected={selected} onToggle={toggleCategory} onClear={clearCategories} />
+        <CategoryFilter categories={categories} selected={selected} onToggle={toggleCategory} onClear={clearCategories} />
       </div>
 
       <div className="relative mt-8">
@@ -53,7 +50,7 @@ export function TimelinePage() {
 
               <div className="ml-[64px] mt-3 grid gap-2 sm:ml-[84px]">
                 {entry.points.map((p) => {
-                  const category = kb.categoryById.get(p.categoryId)!
+                  const category = categoryById.get(p.categoryId)!
                   return (
                     <Link
                       key={p.id}

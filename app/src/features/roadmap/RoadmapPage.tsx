@@ -1,16 +1,15 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getKnowledgeBase } from '@/data/knowledge-context'
-import { buildRoadmap } from '@/domain/roadmap'
+import { getRoadmapView } from '@/backend/knowledge-service'
 import { ImportanceStars } from '@/components/ui'
 
 /** 发展路线：领域 Tab + 阶段泳道（基础→进阶→前沿），依赖顺序编号 */
 export function RoadmapPage() {
-  const kb = getKnowledgeBase()
-  const [activeId, setActiveId] = useState(kb.categories[0].id)
-  const roadmap = useMemo(() => buildRoadmap(kb, activeId), [kb, activeId])
+  const [activeId, setActiveId] = useState('ml-foundation')
+  const view = useMemo(() => getRoadmapView(activeId), [activeId])
 
-  if (!roadmap) return null
+  if (!view) return null
+  const { categories, roadmap, trend } = view
 
   return (
     <div className="rise-in">
@@ -19,7 +18,7 @@ export function RoadmapPage() {
 
       {/* 领域 Tab */}
       <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-b border-edge pb-3">
-        {kb.categories.map((c) => (
+        {categories.map((c) => (
           <button
             key={c.id}
             onClick={() => setActiveId(c.id)}
@@ -34,25 +33,20 @@ export function RoadmapPage() {
       </div>
 
       {/* 领域趋势（发展轨迹预测） */}
-      {(() => {
-        const trend = kb.trendByCategory.get(activeId)!
-        return (
-          <section className="mt-6 border-y border-edge py-5">
-            <p className="text-xs text-dim">
-              发展趋势预测（编辑标注）
-            </p>
-            <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              {trend.directions.map((d) => (
-                <div key={d.title} className="rounded-lg border border-edge p-3">
-                  <p className="text-sm text-star">↗ {d.title}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-dim">{d.description}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )
-      })()}
+      {trend && (
+        <section className="mt-6 border-y border-edge py-5">
+          <p className="text-xs text-dim">发展趋势预测（编辑标注）</p>
+          <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {trend.directions.map((d) => (
+              <div key={d.title} className="rounded-lg border border-edge p-3">
+                <p className="text-sm text-star">↗ {d.title}</p>
+                <p className="mt-1 text-xs leading-relaxed text-dim">{d.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {roadmap.orderViolations.length > 0 && (
         <p className="mt-4 border-l-2 border-accent pl-3 text-xs text-accent">
