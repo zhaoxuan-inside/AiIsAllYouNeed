@@ -89,7 +89,7 @@ export function TimelinePage() {
                   style={{ backgroundColor: 'var(--accent)' }}
                   aria-hidden
                 />
-                {anchor && <span className="text-xs text-accent">「{anchor.label}」</span>}
+                {anchor && <span className="text-xs text-dim">「{anchor.label}」</span>}
               </div>
 
               <div className="ml-[64px] mt-3 grid gap-2 sm:ml-[84px]">

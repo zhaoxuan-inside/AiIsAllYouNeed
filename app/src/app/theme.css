@@ -85,6 +85,8 @@
 html {
   background: var(--void);
   color: var(--star);
+  /* 统一内容缘：可滚动页与不可滚动页的居中列不因经典滚动条占位左右漂移 */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -126,6 +128,81 @@ body {
   .rise-in {
     animation: none;
   }
+}
+
+/* 首页星座动效（页面级、轻）：入场一次性描绘 → 星尘缓闪；系统减动效时全部静止呈现 */
+@media (prefers-reduced-motion: no-preference) {
+  .constellation line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: const-draw 0.9s ease-out both;
+  }
+  .constellation circle,
+  .constellation path {
+    animation: const-fade 0.7s ease-out both;
+  }
+  /* 缓闪：与入场淡入串列（第二个 delay 由内联给出），从/至即基础透明度附近，切换无跳变 */
+  .constellation .const-twinkle {
+    animation:
+      const-fade 0.7s ease-out both,
+      const-twinkle-dust 6.5s ease-in-out infinite alternate;
+  }
+  .constellation path.const-twinkle {
+    animation:
+      const-fade 0.7s ease-out both,
+      const-twinkle-mark 8s ease-in-out infinite alternate;
+  }
+}
+@keyframes const-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes const-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes const-twinkle-dust {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+@keyframes const-twinkle-mark {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+/* 星座锚点（领域入口）：hover/焦点浮出领域名 + 彩点微放大；触屏点击直达领域页 */
+.constellation .const-anchor {
+  outline: none;
+}
+.constellation .const-anchor-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+.constellation .const-anchor-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--star-dim);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.constellation .const-anchor:hover .const-anchor-dot,
+.constellation .const-anchor:focus-visible .const-anchor-dot {
+  transform: scale(1.5);
+}
+.constellation .const-anchor:hover .const-anchor-label,
+.constellation .const-anchor:focus-visible .const-anchor-label {
+  opacity: 1;
 }
 
 /* Focus Mode（iA Writer 招牌）：仅当前段全亮，其余退灰 */

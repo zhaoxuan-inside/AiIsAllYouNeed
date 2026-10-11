@@ -180,31 +180,40 @@ let wikiTerms: { term: string; id: string }[] | null = null
 /**
  * 正文自动关联：把文本中出现的其他知识点标题/别名替换为站内链接（Markdown 形态）。
  * 规则：跳过代码段与已有链接；每个词条最多链接一次；单篇最多 8 个链接，避免过度关联。
+ * 实现：对未保护片段做「单趟正则交替」替换——生成物不会被再次扫描，
+ * 因此重复别名（同一 term 挂多个点时取先注册者）或互为子串的词条不会产生嵌套损坏。
  */
 export function autolinkKnowledge(text: string, excludeId?: string): string {
   const base = kb()
   if (!wikiTerms) {
-    wikiTerms = base.points
-      .flatMap((p) => [p.title, ...p.aliases].map((term) => ({ term, id: p.id })))
-      .filter((t) => t.term.length >= 2)
+    const byTerm = new Map<string, string>()
+    for (const p of base.points) {
+      for (const term of [p.title, ...p.aliases]) {
+        if (term.length >= 2 && !byTerm.has(term)) byTerm.set(term, p.id)
+      }
+    }
+    wikiTerms = [...byTerm.entries()]
+      .map(([term, id]) => ({ term, id }))
       .sort((a, b) => b.term.length - a.term.length)
   }
   const PROTECTED = /(`[^`]*`|\[[^\]]*\]\([^)]*\))/g
+  const idByTerm = new Map(wikiTerms.map((t) => [t.term, t.id]))
+  const termPattern = new RegExp(
+    `${wikiTerms.map((t) => t.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')}`,
+    'g',
+  )
   let linkBudget = 8
-  const linkify = (chunk: string): string => {
-    for (const { term, id } of wikiTerms!) {
-      if (linkBudget <= 0) break
-      if (id === excludeId) continue
-      const idx = chunk.indexOf(term)
-      if (idx < 0) continue
-      chunk = chunk.replace(term, `[${term}](#/point/${id})`)
-      linkBudget -= 1
-    }
-    return chunk
-  }
   return text
     .split(PROTECTED)
-    .map((part) => (part.startsWith('`') || part.startsWith('[') ? part : linkify(part)))
+    .map((part) => {
+      if (part.startsWith('`') || part.startsWith('[')) return part
+      return part.replace(termPattern, (match) => {
+        const id = idByTerm.get(match)
+        if (!id || id === excludeId || linkBudget <= 0) return match
+        linkBudget -= 1
+        return `[${match}](#/point/${id})`
+      })
+    })
     .join('')
 }
 

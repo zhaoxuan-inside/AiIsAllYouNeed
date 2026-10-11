@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { getDomainView } from '@/backend/knowledge-service'
-import { KnowledgeCard, EmptyState, HelpHint } from '@/components/ui'
+import { KnowledgeRow, EmptyState, HelpHint } from '@/components/ui'
 
 /** 领域页：概览 + 路线速览 + 知识点列表 */
 export function DomainPage() {
@@ -33,7 +33,7 @@ export function DomainPage() {
           趋势预测
           <HelpHint label="趋势预测说明" text="由编辑整理的方向判断，非算法生成。" />
         </p>
-        <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
+        <h2 className="font-display mt-1 text-xl">{trend.headline}</h2>
         <ul className="mt-3 space-y-2">
           {trend.directions.map((d) => (
             <li key={d.title} className="text-sm leading-relaxed">
@@ -52,7 +52,7 @@ export function DomainPage() {
         <h2 className="font-display text-xl">知识脉络</h2>
         <div className="mt-4 space-y-5">
           {points.map((p) => (
-            <KnowledgeCard key={p.id} point={p} category={category} showCategory={false} />
+            <KnowledgeRow key={p.id} point={p} category={category} showCategory={false} />
           ))}
         </div>
       </section>

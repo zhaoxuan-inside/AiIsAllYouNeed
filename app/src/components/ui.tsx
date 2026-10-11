@@ -20,7 +20,7 @@ export function HelpHint({ text, label = '说明' }: { text: string; label?: str
         onClick={() => setOpen((o) => !o)}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        className="grid h-4 w-4 place-items-center rounded-full border border-edge text-[10px] leading-none text-faint transition-colors hover:border-accent hover:text-accent"
+        className="relative grid h-4.5 w-4.5 place-items-center rounded-full border border-edge text-xs leading-none text-faint transition-colors after:absolute after:-inset-2 after:content-[''] hover:border-accent hover:text-accent"
       >
         ?
       </button>
@@ -46,12 +46,14 @@ export function CategoryBadge({ category }: { category: Category }) {
   )
 }
 
-/** 重要性（等宽数字 + 星形，强调蓝） */
+/** 重要性（等宽数字 + 星形；星形 = 强调蓝，契约 §1/§2 的蓝之一） */
 export function ImportanceStars({ value }: { value: number }) {
   return (
-    <span className="inline-flex items-center gap-1 text-xs text-dim" title={`影响力 ${value}/5`}>
-      <span className="font-mono">{value}</span>
-      <span aria-hidden>★</span>
+    <span className="inline-flex items-center gap-1 text-xs" title={`影响力 ${value}/5`}>
+      <span className="font-mono text-dim">{value}</span>
+      <span className="text-accent" aria-hidden>
+        ★
+      </span>
     </span>
   )
 }
@@ -71,7 +73,7 @@ export function EmptyState({ title, hint, action }: { title: string; hint?: stri
 }
 
 /** 知识点条目（iA 式列表行：留白分隔）。showCategory=false 用于领域页（上下文已含领域，免冗余） */
-export function KnowledgeCard({
+export function KnowledgeRow({
   point,
   category,
   showCategory = true,

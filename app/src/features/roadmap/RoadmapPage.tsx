@@ -31,27 +31,27 @@ export function RoadmapPage() {
         ))}
       </div>
 
-      {/* 领域趋势（发展轨迹预测） */}
+      {/* 领域趋势（发展轨迹预测）：与领域页同构的行内列表，无卡片 */}
       {trend && (
         <section className="mt-10">
           <p className="flex items-center gap-1 text-xs text-dim">
             趋势预测
             <HelpHint label="趋势预测说明" text="由编辑整理的方向判断，非算法生成。" />
           </p>
-          <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <h2 className="font-display mt-1 text-xl">{trend.headline}</h2>
+          <ul className="mt-3 space-y-2">
             {trend.directions.map((d) => (
-              <div key={d.title} className="rounded-lg border border-edge p-3">
-                <p className="text-sm text-star">↗ {d.title}</p>
-                <p className="mt-1 text-xs leading-relaxed text-dim">{d.description}</p>
-              </div>
+              <li key={d.title} className="text-sm leading-relaxed">
+                <span className="font-bold text-star">{d.title}</span>
+                <span className="text-dim"> — {d.description}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
 
       {roadmap.orderViolations.length > 0 && (
-        <p className="mt-4 text-xs text-accent">
+        <p className="mt-4 text-xs text-dim">
           编辑提示：{roadmap.orderViolations.join('；')}
         </p>
       )}
@@ -73,7 +73,7 @@ export function RoadmapPage() {
                 <li key={p.id}>
                   <Link
                     to={`/point/${p.id}`}
-                    className="group flex items-center gap-3 rounded-lg border border-transparent px-2.5 py-2 transition-colors hover:bg-wash"
+                    className="group flex items-center gap-3 rounded-[2px] px-2.5 py-2 transition-colors hover:bg-wash"
                   >
                     <span className="font-mono text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
                     <span className="text-sm text-star group-hover:text-accent">{p.title}</span>

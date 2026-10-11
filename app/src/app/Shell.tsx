@@ -35,7 +35,7 @@ export function Shell() {
 
   return (
     <div className="min-h-dvh bg-void text-star">
-      <header className="sticky top-0 z-40 bg-void">
+      <header className="sticky top-0 z-40 bg-void [padding-top:env(safe-area-inset-top)]">
         <div className="mx-auto flex h-12 max-w-[960px] items-center gap-5 px-4 lg:px-6">
           <NavLink to="/" className="font-display text-base">
             AI 知识星图
@@ -47,7 +47,11 @@ export function Shell() {
                 to={item.to}
                 end={item.to === '/'}
                 className={({ isActive }) =>
-                  `text-sm transition-colors ${isActive ? 'font-bold text-star' : 'text-dim hover:text-star'}`
+                  `flex h-12 items-center border-b-2 transition-colors ${
+                    isActive
+                      ? 'border-accent font-bold text-star'
+                      : 'border-transparent text-dim hover:text-star'
+                  }`
                 }
               >
                 {item.label}
@@ -59,7 +63,7 @@ export function Shell() {
               onClick={() => setSearchOpen(true)}
               aria-label="搜索"
               title="搜索 (⌘K)"
-              className="grid h-7 w-7 place-items-center text-dim transition-colors hover:text-star"
+              className="relative grid h-7 w-7 place-items-center text-dim transition-colors after:absolute after:-inset-2 after:content-[''] hover:text-star"
             >
               <SearchIcon />
             </button>
@@ -67,7 +71,7 @@ export function Shell() {
               onClick={toggleTheme}
               aria-label="切换主题"
               title="切换主题"
-              className="grid h-7 w-7 place-items-center text-dim transition-colors hover:text-star"
+              className="relative grid h-7 w-7 place-items-center text-dim transition-colors after:absolute after:-inset-2 after:content-[''] hover:text-star"
             >
               {theme === 'night' ? <SunIcon /> : <MoonIcon />}
             </button>
@@ -75,7 +79,7 @@ export function Shell() {
               to="/profile"
               aria-label="本地档案"
               title="本地档案"
-              className="grid h-7 w-7 shrink-0 place-items-center text-dim transition-colors hover:text-star"
+              className="relative grid h-7 w-7 shrink-0 place-items-center text-dim transition-colors after:absolute after:-inset-2 after:content-[''] hover:text-star"
             >
               <UserIcon />
             </NavLink>
@@ -87,14 +91,18 @@ export function Shell() {
         <Outlet />
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-edge bg-void lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-edge bg-void [padding-bottom:env(safe-area-inset-bottom)] lg:hidden">
         {NAV.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === '/'}
             className={({ isActive }) =>
-              `flex h-14 items-center justify-center text-xs ${isActive ? 'font-bold text-star' : 'text-dim'}`
+              `flex h-14 items-center justify-center border-t-2 text-xs transition-colors ${
+                isActive
+                  ? 'border-accent font-bold text-star'
+                  : 'border-transparent text-dim hover:text-star'
+              }`
             }
           >
             {item.label}

@@ -64,7 +64,7 @@ export function KnowledgePointPage() {
   const read = profile.progress[point.id] === true
 
   return (
-    <article className="rise-in mx-auto max-w-[42rem]">
+    <article className="rise-in">
       <header>
         <div className="flex flex-wrap items-center gap-3">
           <Link to={`/domain/${category.id}`}>
@@ -72,11 +72,11 @@ export function KnowledgePointPage() {
           </Link>
           <span className="font-mono text-xs text-dim">{point.year}</span>
           <ImportanceStars value={point.importance} />
-          <div className="ml-auto flex gap-2">
+          <div className="ml-auto flex gap-4">
             <button
               onClick={() => setFocusMode(!focusMode)}
               aria-pressed={focusMode}
-              className={`px-1 py-1.5 text-xs transition-colors ${
+              className={`relative px-1 py-2 text-xs transition-colors after:absolute after:-inset-1.5 after:content-[''] ${
                 focusMode ? 'font-bold text-star underline underline-offset-4 decoration-accent' : 'text-dim hover:text-star'
               }`}
             >
@@ -84,7 +84,7 @@ export function KnowledgePointPage() {
             </button>
             <button
               onClick={() => setProgress(point.id, !read)}
-              className={`px-1 py-1.5 text-xs transition-colors ${
+              className={`relative px-1 py-2 text-xs transition-colors after:absolute after:-inset-1.5 after:content-[''] ${
                 read ? 'font-bold text-star' : 'text-dim hover:text-star'
               }`}
             >
@@ -93,7 +93,7 @@ export function KnowledgePointPage() {
             <button
               onClick={() => toggleFavorite(point.id)}
               aria-label={favorited ? '取消收藏' : '收藏'}
-              className={`px-1 py-1.5 text-xs transition-colors ${
+              className={`relative px-1 py-2 text-xs transition-colors after:absolute after:-inset-1.5 after:content-[''] ${
                 favorited ? 'font-bold text-star' : 'text-dim hover:text-star'
               }`}
             >
@@ -103,10 +103,10 @@ export function KnowledgePointPage() {
         </div>
         <h1 className="font-display mt-3 text-3xl leading-snug">{point.title}</h1>
         {point.aliases.length > 0 && <p className="mt-1 text-xs text-dim">别名：{point.aliases.join(' · ')}</p>}
-        <p className="mt-5 text-lg leading-relaxed text-star">{point.summary}</p>
+        <p className="mt-5 max-w-[38em] text-lg leading-relaxed text-star">{point.summary}</p>
       </header>
 
-      <section ref={proseRef} className={`prose-knowledge mt-6 text-sm ${focusMode ? 'prose-focus' : ''}`}>
+      <section ref={proseRef} className={`prose-knowledge mt-6 ${focusMode ? 'prose-focus' : ''}`}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{autolinkKnowledge(point.detail, point.id)}</ReactMarkdown>
       </section>
 
@@ -190,7 +190,7 @@ export function KnowledgePointPage() {
 
       {point.trend && (
         <section className="mt-12">
-          <p className="flex items-center gap-1 text-xs text-accent">
+          <p className="flex items-center gap-1 text-xs text-dim">
             发展方向
             <HelpHint label="发展方向说明" text="由编辑整理的方向判断，非算法生成。" />
           </p>

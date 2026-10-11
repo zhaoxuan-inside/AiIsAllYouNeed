@@ -58,7 +58,8 @@ describe('页面冒烟（真实种子数据）', () => {
   it('首页：统计、领域入口与双列表', () => {
     renderWithRouter(<HomePage />)
     expect(screen.getByText(`${stats.points}`)).toBeInTheDocument()
-    expect(screen.getByText(/机器学习基础/)).toBeInTheDocument()
+    // 「机器学习基础」出现在星座锚点标签与领域列表行两处
+    expect(screen.getAllByText(/机器学习基础/).length).toBeGreaterThan(0)
     expect(screen.getByText(/高影响力/)).toBeInTheDocument()
   })
 
@@ -72,7 +73,7 @@ describe('页面冒烟（真实种子数据）', () => {
     expect(screen.getByText('「Transformer 纪元」')).toBeInTheDocument()
   })
 
-  it('路线页：默认领域三阶段 + 趋势卡', () => {
+  it('路线页：默认领域三阶段 + 趋势列表', () => {
     renderWithRouter(<Shell />, { path: '/roadmap' })
     expect(screen.getByText('趋势预测')).toBeInTheDocument()
     expect(screen.getByText('基础')).toBeInTheDocument()

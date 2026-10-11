@@ -32,11 +32,14 @@ export function ProfilePage() {
   return (
     <div className="rise-in">
       <header className="flex flex-wrap items-center gap-4 pb-2">
-        <span
-          className="grid h-14 w-14 place-items-center rounded-full text-accent-ink"
-          style={{ backgroundColor: profile.color }}
-        >
-          <UserIcon className="h-7 w-7" />
+        {/* 头像：发丝边圆 + 墨色人形；身份色只落在右下功能点上（iA 近单色） */}
+        <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-full border border-edge">
+          <UserIcon className="h-7 w-7 text-star" />
+          <span
+            className="absolute -bottom-px -right-px h-3.5 w-3.5 rounded-full border-2 border-void"
+            style={{ backgroundColor: profile.color }}
+            aria-hidden
+          />
         </span>
         <div className="min-w-0">
           <input
@@ -46,15 +49,19 @@ export function ProfilePage() {
             className="font-display w-48 border-b border-transparent bg-transparent text-xl outline-none hover:border-edge focus:border-accent"
           />
           <p className="mt-1 text-xs text-dim">仅存于本机浏览器</p>
-          <div className="mt-2 flex gap-1.5">
+          <div className="mt-2 flex items-center gap-5">
             {COLORS.map((c) => (
               <button
                 key={c}
                 onClick={() => renameProfile(profile.name, c)}
                 aria-label={`选择头像色 ${c}`}
-                className="h-5 w-5 rounded-full border transition-transform hover:scale-110"
-                style={{ backgroundColor: c, borderColor: profile.color === c ? 'var(--star)' : 'transparent' }}
-              />
+                aria-pressed={profile.color === c}
+                className={`relative grid h-6 w-6 place-items-center rounded-full border transition-colors after:absolute after:-inset-2 after:content-[''] ${
+                  profile.color === c ? 'border-star' : 'border-transparent hover:border-edge'
+                }`}
+              >
+                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c }} />
+              </button>
             ))}
           </div>
         </div>
@@ -65,7 +72,7 @@ export function ProfilePage() {
         </div>
       </header>
 
-      <div className="mt-6 flex gap-1 rounded-lg border border-edge p-1 text-sm">
+      <div className="mt-6 flex gap-6 border-b border-edge text-sm">
         {(
           [
             ['favorites', '我的收藏'],
@@ -76,7 +83,9 @@ export function ProfilePage() {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`flex-1 border-b-2 pb-2 text-center text-sm transition-colors ${tab === key ? 'border-accent font-bold text-star' : 'border-transparent text-dim hover:text-star'}`}
+            className={`relative -mb-px border-b-2 pb-2 transition-colors after:absolute after:-inset-x-2 after:-inset-y-1.5 after:content-[''] ${
+              tab === key ? 'border-accent font-bold text-star' : 'border-transparent text-dim hover:text-star'
+            }`}
           >
             {label}
           </button>

@@ -67,9 +67,11 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
               className="flex w-full items-baseline justify-between gap-4 px-5 py-2.5 text-left transition-colors hover:bg-wash"
             >
               <span>
-                <span className="text-sm" style={{ color: hit.categoryColor }}>
-                  ●{' '}
-                </span>
+                <span
+                  className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full align-middle"
+                  style={{ backgroundColor: hit.categoryColor }}
+                  aria-hidden
+                />
                 <span className="text-sm text-star">{hit.title}</span>
                 <span className="ml-2 text-xs text-dim">{hit.snippet}</span>
               </span>

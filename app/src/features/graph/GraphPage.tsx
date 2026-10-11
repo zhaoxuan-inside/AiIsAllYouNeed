@@ -205,7 +205,11 @@ export function GraphPage() {
             <button
               key={kind}
               onClick={() => setEdgeKind(kind)}
-              className={`transition-colors ${edgeKind === kind ? 'font-bold text-star' : 'text-dim hover:text-star'}`}
+              className={`relative border-b-2 pb-0.5 transition-colors after:absolute after:-inset-x-2 after:-inset-y-1.5 after:content-[''] ${
+                edgeKind === kind
+                  ? 'border-accent font-bold text-star'
+                  : 'border-transparent text-dim hover:text-star'
+              }`}
             >
               {label}
             </button>
@@ -243,26 +247,30 @@ export function GraphPage() {
             ;(e.currentTarget as Element).setPointerCapture?.(e.pointerId)
           }}
         >
-          <div className="pointer-events-none absolute left-3 top-3 font-mono text-[11px] text-faint">
+          <div className="pointer-events-none absolute left-3 top-3 font-mono text-xs text-faint">
             {nodes.length} nodes · {visibleEdges.length} edges · 已学 {learnedCount}
           </div>
-          <div className="absolute bottom-3 right-3 flex items-center gap-3 rounded-[2px] border border-edge bg-void/85 px-3 py-1.5 text-xs text-dim">
+          <div className="absolute bottom-3 right-3 flex items-center gap-4 rounded-[2px] border border-edge bg-void/85 px-3 py-1.5 text-xs text-dim">
             <button
               onClick={() => setView((v) => ({ ...v, k: Math.max(0.5, v.k * 0.85) }))}
               aria-label="缩小"
-              className="transition-colors hover:text-star"
+              className="relative transition-colors after:absolute after:-inset-2 after:content-[''] hover:text-star"
             >
               <MinusIcon className="h-3.5 w-3.5" />
             </button>
-            <span className="w-10 text-center font-mono text-[11px] text-faint">{Math.round(view.k * 100)}%</span>
+            <span className="w-10 text-center font-mono text-xs text-faint">{Math.round(view.k * 100)}%</span>
             <button
               onClick={() => setView((v) => ({ ...v, k: Math.min(2.4, v.k * 1.15) }))}
               aria-label="放大"
-              className="transition-colors hover:text-star"
+              className="relative transition-colors after:absolute after:-inset-2 after:content-[''] hover:text-star"
             >
               <PlusIcon className="h-3.5 w-3.5" />
             </button>
-            <button onClick={() => setView({ k: 1, tx: 0, ty: 0 })} aria-label="重置视图" className="transition-colors hover:text-star">
+            <button
+              onClick={() => setView({ k: 1, tx: 0, ty: 0 })}
+              aria-label="重置视图"
+              className="relative transition-colors after:absolute after:-inset-2 after:content-[''] hover:text-star"
+            >
               <MaximizeIcon className="h-3.5 w-3.5" />
             </button>
           </div>
@@ -307,6 +315,8 @@ export function GraphPage() {
                     }}
                     className="cursor-pointer"
                   >
+                    {/* 透明热区：小节点在移动端也可命中（触控目标 ≥44px 的画布侧实现） */}
+                    <circle r={Math.max(r + 10, 14)} fill="transparent" />
                     {active && <circle r={r + 3.5} fill="none" stroke="var(--accent)" strokeWidth={1} />}
                     {learnedSet.has(n.id) ? (
                       <circle r={r} fill={mutedColor(tone)} opacity={inFocus ? 1 : 0.12} />
@@ -314,7 +324,7 @@ export function GraphPage() {
                       <circle r={r} fill="none" stroke={mutedColor(tone)} strokeWidth={1.2} opacity={inFocus ? 1 : 0.12} />
                     )}
                     {showLabel && (
-                      <text y={r + 11} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.9}>
+                      <text y={r + 14} textAnchor="middle" fontSize={12} fill="var(--star)" opacity={0.9}>
                         {n.title}
                       </text>
                     )}
@@ -329,14 +339,23 @@ export function GraphPage() {
             </g>
           </svg>
 
-          {/* 详情侧栏（桌面）/ 底部抽屉（移动，样式简化为同组件） */}
+          {/* 详情：桌面右侧栏 / 移动底部抽屉（契约 §8） */}
           {selectedDetail && selectedPoint && (
-            <aside className="absolute right-0 top-0 h-full w-full max-w-xs overflow-y-auto border-l border-edge bg-panel p-5">
-              <button onClick={() => setSelectedNode(null)} className="float-right text-dim transition-colors hover:text-star" aria-label="关闭">
+            <aside
+              role="dialog"
+              aria-label="知识点详情"
+              className="absolute inset-x-0 bottom-0 max-h-[68%] overflow-y-auto border-t border-edge bg-panel p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] lg:inset-y-0 lg:left-auto lg:right-0 lg:max-h-full lg:w-full lg:max-w-xs lg:border-l lg:border-t-0 lg:pb-5"
+            >
+              <button
+                onClick={() => setSelectedNode(null)}
+                className="float-right -mr-3 -mt-3 grid h-11 w-11 place-items-center text-dim transition-colors hover:text-star"
+                aria-label="关闭"
+              >
                 <CloseIcon className="h-4 w-4" />
               </button>
-              <span className="text-xs text-dim">
-                <span style={{ color: selectedPoint.category.color }}>●</span> {selectedPoint.category.name}
+              <span className="inline-flex items-center gap-1.5 text-xs text-dim">
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: selectedPoint.category.color }} />
+                {selectedPoint.category.name}
               </span>
               <h2 className="font-display mt-2 text-lg">{selectedDetail.title}</h2>
               <p className="mt-1 font-mono text-xs text-dim">
