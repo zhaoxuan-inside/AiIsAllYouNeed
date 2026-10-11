@@ -35,8 +35,8 @@ describe('Shell 冒烟', () => {
   it('渲染主导航与顶栏', () => {
     renderWithRouter(<Shell />)
     expect(screen.getAllByText('AI 知识星图').length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: /知识图谱/ }).length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: /发展路线/ }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: /图谱/ }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: /路线/ }).length).toBeGreaterThan(0)
   })
 
   it('主题切换写入 data-theme', () => {

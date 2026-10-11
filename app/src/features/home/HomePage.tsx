@@ -53,7 +53,7 @@ export function HomePage() {
             >
               进入知识图谱
             </Link>
-            <Link to="/roadmap" className="rounded-lg border border-edge px-5 py-2.5 text-sm text-star hover:border-accent/60">
+            <Link to="/roadmap" className="inline-flex items-center px-2 py-2.5 text-sm text-dim underline-offset-4 hover:text-star hover:underline">
               查看发展路线
             </Link>
           </div>

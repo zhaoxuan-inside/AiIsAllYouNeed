@@ -103,6 +103,16 @@ body {
   }
 }
 
+/* Focus Mode（iA Writer 招牌）：仅当前段全亮，其余退灰 */
+.prose-focus p {
+  opacity: 0.25;
+  transition: opacity 0.2s ease;
+}
+.prose-focus p.prose-active,
+.prose-focus p:hover {
+  opacity: 1;
+}
+
 /* Markdown 正文排版（阅读核心） */
 .prose-knowledge {
   max-width: 38em;

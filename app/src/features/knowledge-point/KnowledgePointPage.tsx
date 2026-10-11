@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -40,11 +41,50 @@ function DepMiniGraph({ pointId }: { pointId: string }) {
   )
 }
 
+/**
+ * Focus Mode（iA Writer 招牌）：开启后除「当前段」外全部退灰。
+ * 当前段 = 视口中点最近的段落，随滚动移动；hover 也可临时点亮。
+ */
+function useFocusMode(enabled: boolean, containerRef: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    if (!enabled) return
+    const container = containerRef.current
+    if (!container) return
+    const paragraphs = Array.from(container.querySelectorAll<HTMLElement>('p'))
+    const markActive = () => {
+      const center = window.innerHeight / 2
+      let best: HTMLElement | null = null
+      let bestDist = Number.POSITIVE_INFINITY
+      for (const p of paragraphs) {
+        const r = p.getBoundingClientRect()
+        if (r.bottom < 0 || r.top > window.innerHeight) continue
+        const dist = Math.abs((r.top + r.bottom) / 2 - center)
+        if (dist < bestDist) {
+          bestDist = dist
+          best = p
+        }
+      }
+      for (const p of paragraphs) p.classList.toggle('prose-active', p === best)
+    }
+    markActive()
+    window.addEventListener('scroll', markActive, { passive: true })
+    window.addEventListener('resize', markActive)
+    return () => {
+      window.removeEventListener('scroll', markActive)
+      window.removeEventListener('resize', markActive)
+      for (const p of paragraphs) p.classList.remove('prose-active')
+    }
+  }, [enabled, containerRef])
+}
+
 /** 知识点详情：定义、解读、论文、依赖、相关、趋势、笔记与进度 */
 export function KnowledgePointPage() {
   const { pointId } = useParams()
   const kb = getKnowledgeBase()
   const point = pointId ? kb.pointById.get(pointId) : undefined
+  const [focusMode, setFocusMode] = useState(false)
+  const proseRef = useRef<HTMLDivElement>(null)
+  useFocusMode(focusMode, proseRef)
 
   const profile = useProfileStore((s) => s.profile)
   const toggleFavorite = useProfileStore((s) => s.toggleFavorite)
@@ -72,6 +112,15 @@ export function KnowledgePointPage() {
           <ImportanceStars value={point.importance} />
           <div className="ml-auto flex gap-2">
             <button
+              onClick={() => setFocusMode(!focusMode)}
+              aria-pressed={focusMode}
+              className={`rounded-lg px-3 py-1.5 text-xs transition-colors ${
+                focusMode ? 'bg-star text-void' : 'text-dim hover:text-star'
+              }`}
+            >
+              专注
+            </button>
+            <button
               onClick={() => setProgress(point.id, !read)}
               className={`rounded-lg border px-3 py-1.5 text-xs transition-colors ${
                 read ? 'border-accent bg-accent/10 text-accent' : 'border-edge text-dim hover:text-star'
@@ -97,7 +146,7 @@ export function KnowledgePointPage() {
         </p>
       </header>
 
-      <section className="prose-knowledge mt-6 text-sm">
+      <section ref={proseRef} className={`prose-knowledge mt-6 text-sm ${focusMode ? 'prose-focus' : ''}`}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{point.detail}</ReactMarkdown>
       </section>
 

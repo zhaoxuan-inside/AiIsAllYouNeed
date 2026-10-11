@@ -24,9 +24,6 @@ export function ImportanceStars({ value }: { value: number }) {
 export function EmptyState({ title, hint, action }: { title: string; hint?: string; action?: { to: string; label: string } }) {
   return (
     <div className="flex flex-col items-center gap-3 border-y border-edge px-8 py-14 text-center">
-      <span className="text-2xl text-faint" aria-hidden>
-        ✦
-      </span>
       <p className="text-sm text-dim">{title}</p>
       {hint && <p className="max-w-sm text-xs text-faint">{hint}</p>}
       {action && (
