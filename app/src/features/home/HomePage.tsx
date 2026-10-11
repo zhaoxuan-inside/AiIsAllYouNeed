@@ -32,7 +32,7 @@ export function HomePage() {
       <section className="relative -mx-4 -mt-6 px-6 pb-14 pt-14 lg:-mx-8 lg:px-8">
         <Constellation className="mb-10 h-24 w-full max-w-[880px] opacity-70" />
         <div className="mx-auto w-full max-w-[1120px]">
-          <h1 className="font-display text-3xl leading-snug text-star sm:text-4xl">
+          <h1 className="font-display text-3xl leading-snug text-star">
             把人工智能的知识
             <br />
             绘成一张可漫游的星图
@@ -87,33 +87,31 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 双列：最新 / 高影响力 */}
-      <section className="mt-10 grid gap-8 lg:grid-cols-2">
-        <div>
-          <div className="flex items-baseline justify-between">
-            <h2 className="font-display text-xl">最新收录</h2>
-            <Link to="/timeline" className="text-xs text-dim hover:text-accent">
-              全部时间线 →
-            </Link>
-          </div>
-          <div className="mt-3 space-y-4">
-            {latest.map(({ point, category }) => (
-              <KnowledgeCard key={point.id} point={point} category={category} />
-            ))}
-          </div>
+      {/* 最新收录 / 高影响力：单列文字流（iA 式） */}
+      <section className="mt-12">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-display text-xl">最新收录</h2>
+          <Link to="/timeline" className="text-xs text-dim hover:text-accent">
+            全部时间线 →
+          </Link>
         </div>
-        <div>
-          <div className="flex items-baseline justify-between">
-            <h2 className="font-display text-xl">高影响力</h2>
-            <Link to="/graph" className="text-xs text-dim hover:text-accent">
-              图谱视角 →
-            </Link>
-          </div>
-          <div className="mt-3 space-y-4">
-            {top.map(({ point, category }) => (
-              <KnowledgeCard key={point.id} point={point} category={category} />
-            ))}
-          </div>
+        <div className="mt-3 space-y-4">
+          {latest.map(({ point, category }) => (
+            <KnowledgeCard key={point.id} point={point} category={category} />
+          ))}
+        </div>
+      </section>
+      <section className="mt-12">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-display text-xl">高影响力</h2>
+          <Link to="/graph" className="text-xs text-dim hover:text-accent">
+            图谱视角 →
+          </Link>
+        </div>
+        <div className="mt-3 space-y-4">
+          {top.map(({ point, category }) => (
+            <KnowledgeCard key={point.id} point={point} category={category} />
+          ))}
         </div>
       </section>
     </div>

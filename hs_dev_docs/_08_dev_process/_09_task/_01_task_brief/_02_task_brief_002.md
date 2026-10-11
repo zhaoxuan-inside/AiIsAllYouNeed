@@ -60,3 +60,15 @@
 - **更新时间**：`2026-10-11T08:30:22Z`
 ---
 
+### 任务简述：ia-layout-audit
+- **标题**：iA 版式合规审查：单列流/矮顶栏/UI行高/字号收敛
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：iA 版式合规审查：单列流/矮顶栏/UI行高/字号收敛
+- **详情索引**：`_02_task_detail/_01_ia-layout-audit/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_ia-layout-audit/_00_context_pack.md`
+- **更新时间**：`2026-10-11T08:41:17Z`
+---
+

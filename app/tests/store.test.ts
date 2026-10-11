@@ -27,7 +27,7 @@ describe('本地档案（seam：用户系统信息只存本地）', () => {
     expect(useProfileStore.getState().profile.favorites).not.toContain('transformer')
 
     useProfileStore.getState().toggleFavorite('lstm')
-    const raw = localStorage.getItem('aiana.profile.v1')
+    const raw = localStorage.getItem('aiana.profile.v2')
     expect(raw).toContain('lstm')
   })
 

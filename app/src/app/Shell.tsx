@@ -36,7 +36,7 @@ export function Shell() {
   return (
     <div className="min-h-dvh bg-void text-star">
       <header className="sticky top-0 z-40 bg-void">
-        <div className="mx-auto flex h-14 max-w-[960px] items-center gap-5 px-4 lg:px-6">
+        <div className="mx-auto flex h-12 max-w-[960px] items-center gap-5 px-4 lg:px-6">
           <NavLink to="/" className="font-display text-base">
             AI 知识星图
           </NavLink>
