@@ -4,7 +4,7 @@ import type { Category, KnowledgePoint } from '@/backend'
 /** 领域徽章（iA 式）：彩色圆点承担领域标识，文字一律墨色，1px 发丝边 */
 export function CategoryBadge({ category }: { category: Category }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-[2px] border border-edge px-2 py-0.5 text-xs text-dim">
+    <span className="inline-flex items-center gap-1.5 text-xs text-dim">
       <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: category.color }} />
       {category.name}
     </span>
@@ -16,14 +16,14 @@ export function ImportanceStars({ value }: { value: number }) {
   return (
     <span className="inline-flex items-center gap-1 text-xs text-dim" title={`影响力 ${value}/5`}>
       <span className="font-mono">{value}</span>
-      <span aria-hidden className="text-accent">★</span>
+      <span aria-hidden>★</span>
     </span>
   )
 }
 
 export function EmptyState({ title, hint, action }: { title: string; hint?: string; action?: { to: string; label: string } }) {
   return (
-    <div className="flex flex-col items-center gap-3 border-y border-edge px-8 py-14 text-center">
+    <div className="flex flex-col items-center gap-3 px-8 py-14 text-center">
       <p className="text-sm text-dim">{title}</p>
       {hint && <p className="max-w-sm text-xs text-faint">{hint}</p>}
       {action && (
@@ -40,7 +40,7 @@ export function KnowledgeCard({ point, category }: { point: KnowledgePoint; cate
   return (
     <Link
       to={`/point/${point.id}`}
-      className="group block border-b border-edge py-4 transition-colors hover:bg-wash"
+      className="group block py-3 transition-colors hover:bg-wash"
     >
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="text-base font-bold text-star group-hover:text-accent">{point.title}</h3>

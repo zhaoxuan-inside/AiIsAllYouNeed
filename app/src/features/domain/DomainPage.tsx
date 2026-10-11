@@ -15,7 +15,7 @@ export function DomainPage() {
 
   return (
     <div className="rise-in">
-      <header className="border-b border-edge pb-6" style={{ borderLeft: `3px solid ${category.color}` }}>
+      <header className="pb-2" style={{ borderLeft: `3px solid ${category.color}` }}>
         <p className="text-xs text-dim">
           领域 · {category.nameEn}
         </p>
@@ -28,7 +28,7 @@ export function DomainPage() {
       </header>
 
       {trend && (
-      <section className="mt-6 border-y border-edge py-5">
+      <section className="mt-10">
         <p className="text-xs text-dim">发展趋势预测（编辑标注）</p>
         <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
         <ul className="mt-3 space-y-2">
@@ -47,7 +47,7 @@ export function DomainPage() {
 
       <section className="mt-8">
         <h2 className="font-display text-xl">知识脉络（按诞生年份）</h2>
-        <div className="mt-2">
+        <div className="mt-4 space-y-5">
           {points.map((p) => (
             <KnowledgeCard key={p.id} point={p} category={category} />
           ))}

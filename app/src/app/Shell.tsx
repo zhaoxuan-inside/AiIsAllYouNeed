@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { usePreferenceStore } from '@/backend/preference-store'
+import { useProfileStore } from '@/backend/profile-store'
 import { SearchOverlay } from '@/components/SearchOverlay'
 
 const NAV = [
@@ -15,6 +16,8 @@ const NAV = [
 export function Shell() {
   const theme = usePreferenceStore((s) => s.theme)
   const toggleTheme = usePreferenceStore((s) => s.toggleTheme)
+  const profileName = useProfileStore((s) => s.profile.name)
+  const profileColor = useProfileStore((s) => s.profile.color)
   const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
@@ -34,7 +37,7 @@ export function Shell() {
 
   return (
     <div className="min-h-dvh bg-void text-star">
-      <header className="sticky top-0 z-40 border-b border-edge bg-void">
+      <header className="sticky top-0 z-40 bg-void">
         <div className="mx-auto flex h-14 max-w-[960px] items-center gap-5 px-4 lg:px-6">
           <NavLink to="/" className="font-display text-base">
             AI 知识星图
@@ -69,6 +72,15 @@ export function Shell() {
             >
               {theme === 'night' ? '☾' : '☀'}
             </button>
+            <NavLink
+              to="/profile"
+              aria-label="本地档案"
+              title={`${profileName} · 本地档案`}
+              className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs text-accent-ink"
+              style={{ backgroundColor: profileColor }}
+            >
+              {profileName.slice(0, 1)}
+            </NavLink>
           </div>
         </div>
       </header>

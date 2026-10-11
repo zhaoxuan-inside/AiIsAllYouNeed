@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getTimelineView } from '@/backend/knowledge-service'
 import { useFilterStore } from '@/backend/filter-store'
@@ -12,22 +12,61 @@ const ERA_ANCHORS = [
   { year: 2022, label: '大模型时代' },
 ]
 
-/** 编年时间线：纵向轨道 + 时代锚点，按领域筛选 */
+/** 编年时间线：纵向轨道 + 时代锚点；正/倒序切换带 FLIP 位移动效 */
 export function TimelinePage() {
   const selected = useFilterStore((s) => s.selectedCategories)
   const toggleCategory = useFilterStore((s) => s.toggleCategory)
   const clearCategories = useFilterStore((s) => s.clearCategories)
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
-  const { categories, entries: timeline } = useMemo(() => getTimelineView(selected), [selected])
+  const { categories, entries } = useMemo(() => getTimelineView(selected), [selected])
+  const timeline = useMemo(
+    () => (order === 'asc' ? entries : [...entries].reverse()),
+    [entries, order],
+  )
   const categoryById = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories])
+
+  // FLIP：切换顺序时记录各年份块旧位置，渲染后从旧位置平滑滑到新位置
+  const rowRefs = useRef(new Map<number, HTMLElement | null>())
+  const prevRects = useRef(new Map<number, DOMRect>())
+  const toggleOrder = () => {
+    for (const [key, el] of rowRefs.current) {
+      if (el) prevRects.current.set(key, el.getBoundingClientRect())
+    }
+    setOrder((o) => (o === 'asc' ? 'desc' : 'asc'))
+  }
+  useLayoutEffect(() => {
+    if (prevRects.current.size === 0) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    for (const [key, el] of rowRefs.current) {
+      const prev = prevRects.current.get(key)
+      if (!el || !prev) continue
+      const dy = prev.top - el.getBoundingClientRect().top
+      if (Math.abs(dy) < 1 || reduced) continue
+      el.style.transition = 'none'
+      el.style.transform = `translateY(${dy}px)`
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)'
+        el.style.transform = ''
+      })
+    }
+    prevRects.current.clear()
+  }, [order])
 
   return (
     <div className="rise-in">
       <h1 className="font-display text-2xl">时间线</h1>
       <p className="mt-1 text-sm text-dim">AI 知识的编年长河：每个节点是一个知识点的诞生时刻。</p>
 
-      <div className="mt-4">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <CategoryFilter categories={categories} selected={selected} onToggle={toggleCategory} onClear={clearCategories} />
+        <button
+          onClick={toggleOrder}
+          className="text-xs text-dim transition-colors hover:text-star"
+          aria-label={order === 'asc' ? '切换为倒序' : '切换为正序'}
+        >
+          {order === 'asc' ? '最早在前 ↓' : '最新在前 ↑'}
+        </button>
       </div>
 
       <div className="relative mt-8">
@@ -37,7 +76,13 @@ export function TimelinePage() {
         {timeline.map((entry) => {
           const anchor = ERA_ANCHORS.find((a) => a.year === entry.year)
           return (
-            <section key={entry.year} className="relative pb-10">
+            <section
+              key={entry.year}
+              ref={(el) => {
+                rowRefs.current.set(entry.year, el)
+              }}
+              className="relative pb-10"
+            >
               <div className="flex items-center gap-4">
                 <span className="w-[40px] shrink-0 text-right font-mono text-sm text-star sm:w-[52px] sm:text-base">{entry.year}</span>
                 <span
@@ -55,7 +100,7 @@ export function TimelinePage() {
                     <Link
                       key={p.id}
                       to={`/point/${p.id}`}
-                      className="group flex items-baseline gap-3 rounded-lg border border-transparent px-3 py-2 transition-colors hover:bg-wash"
+                      className="group flex items-baseline gap-3 rounded-[2px] px-3 py-2 transition-colors hover:bg-wash"
                     >
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: category.color }} aria-hidden />
                       <span className="text-sm text-star group-hover:text-accent">{p.title}</span>

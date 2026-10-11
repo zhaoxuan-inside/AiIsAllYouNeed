@@ -29,7 +29,7 @@ export function HomePage() {
   return (
     <div className="rise-in">
       {/* 主视觉：文字优先，星座线稿收于标题上方 */}
-      <section className="relative -mx-4 -mt-6 border-b border-edge px-6 pb-12 pt-14 lg:-mx-8 lg:px-8">
+      <section className="relative -mx-4 -mt-6 px-6 pb-14 pt-14 lg:-mx-8 lg:px-8">
         <Constellation className="mb-10 h-24 w-full max-w-[880px] opacity-70" />
         <div className="mx-auto w-full max-w-[1120px]">
           <p className="text-xs text-dim">AIS ALL YOU NEED · 知识即星空</p>
@@ -57,14 +57,14 @@ export function HomePage() {
       </section>
 
       {/* 统计行：大数字 + 灰标签，发丝线分栏 */}
-      <section className="mt-10 grid grid-cols-2 border-b border-edge sm:grid-cols-4">
+      <section className="mt-12 grid grid-cols-2 gap-y-8 sm:grid-cols-4">
         {[
           { label: '知识点', value: stats.points },
           { label: '领域', value: stats.categories },
           { label: '关键论文', value: stats.papers },
           { label: '年份跨度', value: stats.yearSpan },
-        ].map((item, i) => (
-          <div key={item.label} className={`py-5 pr-6 ${i > 0 ? 'sm:border-l sm:border-edge sm:pl-6' : ''}`}>
+        ].map((item) => (
+          <div key={item.label} className="pr-6">
             <div className="font-mono text-2xl text-star">{item.value}</div>
             <div className="mt-1 text-xs text-dim">{item.label}</div>
           </div>
@@ -80,7 +80,7 @@ export function HomePage() {
               <Link
                 key={c.id}
                 to={`/domain/${c.id}`}
-                className="group flex items-baseline gap-4 border-b border-edge py-4 transition-colors hover:bg-wash"
+                className="group flex items-baseline gap-4 rounded-[2px] px-2 py-3 transition-colors hover:bg-wash"
               >
                 <span className="h-2 w-2 shrink-0 self-center rounded-full" style={{ backgroundColor: c.color }} />
                 <span className="shrink-0 text-base font-bold text-star group-hover:text-accent">{c.name}</span>
@@ -102,7 +102,7 @@ export function HomePage() {
               全部时间线 →
             </Link>
           </div>
-          <div className="mt-2">
+          <div className="mt-3 space-y-4">
             {latest.map(({ point, category }) => (
               <KnowledgeCard key={point.id} point={point} category={category} />
             ))}
@@ -115,7 +115,7 @@ export function HomePage() {
               图谱视角 →
             </Link>
           </div>
-          <div className="mt-2">
+          <div className="mt-3 space-y-4">
             {top.map(({ point, category }) => (
               <KnowledgeCard key={point.id} point={point} category={category} />
             ))}

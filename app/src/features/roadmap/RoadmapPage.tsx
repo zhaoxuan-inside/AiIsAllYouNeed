@@ -17,7 +17,7 @@ export function RoadmapPage() {
       <p className="mt-1 text-sm text-dim">每个领域的学习与演化路径：从基础概念到前沿突破，按依赖顺序编排。</p>
 
       {/* 领域 Tab */}
-      <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-b border-edge pb-3">
+      <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
         {categories.map((c) => (
           <button
             key={c.id}
@@ -34,7 +34,7 @@ export function RoadmapPage() {
 
       {/* 领域趋势（发展轨迹预测） */}
       {trend && (
-        <section className="mt-6 border-y border-edge py-5">
+        <section className="mt-10">
           <p className="text-xs text-dim">发展趋势预测（编辑标注）</p>
           <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -49,15 +49,15 @@ export function RoadmapPage() {
       )}
 
       {roadmap.orderViolations.length > 0 && (
-        <p className="mt-4 border-l-2 border-accent pl-3 text-xs text-accent">
+        <p className="mt-4 text-xs text-accent">
           编辑提示：{roadmap.orderViolations.join('；')}
         </p>
       )}
 
       {/* 阶段泳道 */}
-      <div className="mt-6 grid gap-x-8 gap-y-6 lg:grid-cols-3">
+      <div className="mt-10 grid gap-x-10 gap-y-8 lg:grid-cols-3">
         {roadmap.stages.map((stage, stageIdx) => (
-          <section key={stage.name} className="border-t-2 border-star pt-3">
+          <section key={stage.name}>
             <div className="flex items-baseline justify-between">
               <h2 className="font-display text-base">
                 <span className="mr-2 font-mono text-dim">{stageIdx + 1}</span>

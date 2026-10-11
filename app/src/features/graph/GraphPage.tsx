@@ -35,6 +35,7 @@ export function GraphPage() {
   const clearCategories = useFilterStore((s) => s.clearCategories)
   const [edgeKind, setEdgeKind] = useState<'prerequisite' | 'related' | 'all'>('prerequisite')
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
 
   const { categories, graph } = useMemo(() => getGraphView(selected), [selected])
   const categoryColorById = useMemo(
@@ -124,7 +125,7 @@ export function GraphPage() {
             实线箭头 = 依赖（先学前置）· 虚线 = 相关 · 节点大小 = 影响力 · 拖拽节点、滚轮缩放
           </p>
         </div>
-        <div className="flex gap-1 rounded-lg border border-edge p-1 text-xs">
+        <div className="flex items-center gap-4 text-xs">
           {(
             [
               ['prerequisite', '依赖'],
@@ -135,7 +136,7 @@ export function GraphPage() {
             <button
               key={kind}
               onClick={() => setEdgeKind(kind)}
-              className={`rounded px-3 py-1.5 transition-colors ${edgeKind === kind ? 'bg-accent text-accent-ink' : 'text-dim hover:text-star'}`}
+              className={`transition-colors ${edgeKind === kind ? 'font-bold text-star' : 'text-dim hover:text-star'}`}
             >
               {label}
             </button>
@@ -154,7 +155,7 @@ export function GraphPage() {
       ) : (
         <div
           ref={containerRef}
-          className="relative mt-4 border-y border-edge"
+          className="relative mt-6"
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onWheel={(e) => {
@@ -177,30 +178,34 @@ export function GraphPage() {
                     x2={b.x}
                     y2={b.y}
                     stroke={related ? 'var(--star-dim)' : 'var(--star-dim)'}
-                    strokeWidth={related ? 0.7 : 1.1}
+                    strokeWidth={related ? 0.6 : 1}
                     strokeDasharray={related ? '3 4' : undefined}
-                    opacity={related ? 0.35 : 0.55}
+                    opacity={related ? 0.15 : 0.3}
                     markerEnd={related ? undefined : 'url(#arrow)'}
                   />
                 )
               })}
               {nodes.map((n) => {
                 const color = categoryColorById.get(n.categoryId)!
-                const r = 4 + n.importance * 2
+                const r = 2.5 + n.importance * 1.2
                 const active = selectedNode === n.id
+                const hovered = hoveredNode === n.id
                 return (
                   <g
                     key={n.id}
                     transform={`translate(${n.x} ${n.y})`}
                     onPointerDown={onNodePointerDown(n.id)}
+                    onPointerEnter={() => setHoveredNode(n.id)}
+                    onPointerLeave={() => setHoveredNode((h) => (h === n.id ? null : h))}
                     onClick={() => {
                       if (!dragRef.current.moved) setSelectedNode(active ? null : n.id)
                     }}
                     className="cursor-pointer"
                   >
-                    <circle r={r} fill={color} opacity={active ? 1 : 0.85} className={active ? 'node-glow' : undefined} style={{ color }} />
-                    {(active || n.importance >= 4 || zoom > 1.4) && (
-                      <text y={r + 12} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.85}>
+                    {active && <circle r={r + 3.5} fill="none" stroke="var(--accent)" strokeWidth={1} />}
+                    <circle r={r} fill={color} opacity={active || hovered ? 1 : 0.7} />
+                    {(active || hovered) && (
+                      <text y={r + 12} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.9}>
                         {n.title}
                       </text>
                     )}

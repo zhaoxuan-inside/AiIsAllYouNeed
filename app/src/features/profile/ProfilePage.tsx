@@ -30,7 +30,7 @@ export function ProfilePage() {
 
   return (
     <div className="rise-in">
-      <header className="flex flex-wrap items-center gap-4 border-b border-edge pb-6">
+      <header className="flex flex-wrap items-center gap-4 pb-2">
         <span
           className="grid h-14 w-14 place-items-center rounded-full text-xl text-accent-ink"
           style={{ backgroundColor: profile.color }}
@@ -75,7 +75,7 @@ export function ProfilePage() {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`flex-1 rounded-md px-3 py-2 transition-colors ${tab === key ? 'bg-accent text-accent-ink' : 'text-dim hover:text-star'}`}
+            className={`flex-1 border-b-2 pb-2 text-center text-sm transition-colors ${tab === key ? 'border-accent font-bold text-star' : 'border-transparent text-dim hover:text-star'}`}
           >
             {label}
           </button>
@@ -87,7 +87,7 @@ export function ProfilePage() {
           (favorites.length === 0 ? (
             <EmptyState title="还没有收藏" hint="在知识点详情页点「☆ 收藏」即可保存到这里。" action={{ to: '/graph', label: '去图谱探索' }} />
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {favorites.map((p) => (
                 <PointRow key={p.point.id} id={p.point.id} title={p.point.title} year={p.point.year} onRemove={() => toggleFavorite(p.point.id)} />
               ))}
@@ -98,7 +98,7 @@ export function ProfilePage() {
           (progressList.length === 0 ? (
             <EmptyState title="还没有已读记录" hint="在详情页点「标记已读」记录你的学习轨迹。" action={{ to: '/roadmap', label: '从发展路线开始' }} />
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {progressList.map((p) => (
                 <PointRow key={p.point.id} id={p.point.id} title={p.point.title} year={p.point.year} />
               ))}
@@ -109,9 +109,9 @@ export function ProfilePage() {
           (notes.length === 0 ? (
             <EmptyState title="还没有笔记" hint="在知识点详情页底部写下你的理解。" action={{ to: '/timeline', label: '去时间线漫游' }} />
           ) : (
-            <ul className="space-y-3">
+            <ul className="mt-2 space-y-5">
               {notes.map(({ point, text }) => (
-                <li key={point.point.id} className="border-b border-edge py-4">
+                <li key={point.point.id} className="py-3">
                   <Link to={`/point/${point.point.id}`} className="text-sm text-star hover:text-accent">
                     {point.point.title}
                   </Link>
@@ -127,7 +127,7 @@ export function ProfilePage() {
 
 function PointRow({ id, title, year, onRemove }: { id: string; title: string; year: number; onRemove?: () => void }) {
   return (
-    <li className="flex items-center gap-3 border-b border-edge py-3">
+    <li className="flex items-center gap-3 py-2.5">
       <span className="font-mono text-xs text-dim">{year}</span>
       <Link to={`/point/${id}`} className="text-sm text-star hover:text-accent">
         {title}

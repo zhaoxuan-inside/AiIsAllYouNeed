@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { getCategoryById, getPointDetailView } from '@/backend/knowledge-service'
+import { getPointDetailView } from '@/backend/knowledge-service'
 import { useProfileStore } from '@/backend/profile-store'
 import { CategoryBadge, EmptyState, ImportanceStars } from '@/components/ui'
 
@@ -105,16 +105,16 @@ export function KnowledgePointPage() {
             <button
               onClick={() => setFocusMode(!focusMode)}
               aria-pressed={focusMode}
-              className={`rounded-lg px-3 py-1.5 text-xs transition-colors ${
-                focusMode ? 'bg-star text-void' : 'text-dim hover:text-star'
+              className={`px-1 py-1.5 text-xs transition-colors ${
+                focusMode ? 'font-bold text-star underline underline-offset-4 decoration-accent' : 'text-dim hover:text-star'
               }`}
             >
               专注
             </button>
             <button
               onClick={() => setProgress(point.id, !read)}
-              className={`rounded-lg border px-3 py-1.5 text-xs transition-colors ${
-                read ? 'border-accent bg-accent/10 text-accent' : 'border-edge text-dim hover:text-star'
+              className={`px-1 py-1.5 text-xs transition-colors ${
+                read ? 'font-bold text-star' : 'text-dim hover:text-star'
               }`}
             >
               {read ? '✓ 已读' : '标记已读'}
@@ -122,8 +122,8 @@ export function KnowledgePointPage() {
             <button
               onClick={() => toggleFavorite(point.id)}
               aria-label={favorited ? '取消收藏' : '收藏'}
-              className={`rounded-lg border px-3 py-1.5 text-xs transition-colors ${
-                favorited ? 'border-accent bg-accent/10 text-accent' : 'border-edge text-dim hover:text-star'
+              className={`px-1 py-1.5 text-xs transition-colors ${
+                favorited ? 'font-bold text-star' : 'text-dim hover:text-star'
               }`}
             >
               {favorited ? '★ 已收藏' : '☆ 收藏'}
@@ -132,9 +132,7 @@ export function KnowledgePointPage() {
         </div>
         <h1 className="font-display mt-3 text-3xl leading-snug">{point.title}</h1>
         {point.aliases.length > 0 && <p className="mt-1 text-xs text-dim">别名：{point.aliases.join(' · ')}</p>}
-        <p className="mt-4 border-l-2 pl-4 text-base leading-relaxed text-star" style={{ borderColor: category.color }}>
-          {point.summary}
-        </p>
+        <p className="mt-5 text-lg leading-relaxed text-star">{point.summary}</p>
       </header>
 
       <section ref={proseRef} className={`prose-knowledge mt-6 text-sm ${focusMode ? 'prose-focus' : ''}`}>
@@ -144,9 +142,9 @@ export function KnowledgePointPage() {
       {papers.length > 0 && (
         <section className="mt-8">
           <h2 className="font-display text-base">关键论文</h2>
-          <ul>
+          <ul className="mt-2">
             {papers.map((paper) => (
-              <li key={paper.id} className="border-b border-edge py-3 text-sm">
+              <li key={paper.id} className="py-2 text-sm">
                 <span className="text-star">{paper.title}</span>
                 <span className="ml-2 font-mono text-xs text-dim">
                   {paper.authors.slice(0, 2).join(', ')}
@@ -164,7 +162,7 @@ export function KnowledgePointPage() {
         </section>
       )}
 
-      <section className="mt-10 border-y border-edge py-5">
+      <section className="mt-12">
         <h2 className="font-display text-base">依赖关系</h2>
         <p className="mb-4 mt-1 text-xs text-dim">左：需要先懂的前置 · 右：建立在其上的衍生/相关</p>
         <DepMiniGraph color={category.color} prereqs={prerequisites} derived={derived} />
@@ -176,23 +174,21 @@ export function KnowledgePointPage() {
       {point.related.length > 0 && (
         <section className="mt-8">
           <h2 className="font-display text-base">相关知识点</h2>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {relatedPoints.map((rel) => (
-              <Link
-                key={rel.id}
-                to={`/point/${rel.id}`}
-                className="rounded-full border border-edge px-3 py-1.5 text-xs text-star transition-colors hover:border-accent/60"
-                style={{ borderLeft: `2px solid ${getCategoryById(rel.categoryId)!.color}` }}
-              >
-                {rel.title}
-              </Link>
+          <p className="mt-2 leading-loose">
+            {relatedPoints.map((rel, i) => (
+              <span key={rel.id}>
+                {i > 0 && <span className="text-faint"> · </span>}
+                <Link to={`/point/${rel.id}`} className="text-sm text-star underline-offset-4 hover:text-accent hover:underline">
+                  {rel.title}
+                </Link>
+              </span>
             ))}
-          </div>
+          </p>
         </section>
       )}
 
       {point.trend && (
-        <section className="mt-10 border-l-2 border-accent pl-4">
+        <section className="mt-12">
           <p className="text-xs text-accent">发展方向（编辑标注）</p>
           <p className="mt-1 text-sm leading-relaxed text-star">{point.trend}</p>
           {trend && (

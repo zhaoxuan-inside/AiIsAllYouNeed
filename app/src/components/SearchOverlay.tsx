@@ -51,7 +51,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
           placeholder="搜索知识点：注意力 / Transformer / 梯度下降…"
           className="w-full bg-transparent px-5 py-4 text-base text-star outline-none placeholder:text-dim/60"
         />
-        <div className="border-t border-edge">
+        <div className="mt-1">
           {text.trim() === '' && (
             <div className="px-5 py-4 text-xs text-dim">试试：注意力机制、LSTM、扩散模型、规模法则（回车跳第一个结果）</div>
           )}
@@ -64,7 +64,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
             <button
               key={hit.id}
               onClick={() => go(hit.id)}
-              className="flex w-full items-baseline justify-between gap-4 border-t border-edge px-5 py-3 text-left first:border-t-0 hover:bg-void/40"
+              className="flex w-full items-baseline justify-between gap-4 px-5 py-2.5 text-left transition-colors hover:bg-wash"
             >
               <span>
                 <span className="text-sm" style={{ color: hit.categoryColor }}>

@@ -79,11 +79,6 @@ body {
   opacity: 0.8;
 }
 
-/* 图谱节点 hover（去 glow，改为透明度强调） */
-.node-glow {
-  opacity: 1;
-}
-
 /* 页面级一次性入场（轻） */
 @keyframes rise-in {
   from {
