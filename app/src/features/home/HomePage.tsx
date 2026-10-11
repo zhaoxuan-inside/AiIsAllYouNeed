@@ -1,87 +1,26 @@
-import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { getKnowledgeBase, getFullTimeline } from '@/data/knowledge-context'
-import { KnowledgeCard, domainTextColor } from '@/components/ui'
+import { KnowledgeCard } from '@/components/ui'
 
-/** 纸上星域主视觉：墨色星辰 + 领域色十字星芒，随主题（纸墨/星夜）自适应重绘。 */
-const DOMAIN_COLORS = ['#5B8DEF', '#3FBEA8', '#E0705A', '#9D7BE8', '#E5B85C', '#D46A9E']
-
-function Starfield() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')!
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let raf = 0
-    let baseColor = '#1f2a52'
-    let alphaScale = 0.4
-
-    const syncTheme = () => {
-      const style = getComputedStyle(document.documentElement)
-      baseColor = style.getPropertyValue('--star').trim() || '#1f2a52'
-      // 暗色主题星辰更亮更明显，纸面主题更淡更安静
-      alphaScale = document.documentElement.dataset.theme === 'night' ? 0.55 : 0.32
-    }
-    syncTheme()
-
-    // 主题切换时重读颜色
-    const observer = new MutationObserver(syncTheme)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
-
-    let w = 0
-    let h = 0
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      w = canvas.clientWidth
-      h = canvas.clientHeight
-      canvas.width = w * dpr
-      canvas.height = h * dpr
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    }
-    resize()
-    window.addEventListener('resize', resize)
-
-    const stars = Array.from({ length: 110 }, () => ({
-      x: Math.random(),
-      y: Math.random(),
-      r: Math.random() * 1.1 + 0.5,
-      spark: Math.random() < 0.1,
-      color: Math.random() < 0.14 ? DOMAIN_COLORS[Math.floor(Math.random() * DOMAIN_COLORS.length)] : null,
-      phase: Math.random() * Math.PI * 2,
-    }))
-
-    const draw = (t: number) => {
-      ctx.clearRect(0, 0, w, h)
-      for (const s of stars) {
-        const twinkle = reduced ? 0.7 : 0.55 + 0.45 * Math.sin(t * 0.001 + s.phase)
-        const color = s.color ?? baseColor
-        ctx.globalAlpha = Math.min(1, twinkle * alphaScale * (s.spark ? 1.6 : 1))
-        ctx.fillStyle = color
-        ctx.beginPath()
-        ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2)
-        ctx.fill()
-        if (s.spark) {
-          // 细十字星芒
-          const x = s.x * w
-          const y = s.y * h
-          ctx.fillRect(x - s.r * 3, y - 0.5, s.r * 6, 1)
-          ctx.fillRect(x - 0.5, y - s.r * 3, 1, s.r * 6)
-        }
-      }
-      ctx.globalAlpha = 1
-      if (!reduced) raf = requestAnimationFrame(draw)
-    }
-    raf = requestAnimationFrame(draw)
-    return () => {
-      cancelAnimationFrame(raf)
-      observer.disconnect()
-      window.removeEventListener('resize', resize)
-    }
-  }, [])
-
-  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
+/** iA 式细线星座：静态 SVG 线稿，墨色极淡，不与文字争夺注意力 */
+function Constellation({ className }: { className?: string }) {
+  const nodes = [
+    [80, 150, '#5B8DEF'], [190, 90, '#1A1A1A'], [300, 160, '#3FBEA8'], [420, 70, '#1A1A1A'],
+    [520, 140, '#E0705A'], [640, 60, '#1A1A1A'], [760, 130, '#9D7BE8'], [880, 80, '#1A1A1A'],
+    [960, 150, '#D46A9E'],
+  ] as const
+  const links = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
+  return (
+    <svg viewBox="0 0 1040 220" className={className} aria-hidden preserveAspectRatio="xMidYMid meet">
+      {links.map(([a, b]) => (
+        <line key={`${a}-${b}`} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]}
+          stroke="var(--panel-edge)" strokeWidth="1" />
+      ))}
+      {nodes.map(([x, y, c], i) => (
+        <circle key={i} cx={x} cy={y} r={i % 3 === 0 ? 4 : 2.5} fill={c} opacity={i % 3 === 0 ? 0.85 : 0.4} />
+      ))}
+    </svg>
+  )
 }
 
 export function HomePage() {
@@ -93,10 +32,10 @@ export function HomePage() {
 
   return (
     <div className="rise-in">
-      {/* 主视觉区（占首屏 55vh） */}
-      <section className="relative -mx-4 -mt-6 flex h-[55vh] min-h-[320px] items-center overflow-hidden lg:-mx-8">
-        <Starfield />
-        <div className="relative z-10 mx-auto w-full max-w-[1120px] px-6">
+      {/* 主视觉：文字优先，星座线稿收于标题上方 */}
+      <section className="relative -mx-4 -mt-6 border-b border-edge px-6 pb-12 pt-14 lg:-mx-8 lg:px-8">
+        <Constellation className="mb-10 h-24 w-full max-w-[880px] opacity-70" />
+        <div className="mx-auto w-full max-w-[1120px]">
           <p className="text-xs text-dim">AIS ALL YOU NEED · 知识即星空</p>
           <h1 className="font-display mt-3 text-3xl leading-snug text-star sm:text-4xl">
             把人工智能的知识
@@ -114,51 +53,45 @@ export function HomePage() {
             >
               进入知识图谱
             </Link>
-            <Link to="/roadmap" className="rounded-lg border border-edge px-5 py-2.5 text-sm text-star hover:border-gold/60">
+            <Link to="/roadmap" className="rounded-lg border border-edge px-5 py-2.5 text-sm text-star hover:border-accent/60">
               查看发展路线
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 统计条 */}
-      <section className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] pixel-shadow border border-edge bg-edge sm:grid-cols-4">
+      {/* 统计行：大数字 + 灰标签，发丝线分栏 */}
+      <section className="mt-10 grid grid-cols-2 border-b border-edge sm:grid-cols-4">
         {[
           { label: '知识点', value: kb.points.length },
           { label: '领域', value: kb.categories.length },
           { label: '关键论文', value: kb.papers.length },
           { label: '年份跨度', value: `${years[0]}–${years.at(-1)}` },
-        ].map((item) => (
-          <div key={item.label} className="bg-panel px-5 py-4">
-            <div className="font-mono text-xl text-star">{item.value}</div>
-            <div className="mt-0.5 text-xs text-dim">{item.label}</div>
+        ].map((item, i) => (
+          <div key={item.label} className={`py-5 pr-6 ${i > 0 ? 'sm:border-l sm:border-edge sm:pl-6' : ''}`}>
+            <div className="font-mono text-2xl text-star">{item.value}</div>
+            <div className="mt-1 text-xs text-dim">{item.label}</div>
           </div>
         ))}
       </section>
 
-      {/* 领域入口 */}
-      <section className="mt-10">
+      {/* 领域入口：iA 式列表行 */}
+      <section className="mt-12">
         <h2 className="font-display text-xl">六大领域</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-3">
           {kb.categories.map((c) => {
             const count = kb.points.filter((p) => p.categoryId === c.id).length
             return (
               <Link
                 key={c.id}
                 to={`/domain/${c.id}`}
-                className="group rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-5"
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${c.color}66`)}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = '')}
+                className="group flex items-baseline gap-4 border-b border-edge py-4 transition-colors hover:bg-wash"
               >
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 text-sm" style={{ color: domainTextColor(c.color) }}>
-                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c.color }} />
-                    {c.name}
-                  </span>
-                  <span className="font-mono text-xs text-dim">{count}</span>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-dim">{c.description}</p>
-                <p className="mt-1 text-[11px] text-dim/60">{c.nameEn}</p>
+                <span className="h-2 w-2 shrink-0 self-center rounded-full" style={{ backgroundColor: c.color }} />
+                <span className="shrink-0 text-base font-bold text-star group-hover:text-accent">{c.name}</span>
+                <span className="shrink-0 text-xs text-faint">{c.nameEn}</span>
+                <span className="truncate text-sm text-dim">{c.description}</span>
+                <span className="ml-auto shrink-0 font-mono text-xs text-faint">{count}</span>
               </Link>
             )
           })}
@@ -170,11 +103,11 @@ export function HomePage() {
         <div>
           <div className="flex items-baseline justify-between">
             <h2 className="font-display text-xl">最新收录</h2>
-            <Link to="/timeline" className="text-xs text-dim hover:text-gold">
+            <Link to="/timeline" className="text-xs text-dim hover:text-accent">
               全部时间线 →
             </Link>
           </div>
-          <div className="mt-4 grid gap-3">
+          <div className="mt-2">
             {latest.map((p) => (
               <KnowledgeCard key={p.id} point={p} category={kb.categoryById.get(p.categoryId)!} />
             ))}
@@ -183,11 +116,11 @@ export function HomePage() {
         <div>
           <div className="flex items-baseline justify-between">
             <h2 className="font-display text-xl">高影响力</h2>
-            <Link to="/graph" className="text-xs text-dim hover:text-gold">
+            <Link to="/graph" className="text-xs text-dim hover:text-accent">
               图谱视角 →
             </Link>
           </div>
-          <div className="mt-4 grid gap-3">
+          <div className="mt-2">
             {top.map((p) => (
               <KnowledgeCard key={p.id} point={p} category={kb.categoryById.get(p.categoryId)!} />
             ))}

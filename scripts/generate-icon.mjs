@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * 生成 Tauri 图标源图（1024×1024 PNG，纯 Node 实现，无图像依赖）。
- * v3 纸墨文库：暖纸底 + 墨蓝星座（圆点连线）+ 琥珀主星 + 领域色点缀。
+ * v4 iA 极简：纯白底 + 墨黑细线星座 + 蓝色主星 + 领域色点缀。
  */
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { deflateSync } from 'node:zlib'
@@ -11,9 +11,9 @@ import { fileURLToPath } from 'node:url'
 const SIZE = 1024
 const px = Buffer.alloc(SIZE * SIZE * 4)
 
-const PAPER = [250, 248, 242]
-const INK = [31, 42, 82]
-const GOLD = [184, 134, 47]
+const PAPER = [255, 255, 255]
+const INK = [26, 26, 26]
+const ACCENT = [11, 147, 246]
 const DOMAIN = [
   [91, 141, 239],
   [63, 190, 168],
@@ -74,9 +74,9 @@ for (const [x, y, r, c] of nodes) dot(x, y, r, c)
 // 琥珀主星（四角星芒）
 const cx = 300
 const cy = 300
-dot(cx, cy, 30, GOLD)
-line(cx - 110, cy, cx + 110, cy, 8, GOLD, 0.75)
-line(cx, cy - 110, cx, cy + 110, 8, GOLD, 0.75)
+dot(cx, cy, 30, ACCENT)
+line(cx - 110, cy, cx + 110, cy, 8, ACCENT, 0.75)
+line(cx, cy - 110, cx, cy + 110, 8, ACCENT, 0.75)
 dot(cx, cy, 12, [250, 248, 242])
 
 // 稀疏墨色微星
@@ -125,4 +125,4 @@ const png = Buffer.concat([
 const out = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'app', 'src-tauri', 'icons')
 mkdirSync(out, { recursive: true })
 writeFileSync(join(out, 'icon-source.png'), png)
-console.log(`[icon] paper-ink icon → ${join(out, 'icon-source.png')} (${png.length} bytes)`)
+console.log(`[icon] ia-minimal icon → ${join(out, 'icon-source.png')} (${png.length} bytes)`)

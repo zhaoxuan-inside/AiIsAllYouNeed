@@ -36,3 +36,15 @@
 - **更新时间**：`2026-10-11T05:23:00Z`
 ---
 
+### 任务简述：ia-writer-restyle
+- **标题**：视觉风格 v4：对标 iA Writer（一族字体/近单色/零阴影/发丝线/无卡片）
+- **change_size**：`M`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：视觉风格 v4：对标 iA Writer（一族字体/近单色/零阴影/发丝线/无卡片）
+- **详情索引**：`_02_task_detail/_01_ia-writer-restyle/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_ia-writer-restyle/_00_context_pack.md`
+- **更新时间**：`2026-10-11T05:39:46Z`
+---
+

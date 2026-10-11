@@ -1,33 +1,31 @@
 @import "tailwindcss";
 
-/* ===== 主题令牌 v3「纸墨文库」（DESIGN.md · 纸墨为默认阅读主题，星夜为深色可选） ===== */
+/* ===== 主题令牌 v4「iA 极简文库」（对标 iA Writer 设计语言：一族字体 · 近单色 · 零阴影 · 发丝线 · 单蓝强调） ===== */
 :root,
 :root[data-theme='paper'] {
-  --void: #faf8f2;
+  --void: #ffffff;
   --panel: #ffffff;
-  --panel-edge: #e6e1d4;
-  --star: #1f2a52;
-  --star-dim: #6b7290;
-  --gold: #b8862f;
-  --gold-ink: #ffffff;
-  --shadow-ink: rgba(31, 42, 82, 0.1);
-  --overlay: rgba(250, 248, 242, 0.88);
-  --domain-mix-target: #1f2a52;
-  --hero-wash: linear-gradient(180deg, rgba(184, 134, 47, 0.05), transparent 70%);
+  --panel-edge: #e4e4e1;
+  --star: #1a1a1a;
+  --star-dim: #6b6b6b;
+  --star-faint: #9e9e9e;
+  --accent: #0b93f6;
+  --accent-ink: #ffffff;
+  --hover-wash: #f6f6f4;
+  --overlay: rgba(255, 255, 255, 0.92);
 }
 
 :root[data-theme='night'] {
-  --void: #0a0e1f;
-  --panel: #141b33;
-  --panel-edge: #232c4d;
-  --star: #e9edf8;
-  --star-dim: #98a2c3;
-  --gold: #e5b85c;
-  --gold-ink: #0a0e1f;
-  --shadow-ink: rgba(0, 0, 0, 0.4);
-  --overlay: rgba(10, 14, 31, 0.8);
-  --domain-mix-target: #e9edf8;
-  --hero-wash: linear-gradient(180deg, rgba(229, 184, 92, 0.04), transparent 70%);
+  --void: #1e1e1e;
+  --panel: #1e1e1e;
+  --panel-edge: #383838;
+  --star: #d6d6d6;
+  --star-dim: #9e9e9e;
+  --star-faint: #6b6b6b;
+  --accent: #4da3ff;
+  --accent-ink: #0b0b0b;
+  --hover-wash: #262626;
+  --overlay: rgba(30, 30, 30, 0.92);
 }
 
 @theme inline {
@@ -36,23 +34,22 @@
   --color-edge: var(--panel-edge);
   --color-star: var(--star);
   --color-dim: var(--star-dim);
-  --color-gold: var(--gold);
-  --color-gold-ink: var(--gold-ink);
+  --color-faint: var(--star-faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-wash: var(--hover-wash);
 
-  /* 阅读字体：标题衬线（思源宋体），正文系统黑体（原生渲染最舒适） */
-  --font-serif: 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
-  --font-sans: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Consolas, 'JetBrains Mono', monospace;
+  /* iA 理念：一族字体。标题与正文同族，仅靠字重与字号分层 */
+  --font-sans: 'iA Writer Quattro', -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-serif: 'iA Writer Quattro', -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono: 'iA Writer Mono', ui-monospace, 'SF Mono', Consolas, monospace;
 
-  --radius-card: 8px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-
-  /* 纸面深度：极轻投影 + 以细边为主 */
-  --shadow-pixel: 0 1px 2px var(--shadow-ink), 0 4px 16px var(--shadow-ink);
-  --shadow-pixel-sm: 0 1px 2px var(--shadow-ink);
+  /* iA 式近直角 */
+  --radius-card: 2px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 4px;
 }
 
 html {
@@ -66,49 +63,38 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 标题衬线（学术文库气质） */
+/* 标题不再换族：同族同色，仅字号字重（.font-display 保留类名兼容） */
 .font-display {
-  font-family: var(--font-serif);
-  letter-spacing: 0.01em;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
-/* 细分隔线 */
 .hairline {
   border-color: var(--panel-edge);
 }
 
-/* 卡片投影（极轻，主要靠 1px 细边表达层次） */
-.pixel-shadow {
-  box-shadow: 0 1px 2px var(--shadow-ink), 0 4px 16px var(--shadow-ink);
-}
-
-.pixel-shadow-sm {
-  box-shadow: 0 1px 2px var(--shadow-ink);
-}
-
-/* 主按钮按压反馈（轻） */
+/* 主按钮按压：透明度反馈（iA 无位移无阴影） */
 .pixel-press:active {
-  transform: translateY(1px);
+  opacity: 0.8;
 }
 
-/* 图谱节点 hover 泛光（全站唯一允许的 glow，仅暗色主题明显） */
+/* 图谱节点 hover（去 glow，改为透明度强调） */
 .node-glow {
-  filter: drop-shadow(0 0 5px currentColor);
+  opacity: 1;
 }
 
-/* 页面级一次性入场 */
+/* 页面级一次性入场（轻） */
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 .rise-in {
-  animation: rise-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise-in 0.3s ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -117,7 +103,7 @@ body {
   }
 }
 
-/* Markdown 正文排版（阅读核心：行长、行距、字号节奏） */
+/* Markdown 正文排版（阅读核心） */
 .prose-knowledge {
   max-width: 38em;
   font-size: 16px;
@@ -128,20 +114,18 @@ body {
 }
 .prose-knowledge h2,
 .prose-knowledge h3 {
-  font-family: var(--font-serif);
   margin: 1.4em 0 0.5em;
   line-height: 1.4;
 }
 .prose-knowledge code {
   font-family: var(--font-mono);
-  font-size: 0.88em;
-  background: var(--panel);
-  border: 1px solid var(--panel-edge);
-  border-radius: 4px;
+  font-size: 0.85em;
+  background: var(--hover-wash);
+  border-radius: 2px;
   padding: 0.1em 0.35em;
 }
 .prose-knowledge a {
-  color: var(--gold);
+  color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -151,14 +135,14 @@ body {
   margin: 0.9em 0;
 }
 
-/* 滚动条 */
+/* 滚动条（发丝） */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--panel-edge);
-  border-radius: 5px;
+  border-radius: 0;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

@@ -1,44 +1,36 @@
 import { Link } from 'react-router-dom'
 import type { Category, KnowledgePoint } from '@/domain/schema'
 
-/** 领域色文字：向主题文字色混合 28%，保证纸墨/星夜双主题下小字号可读 */
-export function domainTextColor(hex: string): string {
-  return `color-mix(in srgb, ${hex} 72%, var(--domain-mix-target))`
-}
-
-/** 领域徽章：领域色 12% 透明底 + 领域色文字 + 圆点 */
+/** 领域徽章（iA 式）：彩色圆点承担领域标识，文字一律墨色，1px 发丝边 */
 export function CategoryBadge({ category }: { category: Category }) {
   return (
-    <span
-      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs"
-      style={{ backgroundColor: `${category.color}1f`, color: domainTextColor(category.color) }}
-    >
+    <span className="inline-flex items-center gap-1.5 rounded-[2px] border border-edge px-2 py-0.5 text-xs text-dim">
       <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: category.color }} />
       {category.name}
     </span>
   )
 }
 
-/** 重要性星标（等宽数字 + 星形） */
+/** 重要性（等宽数字 + 星形，强调蓝） */
 export function ImportanceStars({ value }: { value: number }) {
   return (
     <span className="inline-flex items-center gap-1 text-xs text-dim" title={`影响力 ${value}/5`}>
       <span className="font-mono">{value}</span>
-      <span aria-hidden>★</span>
+      <span aria-hidden className="text-accent">★</span>
     </span>
   )
 }
 
 export function EmptyState({ title, hint, action }: { title: string; hint?: string; action?: { to: string; label: string } }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel px-8 py-14 text-center">
-      <span className="text-2xl" aria-hidden>
+    <div className="flex flex-col items-center gap-3 border-y border-edge px-8 py-14 text-center">
+      <span className="text-2xl text-faint" aria-hidden>
         ✦
       </span>
       <p className="text-sm text-dim">{title}</p>
-      {hint && <p className="max-w-sm text-xs text-dim/70">{hint}</p>}
+      {hint && <p className="max-w-sm text-xs text-faint">{hint}</p>}
       {action && (
-        <Link to={action.to} className="mt-1 rounded-lg border border-edge px-4 py-2 text-sm text-gold transition-colors hover:border-gold">
+        <Link to={action.to} className="mt-1 text-sm text-accent underline underline-offset-4">
           {action.label}
         </Link>
       )}
@@ -46,27 +38,29 @@ export function EmptyState({ title, hint, action }: { title: string; hint?: stri
   )
 }
 
-/** 知识点卡片（列表通用） */
+/** 知识点条目（iA 式列表行：发丝线分隔，无卡片） */
 export function KnowledgeCard({ point, category }: { point: KnowledgePoint; category: Category }) {
   return (
     <Link
       to={`/point/${point.id}`}
-      className="group block rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-4"
-      style={{ ['--hover-c' as string]: category.color }}
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${category.color}55`)}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = '')}
+      className="group block border-b border-edge py-4 transition-colors hover:bg-wash"
     >
-      <div className="flex items-center justify-between gap-3">
-        <CategoryBadge category={category} />
-        <span className="font-mono text-xs text-dim">{point.year}</span>
+      <div className="flex items-baseline justify-between gap-4">
+        <h3 className="text-base font-bold text-star group-hover:text-accent">{point.title}</h3>
+        <span className="shrink-0 font-mono text-xs text-faint">{point.year}</span>
       </div>
-      <h3 className="font-display mt-2 text-base text-star group-hover:text-gold">{point.title}</h3>
-      <p className="mt-1 line-clamp-2 text-sm text-dim">{point.summary}</p>
+      <div className="mt-1 flex items-center gap-3">
+        <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-dim">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: category.color }} />
+          {category.name}
+        </span>
+        <span className="truncate text-sm text-dim">{point.summary}</span>
+      </div>
     </Link>
   )
 }
 
-/** 领域筛选 chips（图谱/时间线共用） */
+/** 领域筛选（iA 式文字 chips：彩点标识，选中加粗） */
 export function CategoryFilter({
   categories,
   selected,
@@ -79,19 +73,16 @@ export function CategoryFilter({
   onClear: () => void
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
       {categories.map((c) => {
         const active = selected.includes(c.id)
         return (
           <button
             key={c.id}
             onClick={() => onToggle(c.id)}
-            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors"
-            style={{
-              borderColor: active ? c.color : 'var(--panel-edge)',
-              color: active ? c.color : 'var(--star-dim)',
-              backgroundColor: active ? `${c.color}1a` : 'transparent',
-            }}
+            className={`inline-flex items-center gap-1.5 text-xs transition-colors ${
+              active ? 'font-bold text-star' : 'text-dim hover:text-star'
+            }`}
           >
             <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c.color }} />
             {c.name}
@@ -99,7 +90,7 @@ export function CategoryFilter({
         )
       })}
       {selected.length > 0 && (
-        <button onClick={onClear} className="px-2 text-xs text-dim underline underline-offset-2 hover:text-star">
+        <button onClick={onClear} className="text-xs text-accent underline underline-offset-2">
           重置
         </button>
       )}

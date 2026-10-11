@@ -45,10 +45,10 @@ export function TimelinePage() {
                 <span className="w-[40px] shrink-0 text-right font-mono text-sm text-star sm:w-[52px] sm:text-base">{entry.year}</span>
                 <span
                   className="relative z-10 h-2.5 w-2.5 shrink-0 rounded-full ring-4 ring-void"
-                  style={{ backgroundColor: 'var(--gold)' }}
+                  style={{ backgroundColor: 'var(--accent)' }}
                   aria-hidden
                 />
-                {anchor && <span className="text-xs text-gold">「{anchor.label}」</span>}
+                {anchor && <span className="text-xs text-accent">「{anchor.label}」</span>}
               </div>
 
               <div className="ml-[64px] mt-3 grid gap-2 sm:ml-[84px]">
@@ -58,10 +58,10 @@ export function TimelinePage() {
                     <Link
                       key={p.id}
                       to={`/point/${p.id}`}
-                      className="group flex items-baseline gap-3 rounded-lg border border-transparent px-3 py-2 transition-colors hover:border-edge hover:bg-panel"
+                      className="group flex items-baseline gap-3 rounded-lg border border-transparent px-3 py-2 transition-colors hover:bg-wash"
                     >
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: category.color }} aria-hidden />
-                      <span className="text-sm text-star group-hover:text-gold">{p.title}</span>
+                      <span className="text-sm text-star group-hover:text-accent">{p.title}</span>
                       <span className="hidden truncate text-xs text-dim sm:inline">{p.summary}</span>
                       <span className="ml-auto shrink-0">
                         <ImportanceStars value={p.importance} />

@@ -23,9 +23,9 @@ export function ProfilePage() {
 
   return (
     <div className="rise-in">
-      <header className="flex flex-wrap items-center gap-4 rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-6">
+      <header className="flex flex-wrap items-center gap-4 border-b border-edge pb-6">
         <span
-          className="grid h-14 w-14 place-items-center rounded-full text-xl text-gold-ink"
+          className="grid h-14 w-14 place-items-center rounded-full text-xl text-accent-ink"
           style={{ backgroundColor: profile.color }}
         >
           {profile.name.slice(0, 1)}
@@ -35,7 +35,7 @@ export function ProfilePage() {
             defaultValue={profile.name}
             onBlur={(e) => renameProfile(e.target.value)}
             aria-label="昵称"
-            className="font-display w-48 border-b border-transparent bg-transparent text-xl outline-none hover:border-edge focus:border-gold"
+            className="font-display w-48 border-b border-transparent bg-transparent text-xl outline-none hover:border-edge focus:border-accent"
           />
           <p className="mt-1 text-xs text-dim">档案信息仅保存在本机浏览器，不上传任何服务器</p>
           <div className="mt-2 flex gap-1.5">
@@ -68,7 +68,7 @@ export function ProfilePage() {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`flex-1 rounded-md px-3 py-2 transition-colors ${tab === key ? 'bg-gold text-gold-ink' : 'text-dim hover:text-star'}`}
+            className={`flex-1 rounded-md px-3 py-2 transition-colors ${tab === key ? 'bg-accent text-accent-ink' : 'text-dim hover:text-star'}`}
           >
             {label}
           </button>
@@ -104,8 +104,8 @@ export function ProfilePage() {
           ) : (
             <ul className="space-y-3">
               {notes.map(({ point, text }) => (
-                <li key={point.id} className="rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-4">
-                  <Link to={`/point/${point.id}`} className="text-sm text-star hover:text-gold">
+                <li key={point.id} className="border-b border-edge py-4">
+                  <Link to={`/point/${point.id}`} className="text-sm text-star hover:text-accent">
                     {point.title}
                   </Link>
                   <p className="mt-1 whitespace-pre-wrap text-sm text-dim">{text}</p>
@@ -120,9 +120,9 @@ export function ProfilePage() {
 
 function PointRow({ id, title, year, onRemove }: { id: string; title: string; year: number; onRemove?: () => void }) {
   return (
-    <li className="flex items-center gap-3 rounded-lg border border-edge bg-panel px-4 py-3">
+    <li className="flex items-center gap-3 border-b border-edge py-3">
       <span className="font-mono text-xs text-dim">{year}</span>
-      <Link to={`/point/${id}`} className="text-sm text-star hover:text-gold">
+      <Link to={`/point/${id}`} className="text-sm text-star hover:text-accent">
         {title}
       </Link>
       {onRemove && (

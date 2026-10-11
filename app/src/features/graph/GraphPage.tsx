@@ -11,7 +11,7 @@ import {
 } from 'd3-force'
 import { getFullGraph, getKnowledgeBase, useFilterStore } from '@/data/knowledge-context'
 import { buildGraph } from '@/domain/graph'
-import { CategoryFilter, EmptyState, domainTextColor } from '@/components/ui'
+import { CategoryFilter, EmptyState } from '@/components/ui'
 import type { GraphEdge, GraphNode } from '@/domain/graph'
 
 interface PositionedNode extends GraphNode {
@@ -134,7 +134,7 @@ export function GraphPage() {
             <button
               key={kind}
               onClick={() => setEdgeKind(kind)}
-              className={`rounded px-3 py-1.5 transition-colors ${edgeKind === kind ? 'bg-gold text-gold-ink' : 'text-dim hover:text-star'}`}
+              className={`rounded px-3 py-1.5 transition-colors ${edgeKind === kind ? 'bg-accent text-accent-ink' : 'text-dim hover:text-star'}`}
             >
               {label}
             </button>
@@ -153,7 +153,7 @@ export function GraphPage() {
       ) : (
         <div
           ref={containerRef}
-          className="relative mt-4 overflow-hidden rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel"
+          className="relative mt-4 border-y border-edge"
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onWheel={(e) => {
@@ -222,7 +222,7 @@ export function GraphPage() {
               </button>
               <span
                 className="text-xs"
-                style={{ color: domainTextColor(kb.categoryById.get(selectedPoint.categoryId)!.color) }}
+                style={{ color: "var(--star-dim)" }}
               >
                 ● {kb.categoryById.get(selectedPoint.categoryId)!.name}
               </span>
@@ -236,7 +236,7 @@ export function GraphPage() {
               </div>
               <button
                 onClick={() => navigate(`/point/${selectedPoint.id}`)}
-                className="mt-4 w-full rounded-lg border border-gold/60 px-4 py-2 text-sm text-gold hover:bg-gold/10"
+                className="mt-4 w-full rounded-lg border border-accent/60 px-4 py-2 text-sm text-accent hover:bg-accent/10"
               >
                 查看完整详情 →
               </button>
@@ -253,7 +253,7 @@ export function GraphPage() {
             {c.name}
           </span>
         ))}
-        <Link to="/timeline" className="ml-auto text-dim hover:text-gold">
+        <Link to="/timeline" className="ml-auto text-dim hover:text-accent">
           按时间轴查看 →
         </Link>
       </div>
