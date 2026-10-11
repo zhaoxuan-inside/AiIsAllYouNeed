@@ -1,14 +1,19 @@
 import { Link } from 'react-router-dom'
 import type { Category, KnowledgePoint } from '@/domain/schema'
 
+/** 领域色文字：向主题文字色混合 28%，保证纸墨/星夜双主题下小字号可读 */
+export function domainTextColor(hex: string): string {
+  return `color-mix(in srgb, ${hex} 72%, var(--domain-mix-target))`
+}
+
 /** 领域徽章：领域色 12% 透明底 + 领域色文字 + 圆点 */
 export function CategoryBadge({ category }: { category: Category }) {
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-none px-2.5 py-0.5 text-xs"
-      style={{ backgroundColor: `${category.color}1f`, color: category.color }}
+      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs"
+      style={{ backgroundColor: `${category.color}1f`, color: domainTextColor(category.color) }}
     >
-      <span className="h-1.5 w-1.5 rounded-none" style={{ backgroundColor: category.color }} />
+      <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: category.color }} />
       {category.name}
     </span>
   )
@@ -26,14 +31,14 @@ export function ImportanceStars({ value }: { value: number }) {
 
 export function EmptyState({ title, hint, action }: { title: string; hint?: string; action?: { to: string; label: string } }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel px-8 py-14 text-center">
+    <div className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel px-8 py-14 text-center">
       <span className="text-2xl" aria-hidden>
         ✦
       </span>
       <p className="text-sm text-dim">{title}</p>
       {hint && <p className="max-w-sm text-xs text-dim/70">{hint}</p>}
       {action && (
-        <Link to={action.to} className="mt-1 rounded-lg border-2 border-edge px-4 py-2 text-sm text-gold transition-colors hover:border-gold">
+        <Link to={action.to} className="mt-1 rounded-lg border border-edge px-4 py-2 text-sm text-gold transition-colors hover:border-gold">
           {action.label}
         </Link>
       )}
@@ -46,7 +51,7 @@ export function KnowledgeCard({ point, category }: { point: KnowledgePoint; cate
   return (
     <Link
       to={`/point/${point.id}`}
-      className="group block rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-4"
+      className="group block rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-4"
       style={{ ['--hover-c' as string]: category.color }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${category.color}55`)}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = '')}
@@ -81,14 +86,14 @@ export function CategoryFilter({
           <button
             key={c.id}
             onClick={() => onToggle(c.id)}
-            className="inline-flex items-center gap-1.5 rounded-none border px-3 py-1 text-xs transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors"
             style={{
               borderColor: active ? c.color : 'var(--panel-edge)',
               color: active ? c.color : 'var(--star-dim)',
               backgroundColor: active ? `${c.color}1a` : 'transparent',
             }}
           >
-            <span className="h-1.5 w-1.5 rounded-none" style={{ backgroundColor: c.color }} />
+            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c.color }} />
             {c.name}
           </button>
         )

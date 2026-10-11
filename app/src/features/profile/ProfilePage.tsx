@@ -23,9 +23,9 @@ export function ProfilePage() {
 
   return (
     <div className="rise-in">
-      <header className="flex flex-wrap items-center gap-4 rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-6">
+      <header className="flex flex-wrap items-center gap-4 rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-6">
         <span
-          className="grid h-14 w-14 place-items-center rounded-none text-xl text-gold-ink"
+          className="grid h-14 w-14 place-items-center rounded-full text-xl text-gold-ink"
           style={{ backgroundColor: profile.color }}
         >
           {profile.name.slice(0, 1)}
@@ -44,7 +44,7 @@ export function ProfilePage() {
                 key={c}
                 onClick={() => renameProfile(profile.name, c)}
                 aria-label={`选择头像色 ${c}`}
-                className="h-5 w-5 rounded-none border transition-transform hover:scale-110"
+                className="h-5 w-5 rounded-full border transition-transform hover:scale-110"
                 style={{ backgroundColor: c, borderColor: profile.color === c ? 'var(--star)' : 'transparent' }}
               />
             ))}
@@ -57,7 +57,7 @@ export function ProfilePage() {
         </div>
       </header>
 
-      <div className="mt-6 flex gap-1 rounded-lg border-2 border-edge p-1 text-sm">
+      <div className="mt-6 flex gap-1 rounded-lg border border-edge p-1 text-sm">
         {(
           [
             ['favorites', '我的收藏'],
@@ -104,7 +104,7 @@ export function ProfilePage() {
           ) : (
             <ul className="space-y-3">
               {notes.map(({ point, text }) => (
-                <li key={point.id} className="rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-4">
+                <li key={point.id} className="rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-4">
                   <Link to={`/point/${point.id}`} className="text-sm text-star hover:text-gold">
                     {point.title}
                   </Link>
@@ -120,7 +120,7 @@ export function ProfilePage() {
 
 function PointRow({ id, title, year, onRemove }: { id: string; title: string; year: number; onRemove?: () => void }) {
   return (
-    <li className="flex items-center gap-3 rounded-lg border-2 border-edge bg-panel px-4 py-3">
+    <li className="flex items-center gap-3 rounded-lg border border-edge bg-panel px-4 py-3">
       <span className="font-mono text-xs text-dim">{year}</span>
       <Link to={`/point/${id}`} className="text-sm text-star hover:text-gold">
         {title}

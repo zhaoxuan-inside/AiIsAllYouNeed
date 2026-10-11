@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
-/* ===== 主题令牌 v2「像素星图」（DESIGN.md · 星夜为默认，纸面为日间） ===== */
+/* ===== 主题令牌 v3「纸墨文库」（DESIGN.md · 纸墨为默认阅读主题，星夜为深色可选） ===== */
 :root,
+:root[data-theme='paper'] {
+  --void: #faf8f2;
+  --panel: #ffffff;
+  --panel-edge: #e6e1d4;
+  --star: #1f2a52;
+  --star-dim: #6b7290;
+  --gold: #b8862f;
+  --gold-ink: #ffffff;
+  --shadow-ink: rgba(31, 42, 82, 0.1);
+  --overlay: rgba(250, 248, 242, 0.88);
+  --domain-mix-target: #1f2a52;
+  --hero-wash: linear-gradient(180deg, rgba(184, 134, 47, 0.05), transparent 70%);
+}
+
 :root[data-theme='night'] {
   --void: #0a0e1f;
   --panel: #141b33;
-  --panel-edge: #2a3560;
-  --star: #f2f5ff;
-  --star-dim: #9aa6ce;
-  --gold: #f0c34e;
+  --panel-edge: #232c4d;
+  --star: #e9edf8;
+  --star-dim: #98a2c3;
+  --gold: #e5b85c;
   --gold-ink: #0a0e1f;
-  --shadow-ink: rgba(0, 0, 0, 0.65);
-  --overlay: rgba(10, 14, 31, 0.85);
-}
-
-:root[data-theme='paper'] {
-  --void: #f7f4ee;
-  --panel: #ffffff;
-  --panel-edge: #e3dfd4;
-  --star: #1b2340;
-  --star-dim: #5a6285;
-  --gold: #b98a2f;
-  --gold-ink: #ffffff;
-  --shadow-ink: rgba(27, 35, 64, 0.35);
-  --overlay: rgba(247, 244, 238, 0.88);
+  --shadow-ink: rgba(0, 0, 0, 0.4);
+  --overlay: rgba(10, 14, 31, 0.8);
+  --domain-mix-target: #e9edf8;
+  --hero-wash: linear-gradient(180deg, rgba(229, 184, 92, 0.04), transparent 70%);
 }
 
 @theme inline {
@@ -35,22 +39,20 @@
   --color-gold: var(--gold);
   --color-gold-ink: var(--gold-ink);
 
-  /* 像素风：全站唯一字体族 */
-  --font-sans: 'Fusion Pixel 12px Proportional SC', monospace;
-  --font-serif: 'Fusion Pixel 12px Proportional SC', monospace;
-  --font-mono: 'Fusion Pixel 12px Proportional SC', monospace;
+  /* 阅读字体：标题衬线（思源宋体），正文系统黑体（原生渲染最舒适） */
+  --font-serif: 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+  --font-sans: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Consolas, 'JetBrains Mono', monospace;
 
-  /* 像素风：一切直角 */
-  --radius-card: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
+  --radius-card: 8px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
 
-  /* 像素风：块状硬阴影（禁 blur） */
-  --shadow-pixel: 4px 4px 0 0 var(--shadow-ink);
-  --shadow-pixel-sm: 2px 2px 0 0 var(--shadow-ink);
-  --shadow-none: 0 0 0 0 transparent;
+  /* 纸面深度：极轻投影 + 以细边为主 */
+  --shadow-pixel: 0 1px 2px var(--shadow-ink), 0 4px 16px var(--shadow-ink);
+  --shadow-pixel-sm: 0 1px 2px var(--shadow-ink);
 }
 
 html {
@@ -60,51 +62,45 @@ html {
 
 body {
   font-family: var(--font-sans);
-  line-height: 1.7;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 兼容 v1 类名：标题不再有独立衬线族 */
+/* 标题衬线（学术文库气质） */
 .font-display {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
+  letter-spacing: 0.01em;
 }
 
-/* 细轨分隔（1px）与主边（2px）并用；卡片统一块状硬阴影 */
+/* 细分隔线 */
 .hairline {
   border-color: var(--panel-edge);
 }
 
+/* 卡片投影（极轻，主要靠 1px 细边表达层次） */
 .pixel-shadow {
-  box-shadow: 4px 4px 0 0 var(--shadow-ink);
+  box-shadow: 0 1px 2px var(--shadow-ink), 0 4px 16px var(--shadow-ink);
 }
 
 .pixel-shadow-sm {
-  box-shadow: 2px 2px 0 0 var(--shadow-ink);
+  box-shadow: 0 1px 2px var(--shadow-ink);
 }
 
-/* 主按钮按压塌陷：位移并收缩阴影 */
-.pixel-press {
-  transition: transform 0.05s steps(2), box-shadow 0.05s steps(2);
-}
+/* 主按钮按压反馈（轻） */
 .pixel-press:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 var(--shadow-ink);
+  transform: translateY(1px);
 }
 
-/* 图谱节点 hover 块状泛光（全站唯一允许的 glow） */
+/* 图谱节点 hover 泛光（全站唯一允许的 glow，仅暗色主题明显） */
 .node-glow {
   filter: drop-shadow(0 0 5px currentColor);
 }
 
-/* 像素图像（低分辨率画布整数倍放大） */
-.pixelated {
-  image-rendering: pixelated;
-}
-
-/* 页面级一次性入场（距离缩为 4px，像素步进感） */
+/* 页面级一次性入场 */
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -112,7 +108,7 @@ body {
   }
 }
 .rise-in {
-  animation: rise-in 0.24s steps(4) both;
+  animation: rise-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -121,22 +117,27 @@ body {
   }
 }
 
-/* Markdown 正文排版 */
+/* Markdown 正文排版（阅读核心：行长、行距、字号节奏） */
 .prose-knowledge {
-  max-width: 42em;
-  color: var(--star);
+  max-width: 38em;
+  font-size: 16px;
+  line-height: 1.85;
 }
 .prose-knowledge p {
-  margin: 0.75em 0;
+  margin: 0.9em 0;
 }
 .prose-knowledge h2,
 .prose-knowledge h3 {
-  margin: 1.2em 0 0.4em;
+  font-family: var(--font-serif);
+  margin: 1.4em 0 0.5em;
+  line-height: 1.4;
 }
 .prose-knowledge code {
-  font-size: 0.9em;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
   background: var(--panel);
-  border: 2px solid var(--panel-edge);
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
   padding: 0.1em 0.35em;
 }
 .prose-knowledge a {
@@ -145,19 +146,19 @@ body {
   text-underline-offset: 3px;
 }
 .prose-knowledge ul {
-  list-style: square;
+  list-style: disc;
   padding-left: 1.4em;
-  margin: 0.75em 0;
+  margin: 0.9em 0;
 }
 
-/* 滚动条（方块化） */
+/* 滚动条 */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--panel-edge);
-  border: 2px solid var(--void);
+  border-radius: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

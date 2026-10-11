@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { usePreferenceStore } from '@/store/preference'
 import { useProfileStore } from '@/store/profile'
 import { SearchOverlay } from '@/components/SearchOverlay'
+import { getKnowledgeBase } from '@/data/knowledge-context'
 
 const NAV = [
   { to: '/', label: '首页', icon: '✦' },
@@ -47,7 +48,7 @@ export function Shell() {
           </NavLink>
           <button
             onClick={() => setSearchOpen(true)}
-            className="ml-auto flex h-9 min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border-2 border-edge bg-panel px-3 text-sm text-dim transition-colors hover:border-gold/60"
+            className="ml-auto flex h-9 min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-edge bg-panel px-3 text-sm text-dim transition-colors hover:border-gold/60"
           >
             <span aria-hidden>⌕</span>
             <span className="truncate">搜索知识点…</span>
@@ -56,14 +57,14 @@ export function Shell() {
           <button
             onClick={toggleTheme}
             aria-label="切换主题"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border-2 border-edge text-sm text-dim hover:border-gold/60 hover:text-star"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-edge text-sm text-dim hover:border-gold/60 hover:text-star"
           >
             {theme === 'night' ? '☾' : '☀'}
           </button>
           <NavLink
             to="/profile"
             aria-label="本地档案"
-            className="hidden h-9 w-9 shrink-0 place-items-center rounded-none text-xs text-gold-ink sm:grid"
+            className="hidden h-9 w-9 shrink-0 place-items-center rounded-full text-xs text-gold-ink sm:grid"
             style={{ backgroundColor: profileColor }}
           >
             {profileName.slice(0, 1)}
@@ -87,7 +88,7 @@ export function Shell() {
               >
                 {({ isActive }) => (
                   <>
-                    {isActive && <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-none bg-gold" />}
+                    {isActive && <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-gold" />}
                     <span className="w-5 text-center text-base" aria-hidden>
                       {item.icon}
                     </span>
@@ -98,7 +99,7 @@ export function Shell() {
             ))}
           </nav>
           <p className="mt-8 px-3 text-[11px] leading-relaxed text-dim/60">
-            知识点 · 96 颗星
+            知识点 · {getKnowledgeBase().points.length} 颗星
             <br />
             数据随 Git 仓库更新
           </p>

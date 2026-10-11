@@ -1,77 +1,90 @@
 #!/usr/bin/env node
 /**
  * 生成 Tauri 图标源图（1024×1024 PNG，纯 Node 实现，无图像依赖）。
- * v2 像素风：在 64×64 逻辑网格上绘制，整数倍放大（×16）保持硬边像素。
- * 设计：深靛蓝底 + 金色像素四角星 + 六领域色微星 + 方块星辰。
+ * v3 纸墨文库：暖纸底 + 墨蓝星座（圆点连线）+ 琥珀主星 + 领域色点缀。
  */
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { deflateSync } from 'node:zlib'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const GRID = 64
-const SCALE = 16
-const SIZE = GRID * SCALE
+const SIZE = 1024
 const px = Buffer.alloc(SIZE * SIZE * 4)
 
-const VOID = [10, 14, 31]
-const GOLD = [240, 195, 78]
+const PAPER = [250, 248, 242]
+const INK = [31, 42, 82]
+const GOLD = [184, 134, 47]
 const DOMAIN = [
   [91, 141, 239],
   [63, 190, 168],
   [224, 112, 90],
   [157, 123, 232],
-  [240, 195, 78],
   [213, 106, 158],
+  [184, 134, 47],
 ]
 
-// 在逻辑网格上落一个像素方块
-const setCell = (gx, gy, [r, g, b], alpha = 1) => {
-  if (gx < 0 || gy < 0 || gx >= GRID || gy >= GRID) return
-  for (let dy = 0; dy < SCALE; dy++)
-    for (let dx = 0; dx < SCALE; dx++) {
-      const i = ((gy * SCALE + dy) * SIZE + gx * SCALE + dx) * 4
-      px[i] = r
-      px[i + 1] = g
-      px[i + 2] = b
-      px[i + 3] = Math.round(255 * alpha)
-    }
+const blend = (x, y, [r, g, b], alpha) => {
+  if (x < 0 || y < 0 || x >= SIZE || y >= SIZE || alpha <= 0) return
+  const i = (y * SIZE + x) * 4
+  const a = Math.min(1, alpha)
+  px[i] = Math.round(r * a + px[i] * (1 - a))
+  px[i + 1] = Math.round(g * a + px[i + 1] * (1 - a))
+  px[i + 2] = Math.round(b * a + px[i + 2] * (1 - a))
+  px[i + 3] = 255
 }
 
 // 底色
-for (let y = 0; y < GRID; y++) for (let x = 0; x < GRID; x++) setCell(x, y, VOID)
+for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) blend(x, y, PAPER, 1)
 
-// 伪随机方块星辰（固定种子可复现）
+const dot = (cx, cy, r, color, alpha = 1) => {
+  const R = Math.ceil(r) + 2
+  for (let dy = -R; dy <= R; dy++)
+    for (let dx = -R; dx <= R; dx++) {
+      const d = Math.hypot(dx, dy)
+      if (d <= r + 1) blend(Math.round(cx) + dx, Math.round(cy) + dy, color, alpha * Math.min(1, Math.max(0, r + 1 - d)))
+    }
+}
+const line = (x1, y1, x2, y2, w, color, alpha = 1) => {
+  const len = Math.hypot(x2 - x1, y2 - y1)
+  const R = Math.ceil(w / 2 + 2)
+  const [minX, maxX] = [Math.min(x1, x2) - R, Math.max(x1, x2) + R]
+  const [minY, maxY] = [Math.min(y1, y2) - R, Math.max(y1, y2) + R]
+  for (let y = Math.floor(minY); y <= maxY; y++)
+    for (let x = Math.floor(minX); x <= maxX; x++) {
+      const t = Math.max(0, Math.min(1, ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / (len * len)))
+      const d = Math.hypot(x - (x1 + t * (x2 - x1)), y - (y1 + t * (y2 - y1)))
+      if (d <= w / 2 + 1) blend(x, y, color, alpha * Math.min(1, Math.max(0, w / 2 + 1 - d)))
+    }
+}
+
+// 星座：墨蓝细线连接的知识点群
+const nodes = [
+  [300, 700, 26, DOMAIN[0]],
+  [480, 560, 34, INK],
+  [660, 640, 22, DOMAIN[1]],
+  [560, 380, 28, DOMAIN[4]],
+  [750, 300, 40, INK],
+  [850, 460, 20, DOMAIN[3]],
+]
+for (const [a, b] of [[0, 1], [1, 2], [1, 3], [3, 4], [4, 5], [2, 3]]) {
+  line(nodes[a][0], nodes[a][1], nodes[b][0], nodes[b][1], 10, INK, 0.5)
+}
+for (const [x, y, r, c] of nodes) dot(x, y, r, c)
+
+// 琥珀主星（四角星芒）
+const cx = 300
+const cy = 300
+dot(cx, cy, 30, GOLD)
+line(cx - 110, cy, cx + 110, cy, 8, GOLD, 0.75)
+line(cx, cy - 110, cx, cy + 110, 8, GOLD, 0.75)
+dot(cx, cy, 12, [250, 248, 242])
+
+// 稀疏墨色微星
 let seed = 20261011
 const rand = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff)
-for (let i = 0; i < 150; i++) {
-  const x = Math.floor(rand() * GRID)
-  const y = Math.floor(rand() * GRID)
-  const c = rand() < 0.18 ? DOMAIN[Math.floor(rand() * DOMAIN.length)] : [242, 245, 255]
-  setCell(x, y, c, 0.35 + rand() * 0.65)
-  if (rand() < 0.2) setCell(x, y - 1, c, 0.5) // 竖二连星
+for (let i = 0; i < 90; i++) {
+  dot(rand() * SIZE, rand() * SIZE, 1.5 + rand() * 2.5, INK, 0.12 + rand() * 0.18)
 }
-
-// 中央像素四角星（菱形星芒 + 十字臂，纯方块构成）
-const c = GRID / 2
-const R = 19
-for (let d = -R; d <= R; d++) {
-  const arm = R - Math.abs(d)
-  // 十字主臂
-  for (let k = -arm; k <= arm; k++) {
-    const tip = Math.abs(k) < arm * 0.28 ? 1 : 0.85
-    setCell(c + k, c + d, GOLD, tip)
-    setCell(c + d, c + k, GOLD, tip)
-  }
-}
-// 中心亮块 + 外圈点缀
-setCell(c - 1, c - 1, [255, 230, 170])
-setCell(c, c, [255, 230, 170])
-setCell(c + 1, c + 1, GOLD, 0.9)
-setCell(c - 2, c, GOLD, 0.75)
-setCell(c + 2, c, GOLD, 0.75)
-setCell(c, c - 2, GOLD, 0.75)
-setCell(c, c + 2, GOLD, 0.75)
 
 // PNG 编码（RGBA，filter 0）
 const raw = Buffer.alloc(SIZE * (SIZE * 4 + 1))
@@ -80,14 +93,14 @@ for (let y = 0; y < SIZE; y++) {
   px.copy(raw, y * (SIZE * 4 + 1) + 1, y * SIZE * 4, (y + 1) * SIZE * 4)
 }
 const crcTable = Array.from({ length: 256 }, (_, n) => {
-  let x = n
-  for (let k = 0; k < 8; k++) x = x & 1 ? 0xedb88320 ^ (x >>> 1) : x >>> 1
-  return x >>> 0
+  let c = n
+  for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1
+  return c >>> 0
 })
 const crc32 = (buf) => {
-  let crc = 0xffffffff
-  for (const b of buf) crc = crcTable[(crc ^ b) & 0xff] ^ (crc >>> 8)
-  return (crc ^ 0xffffffff) >>> 0
+  let c = 0xffffffff
+  for (const b of buf) c = crcTable[(c ^ b) & 0xff] ^ (c >>> 8)
+  return (c ^ 0xffffffff) >>> 0
 }
 const chunk = (type, data) => {
   const len = Buffer.alloc(4)
@@ -112,4 +125,4 @@ const png = Buffer.concat([
 const out = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'app', 'src-tauri', 'icons')
 mkdirSync(out, { recursive: true })
 writeFileSync(join(out, 'icon-source.png'), png)
-console.log(`[icon] pixel icon → ${join(out, 'icon-source.png')} (${png.length} bytes)`)
+console.log(`[icon] paper-ink icon → ${join(out, 'icon-source.png')} (${png.length} bytes)`)

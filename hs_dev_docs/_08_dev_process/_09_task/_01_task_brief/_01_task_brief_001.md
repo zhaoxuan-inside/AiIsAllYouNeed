@@ -24,3 +24,15 @@
 - **更新时间**：`2026-10-11T05:04:40Z`
 ---
 
+### 任务简述：paper-ink-restyle
+- **标题**：视觉风格 v3：纸墨文库（阅读优先，纸墨默认+星夜可选）
+- **change_size**：`M`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：视觉风格 v3：纸墨文库（阅读优先，纸墨默认+星夜可选）
+- **详情索引**：`_02_task_detail/_01_paper-ink-restyle/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_paper-ink-restyle/_00_context_pack.md`
+- **更新时间**：`2026-10-11T05:23:00Z`
+---
+

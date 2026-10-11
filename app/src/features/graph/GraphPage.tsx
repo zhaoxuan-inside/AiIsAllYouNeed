@@ -11,7 +11,7 @@ import {
 } from 'd3-force'
 import { getFullGraph, getKnowledgeBase, useFilterStore } from '@/data/knowledge-context'
 import { buildGraph } from '@/domain/graph'
-import { CategoryFilter, EmptyState } from '@/components/ui'
+import { CategoryFilter, EmptyState, domainTextColor } from '@/components/ui'
 import type { GraphEdge, GraphNode } from '@/domain/graph'
 
 interface PositionedNode extends GraphNode {
@@ -123,7 +123,7 @@ export function GraphPage() {
             实线箭头 = 依赖（先学前置）· 虚线 = 相关 · 节点大小 = 影响力 · 拖拽节点、滚轮缩放
           </p>
         </div>
-        <div className="flex gap-1 rounded-lg border-2 border-edge p-1 text-xs">
+        <div className="flex gap-1 rounded-lg border border-edge p-1 text-xs">
           {(
             [
               ['prerequisite', '依赖'],
@@ -153,7 +153,7 @@ export function GraphPage() {
       ) : (
         <div
           ref={containerRef}
-          className="relative mt-4 overflow-hidden rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel"
+          className="relative mt-4 overflow-hidden rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel"
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onWheel={(e) => {
@@ -163,7 +163,6 @@ export function GraphPage() {
         >
           <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} className="h-[70vh] max-h-[640px] w-full touch-none" role="img" aria-label="知识依赖图谱">
             <g transform={`translate(${(VIEW.w * (1 - zoom)) / 2} ${(VIEW.h * (1 - zoom)) / 2}) scale(${zoom})`}>
-              <g shapeRendering="crispEdges">
               {visibleEdges.map((e, i) => {
                 const a = nodeMap.get(e.from)
                 const b = nodeMap.get(e.to)
@@ -184,11 +183,9 @@ export function GraphPage() {
                   />
                 )
               })}
-              </g>
-              <g shapeRendering="crispEdges">
               {nodes.map((n) => {
                 const color = kb.categoryById.get(n.categoryId)!.color
-                const size = 7 + n.importance * 2.5 // 方形节点：边长=影响力
+                const r = 4 + n.importance * 2
                 const active = selectedNode === n.id
                 return (
                   <g
@@ -200,16 +197,15 @@ export function GraphPage() {
                     }}
                     className="cursor-pointer"
                   >
-                    <rect x={-size / 2} y={-size / 2} width={size} height={size} fill={color} opacity={active ? 1 : 0.9} className={active ? 'node-glow' : undefined} style={{ color }} />
+                    <circle r={r} fill={color} opacity={active ? 1 : 0.85} className={active ? 'node-glow' : undefined} style={{ color }} />
                     {(active || n.importance >= 4 || zoom > 1.4) && (
-                      <text y={size / 2 + 12} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.85}>
+                      <text y={r + 12} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.85}>
                         {n.title}
                       </text>
                     )}
                   </g>
                 )
               })}
-              </g>
               <defs>
                 <marker id="arrow" viewBox="0 0 8 8" refX={7} refY={4} markerWidth={5} markerHeight={5} orient="auto-start-reverse">
                   <path d="M0,0 L8,4 L0,8 z" fill="var(--star-dim)" />
@@ -226,7 +222,7 @@ export function GraphPage() {
               </button>
               <span
                 className="text-xs"
-                style={{ color: kb.categoryById.get(selectedPoint.categoryId)!.color }}
+                style={{ color: domainTextColor(kb.categoryById.get(selectedPoint.categoryId)!.color) }}
               >
                 ● {kb.categoryById.get(selectedPoint.categoryId)!.name}
               </span>
@@ -253,7 +249,7 @@ export function GraphPage() {
       <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-dim">
         {kb.categories.map((c) => (
           <span key={c.id} className="inline-flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-none" style={{ backgroundColor: c.color }} />
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c.color }} />
             {c.name}
           </span>
         ))}

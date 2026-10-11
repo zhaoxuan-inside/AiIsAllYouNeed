@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { getKnowledgeBase, getFullTimeline } from '@/data/knowledge-context'
-import { KnowledgeCard } from '@/components/ui'
+import { KnowledgeCard, domainTextColor } from '@/components/ui'
 
-/** 像素星域主视觉：低分辨率网格绘制方块星辰，整数倍放大（image-rendering: pixelated）。 */
-const PIXEL_SCALE = 6
+/** 纸上星域主视觉：墨色星辰 + 领域色十字星芒，随主题（纸墨/星夜）自适应重绘。 */
+const DOMAIN_COLORS = ['#5B8DEF', '#3FBEA8', '#E0705A', '#9D7BE8', '#E5B85C', '#D46A9E']
 
 function Starfield() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -15,46 +15,73 @@ function Starfield() {
     const ctx = canvas.getContext('2d')!
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let raf = 0
+    let baseColor = '#1f2a52'
+    let alphaScale = 0.4
 
-    const COLORS = ['#5B8DEF', '#3FBEA8', '#E0705A', '#9D7BE8', '#F0C34E', '#D46A9E']
-    const gw = Math.max(1, Math.floor(canvas.clientWidth / PIXEL_SCALE))
-    const gh = Math.max(1, Math.floor(canvas.clientHeight / PIXEL_SCALE))
-    canvas.width = gw
-    canvas.height = gh
+    const syncTheme = () => {
+      const style = getComputedStyle(document.documentElement)
+      baseColor = style.getPropertyValue('--star').trim() || '#1f2a52'
+      // 暗色主题星辰更亮更明显，纸面主题更淡更安静
+      alphaScale = document.documentElement.dataset.theme === 'night' ? 0.55 : 0.32
+    }
+    syncTheme()
 
-    // 星辰落在网格上：稀疏排布保持安静——大部分 1px，少量 2px 亮星，稀少领域色十字星芒
-    const stars = Array.from({ length: Math.floor(gw * gh * 0.007) }, () => ({
-      x: Math.floor(Math.random() * gw),
-      y: Math.floor(Math.random() * gh),
-      big: Math.random() < 0.2,
-      cross: Math.random() < 0.12,
-      color: Math.random() < 0.16 ? COLORS[Math.floor(Math.random() * COLORS.length)] : '#F2F5FF',
+    // 主题切换时重读颜色
+    const observer = new MutationObserver(syncTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
+    let w = 0
+    let h = 0
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      w = canvas.clientWidth
+      h = canvas.clientHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const stars = Array.from({ length: 110 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.1 + 0.5,
+      spark: Math.random() < 0.1,
+      color: Math.random() < 0.14 ? DOMAIN_COLORS[Math.floor(Math.random() * DOMAIN_COLORS.length)] : null,
       phase: Math.random() * Math.PI * 2,
     }))
 
     const draw = (t: number) => {
-      ctx.clearRect(0, 0, gw, gh)
+      ctx.clearRect(0, 0, w, h)
       for (const s of stars) {
-        const twinkle = reduced ? 0.75 : 0.35 + 0.65 * Math.round(Math.sin(t * 0.002 + s.phase) * 0.5 + 0.5)
-        ctx.globalAlpha = twinkle
-        ctx.fillStyle = s.color
-        const size = s.big ? 2 : 1
-        ctx.fillRect(s.x, s.y, size, size)
-        if (s.cross) {
-          ctx.fillRect(s.x - 1, s.y, 1, 1)
-          ctx.fillRect(s.x + size, s.y, 1, 1)
-          ctx.fillRect(s.x, s.y - 1, size, 1)
-          ctx.fillRect(s.x, s.y + size, size, 1)
+        const twinkle = reduced ? 0.7 : 0.55 + 0.45 * Math.sin(t * 0.001 + s.phase)
+        const color = s.color ?? baseColor
+        ctx.globalAlpha = Math.min(1, twinkle * alphaScale * (s.spark ? 1.6 : 1))
+        ctx.fillStyle = color
+        ctx.beginPath()
+        ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2)
+        ctx.fill()
+        if (s.spark) {
+          // 细十字星芒
+          const x = s.x * w
+          const y = s.y * h
+          ctx.fillRect(x - s.r * 3, y - 0.5, s.r * 6, 1)
+          ctx.fillRect(x - 0.5, y - s.r * 3, 1, s.r * 6)
         }
       }
       ctx.globalAlpha = 1
       if (!reduced) raf = requestAnimationFrame(draw)
     }
     raf = requestAnimationFrame(draw)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      observer.disconnect()
+      window.removeEventListener('resize', resize)
+    }
   }, [])
 
-  return <canvas ref={canvasRef} className="pixelated absolute inset-0 h-full w-full" aria-hidden />
+  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
 }
 
 export function HomePage() {
@@ -83,11 +110,11 @@ export function HomePage() {
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to="/graph"
-              className="pixel-press pixel-shadow rounded-lg bg-gold px-5 py-2.5 text-sm text-gold-ink"
+              className="pixel-press rounded-lg bg-star px-5 py-2.5 text-sm text-void hover:opacity-90"
             >
               进入知识图谱
             </Link>
-            <Link to="/roadmap" className="rounded-lg border-2 border-edge px-5 py-2.5 text-sm text-star hover:border-gold/60">
+            <Link to="/roadmap" className="rounded-lg border border-edge px-5 py-2.5 text-sm text-star hover:border-gold/60">
               查看发展路线
             </Link>
           </div>
@@ -95,7 +122,7 @@ export function HomePage() {
       </section>
 
       {/* 统计条 */}
-      <section className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-edge sm:grid-cols-4">
+      <section className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] pixel-shadow border border-edge bg-edge sm:grid-cols-4">
         {[
           { label: '知识点', value: kb.points.length },
           { label: '领域', value: kb.categories.length },
@@ -119,13 +146,13 @@ export function HomePage() {
               <Link
                 key={c.id}
                 to={`/domain/${c.id}`}
-                className="group rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-5"
+                className="group rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-5"
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${c.color}66`)}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = '')}
               >
                 <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 text-sm" style={{ color: c.color }}>
-                    <span className="h-2 w-2 rounded-none" style={{ backgroundColor: c.color }} />
+                  <span className="inline-flex items-center gap-2 text-sm" style={{ color: domainTextColor(c.color) }}>
+                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c.color }} />
                     {c.name}
                   </span>
                   <span className="font-mono text-xs text-dim">{count}</span>

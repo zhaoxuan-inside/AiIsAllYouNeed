@@ -48,10 +48,10 @@ describe('本地档案（seam：用户系统信息只存本地）', () => {
 })
 
 describe('偏好（主题）', () => {
-  it('默认星夜主题，可切换纸面并持久化', () => {
-    expect(usePreferenceStore.getState().theme).toBe('night')
-    usePreferenceStore.getState().toggleTheme()
+  it('默认纸墨主题，可切换星夜并持久化', () => {
     expect(usePreferenceStore.getState().theme).toBe('paper')
-    expect(localStorage.getItem('aiana.prefs.v1')).toContain('paper')
+    usePreferenceStore.getState().toggleTheme()
+    expect(usePreferenceStore.getState().theme).toBe('night')
+    expect(localStorage.getItem('aiana.prefs.v2')).toContain('night')
   })
 })

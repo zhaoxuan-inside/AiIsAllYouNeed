@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { getKnowledgeBase } from '@/data/knowledge-context'
 import { buildRoadmap } from '@/domain/roadmap'
-import { KnowledgeCard, EmptyState } from '@/components/ui'
+import { KnowledgeCard, EmptyState, domainTextColor } from '@/components/ui'
 
 /** 领域页：概览 + 路线速览 + 知识点列表 */
 export function DomainPage() {
@@ -19,8 +19,8 @@ export function DomainPage() {
 
   return (
     <div className="rise-in">
-      <header className="rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-6" style={{ borderLeft: `3px solid ${category.color}` }}>
-        <p className="text-xs" style={{ color: category.color }}>
+      <header className="rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-6" style={{ borderLeft: `3px solid ${category.color}` }}>
+        <p className="text-xs" style={{ color: domainTextColor(category.color) }}>
           领域 · {category.nameEn}
         </p>
         <h1 className="font-display mt-1 text-2xl">{category.name}</h1>
@@ -31,8 +31,8 @@ export function DomainPage() {
         </div>
       </header>
 
-      <section className="mt-6 rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel p-5">
-        <p className="text-xs" style={{ color: category.color }}>
+      <section className="mt-6 rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel p-5">
+        <p className="text-xs" style={{ color: domainTextColor(category.color) }}>
           发展趋势预测（编辑标注）
         </p>
         <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>

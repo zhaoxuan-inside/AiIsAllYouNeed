@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { getSearchIndex } from '@/data/knowledge-context'
 import { getKnowledgeBase } from '@/data/knowledge-context'
 import { query, snippet } from '@/domain/search'
+import { domainTextColor } from '@/components/ui'
 
 /** 全局搜索浮层：中文 bigram 索引，回车跳第一个结果 */
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -42,7 +43,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]" style={{ background: 'var(--overlay)' }} onClick={onClose}>
       <div
-        className="w-full max-w-xl rounded-[var(--radius-card)] pixel-shadow border-2 border-edge bg-panel pixel-shadow"
+        className="w-full max-w-xl rounded-[var(--radius-card)] pixel-shadow border border-edge bg-panel pixel-shadow"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-label="搜索知识"
@@ -76,7 +77,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                 className="flex w-full items-baseline justify-between gap-4 border-t border-edge px-5 py-3 text-left first:border-t-0 hover:bg-void/40"
               >
                 <span>
-                  <span className="text-sm" style={{ color: category.color }}>
+                  <span className="text-sm" style={{ color: domainTextColor(category.color) }}>
                     ●{' '}
                   </span>
                   <span className="text-sm text-star">{point.title}</span>
