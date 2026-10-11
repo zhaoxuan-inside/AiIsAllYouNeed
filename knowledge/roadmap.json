@@ -1,0 +1,50 @@
+[
+  {
+    "categoryId": "ml-foundation",
+    "stages": [
+      { "name": "基础", "description": "统计学习的第一性原理：线性模型、参数估计与无监督探索。", "pointIds": ["linear-regression", "logistic-regression", "perceptron", "mle", "k-means", "pca", "monte-carlo-method"] },
+      { "name": "进阶", "description": "神经网络与经典机器武库：训练多层网络，掌握树模型与核方法。", "pointIds": ["gradient-descent", "backpropagation", "activation-functions", "decision-trees", "svm", "em-algorithm", "overfitting-regularization", "autoencoder"] },
+      { "name": "前沿", "description": "现代训练技艺与表征学习：让深网络稳定、高效、可迁移。", "pointIds": ["ensemble-learning", "batch-normalization", "dropout", "adam-optimizer", "transfer-learning", "self-supervised-learning", "graph-neural-networks"] }
+    ]
+  },
+  {
+    "categoryId": "nlp",
+    "stages": [
+      { "name": "基础", "description": "统计语言处理时代：语言模型、序列标注与词向量。", "pointIds": ["ngram-language-model", "statistical-machine-translation", "hmm", "conditional-random-field", "rnn", "lstm", "word2vec", "glove"] },
+      { "name": "进阶", "description": "神经序列建模与注意力革命：从 Seq2Seq 到 Transformer。", "pointIds": ["seq2seq", "attention-mechanism", "layer-norm", "transformer", "positional-encoding", "bpe", "elmo"] },
+      { "name": "前沿", "description": "嵌入与检索：大模型时代 NLP 的基础设施。", "pointIds": ["text-embedding"] }
+    ]
+  },
+  {
+    "categoryId": "cv",
+    "stages": [
+      { "name": "基础", "description": "卷积革命的前夜与燃料：数据集、卷积网络与激活函数。", "pointIds": ["imagenet", "convolutional-neural-networks", "relu-era"] },
+      { "name": "进阶", "description": "深度卷积的黄金十年：从 AlexNet 到检测与分割任务化。", "pointIds": ["alexnet", "vgg", "googlenet-inception", "object-detection", "image-segmentation"] },
+      { "name": "前沿", "description": "架构统一与实时化：残差、单阶段检测与视觉 Transformer。", "pointIds": ["resnet", "yolo", "vision-transformer"] }
+    ]
+  },
+  {
+    "categoryId": "rl",
+    "stages": [
+      { "name": "基础", "description": "序贯决策的数学地基：探索利用与马尔可夫决策过程。", "pointIds": ["multi-armed-bandit", "markov-decision-process"] },
+      { "name": "进阶", "description": "无模型学习的方法谱系：价值方法、策略方法与规划。", "pointIds": ["td-learning", "q-learning", "policy-gradient", "monte-carlo-tree-search", "inverse-rl"] },
+      { "name": "前沿", "description": "深度强化学习与大模型对齐：从 Atari 到 RLHF。", "pointIds": ["dqn", "ppo", "alphago", "preference-modeling", "rlhf"] }
+    ]
+  },
+  {
+    "categoryId": "llm",
+    "stages": [
+      { "name": "基础", "description": "生成式 AI 的两条源头：预训练语言模型与深度生成模型。", "pointIds": ["gpt-1", "bert", "gan", "vae"] },
+      { "name": "进阶", "description": "规模化的十年：上下文学习、规模法则与多模态对齐。", "pointIds": ["gpt-2", "gpt-3", "scaling-laws", "mixture-of-experts", "clip", "ddpm", "rag", "prompt-engineering"] },
+      { "name": "前沿", "description": "对齐、推理与自主智能：ChatGPT 之后的世界。", "pointIds": ["instructgpt", "chatgpt", "chain-of-thought", "emergent-abilities", "stable-diffusion", "llama-open-weights", "llm-alignment", "agent", "inference-scaling"] }
+    ]
+  },
+  {
+    "categoryId": "math-theory",
+    "stages": [
+      { "name": "基础", "description": "AI 的四大数学支柱：概率、线性代数、优化与计算理论。", "pointIds": ["probability-theory", "linear-algebra", "optimization-theory", "computability-theory"] },
+      { "name": "进阶", "description": "推断、信息与可学习性：从贝叶斯到统计学习理论。", "pointIds": ["bayes-theorem", "information-theory", "turing-test", "vc-dimension"] },
+      { "name": "前沿", "description": "深度学习的理论解释：逼近、泛化与特征学习。", "pointIds": ["pac-learning", "universal-approximation", "no-free-lunch", "neural-tangent-kernel"] }
+    ]
+  }
+]

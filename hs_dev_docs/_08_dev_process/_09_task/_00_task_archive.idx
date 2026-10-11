@@ -1,0 +1,2 @@
+{"version": "1.0", "category": "task_archive", "root": "_09_task"}
+{"id": "v1-vertical-slice", "title": "v1 垂直切片：领域模型+搜索+种子数据+6视图+多端壳", "path": "_02_task_detail/_01_v1-vertical-slice/_00_task_detail.md", "status": "COMPLETED", "digest": "cc651b39", "updated_at": "2026-10-11T02:07:15Z", "last_note": "v1 垂直切片交付：六视图+94知识点+六端壳+45测试绿+门禁PASS，已本地提交"}

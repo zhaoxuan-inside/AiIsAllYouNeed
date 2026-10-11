@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ml-foundation",
+    "name": "机器学习基础",
+    "nameEn": "Machine Learning Foundations",
+    "color": "#5B8DEF",
+    "description": "从统计学习到深度学习的通用方法与训练技艺。",
+    "order": 1
+  },
+  {
+    "id": "nlp",
+    "name": "自然语言处理",
+    "nameEn": "Natural Language Processing",
+    "color": "#3FBEA8",
+    "description": "让机器理解与生成人类语言的技术脉络。",
+    "order": 2
+  },
+  {
+    "id": "cv",
+    "name": "计算机视觉",
+    "nameEn": "Computer Vision",
+    "color": "#E0705A",
+    "description": "让机器看懂图像与视频的演化之路。",
+    "order": 3
+  },
+  {
+    "id": "rl",
+    "name": "强化学习",
+    "nameEn": "Reinforcement Learning",
+    "color": "#9D7BE8",
+    "description": "通过与环境的试错交互学习最优决策。",
+    "order": 4
+  },
+  {
+    "id": "llm",
+    "name": "大模型与生成",
+    "nameEn": "LLM & Generative AI",
+    "color": "#E5B85C",
+    "description": "预训练、规模法则与生成式 AI 的爆发时代。",
+    "order": 5
+  },
+  {
+    "id": "math-theory",
+    "name": "数学与理论",
+    "nameEn": "Mathematics & Theory",
+    "color": "#D46A9E",
+    "description": "支撑一切 AI 方法的数学根基与理论保证。",
+    "order": 6
+  }
+]

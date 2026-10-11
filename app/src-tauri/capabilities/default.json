@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "默认能力：主窗口访问应用与外部链接打开器",
+  "windows": ["main"],
+  "permissions": ["core:default", "opener:default"]
+}

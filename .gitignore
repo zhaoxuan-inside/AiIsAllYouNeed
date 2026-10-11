@@ -1,0 +1,14 @@
+# 依赖与产物
+node_modules/
+dist/
+app/dist/
+app/src/data/compiled/
+*.tsbuildinfo
+
+# Tauri 构建产物
+app/src-tauri/target/
+app/src-tauri/gen/
+
+# 系统文件
+.DS_Store
+Thumbs.db

@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* ===== 主题令牌（DESIGN.md · 星夜为默认，纸面为日间阅读） ===== */
+:root,
+:root[data-theme='night'] {
+  --void: #0a0e1f;
+  --panel: #141b33;
+  --panel-edge: #232c4d;
+  --star: #e9edf8;
+  --star-dim: #98a2c3;
+  --gold: #e5b85c;
+  --gold-ink: #0a0e1f;
+  --overlay: rgba(10, 14, 31, 0.72);
+}
+
+:root[data-theme='paper'] {
+  --void: #f7f4ee;
+  --panel: #ffffff;
+  --panel-edge: #e3dfd4;
+  --star: #1b2340;
+  --star-dim: #5a6285;
+  --gold: #b98a2f;
+  --gold-ink: #ffffff;
+  --overlay: rgba(247, 244, 238, 0.8);
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-panel: var(--panel);
+  --color-edge: var(--panel-edge);
+  --color-star: var(--star);
+  --color-dim: var(--star-dim);
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+
+  --font-serif: Georgia, 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+  --font-sans: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Consolas, 'JetBrains Mono', monospace;
+
+  --radius-card: 10px;
+}
+
+html {
+  background: var(--void);
+  color: var(--star);
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 标题用衬线（学术编年感） */
+.font-display {
+  font-family: var(--font-serif);
+  letter-spacing: 0.01em;
+}
+
+/* 极细轨道线分割 */
+.hairline {
+  border-color: var(--panel-edge);
+}
+
+/* 图谱节点 hover 泛光（全站唯一允许的 glow） */
+.node-glow {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* 页面级一次性入场编排（非逐节 fade-up） */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in {
+    animation: none;
+  }
+}
+
+/* Markdown 正文排版 */
+.prose-knowledge {
+  max-width: 42em;
+  color: var(--star);
+}
+.prose-knowledge p {
+  margin: 0.75em 0;
+}
+.prose-knowledge h2,
+.prose-knowledge h3 {
+  font-family: var(--font-serif);
+  margin: 1.2em 0 0.4em;
+}
+.prose-knowledge code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.prose-knowledge a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-knowledge ul {
+  list-style: disc;
+  padding-left: 1.4em;
+  margin: 0.75em 0;
+}
+
+/* 滚动条与星空画布 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--panel-edge);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

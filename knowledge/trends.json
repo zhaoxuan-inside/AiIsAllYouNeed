@@ -1,0 +1,57 @@
+[
+  {
+    "categoryId": "ml-foundation",
+    "headline": "从「手工调优」走向「自动化与数据为中心」",
+    "directions": [
+      { "title": "模型合并与参数高效微调", "description": "LoRA/QLoRA、模型平均与任务算术让「训练一个大模型、 everyone 拿去改」成为现实，训练技艺的重心从全量训练转向轻量改造。", "relatedPointIds": ["transfer-learning", "adam-optimizer"] },
+      { "title": "数据中心化 AI", "description": "在规模法则的边际收益递减处，数据质量、去重与课程设计重新成为杠杆；合成数据进入训练循环。", "relatedPointIds": ["overfitting-regularization", "self-supervised-learning"] },
+      { "title": "训练科学化", "description": "μP 等超参数迁移理论让小规模实验可靠地指导大规模训练，「炼丹」正在变成可复现的工程科学。", "relatedPointIds": ["gradient-descent", "adam-optimizer"] }
+    ]
+  },
+  {
+    "categoryId": "nlp",
+    "headline": "任务专用系统已被「一个模型」吞并，竞争转向长上下文与效率",
+    "directions": [
+      { "title": "长上下文成为默认能力", "description": "百万级 token 窗口、位置编码外推与注意力效率改进，让「整本书/整个代码库进上下文」从论文变成产品参数。", "relatedPointIds": ["positional-encoding", "attention-mechanism"] },
+      { "title": "状态空间模型挑战注意力", "description": "Mamba 等线性复杂度架构继承 RNN 的效率与注意力表达力，「Transformer 垄断」出现第一个可信挑战者。", "relatedPointIds": ["rnn", "transformer"] },
+      { "title": "检索与生成深度融合", "description": "文本嵌入、向量检索与生成模型协同设计，语言系统的记忆从权重内外双向扩展。", "relatedPointIds": ["text-embedding", "rag"] }
+    ]
+  },
+  {
+    "categoryId": "cv",
+    "headline": "从任务专用网络走向视觉基础模型与生成式视觉",
+    "directions": [
+      { "title": "通用视觉模型吞并细分任务", "description": "SAM 式零样本分割/检测正在替代传统专用模型，「一个视觉基座 + 提示」成为新范式。", "relatedPointIds": ["image-segmentation", "vision-transformer"] },
+      { "title": "生成与理解合流", "description": "扩散模型与视觉编码器共享骨干，理解图像与生成图像逐渐成为同一系统的两种模式。", "relatedPointIds": ["stable-diffusion", "ddpm"] },
+      { "title": "视频与世界模型", "description": "视频生成（Sora 类）被视作「世界模拟器」雏形，视觉智能从识别帧走向预测时空演化。", "relatedPointIds": ["ddpm", "vision-transformer"] }
+    ]
+  },
+  {
+    "categoryId": "rl",
+    "headline": "强化学习从「玩游戏」进入「大模型对齐与推理」的主舞台",
+    "directions": [
+      { "title": "过程监督与推理时搜索", "description": "奖励模型从评结果转向评过程，MCTS 式搜索回归大模型推理（o1 路线），「学习+搜索」的 AlphaGo 模板全面复活。", "relatedPointIds": ["preference-modeling", "monte-carlo-tree-search", "inference-scaling"] },
+      { "title": "更便宜的对齐算法", "description": "DPO/GRPO 等方法绕开完整 RL 循环，对齐成本下降一个数量级，开源对齐成为常态。", "relatedPointIds": ["rlhf", "ppo"] },
+      { "title": "具身智能的动作基座", "description": "视觉-语言-动作模型把 LLM 范式搬进机器人，强化学习重回物理世界的决策学习。", "relatedPointIds": ["policy-gradient", "dqn"] }
+    ]
+  },
+  {
+    "categoryId": "llm",
+    "headline": "能力扩展从「堆参数」转向「推理时计算 + 多模态 + 自主执行」三条曲线",
+    "directions": [
+      { "title": "推理时计算扩展", "description": "o1/R1 类长推理模型证明「思考更久」与「参数更多」同样有效，扩展定律获得第二根轴。", "relatedPointIds": ["inference-scaling", "chain-of-thought"] },
+      { "title": "原生多模态统一", "description": "文本、图像、音频、视频在单一模型中端到端处理，模态边界消失，「看、听、说、画」一体。", "relatedPointIds": ["clip", "stable-diffusion"] },
+      { "title": "从对话到自主执行", "description": "Agent 化（规划 + 工具 + 长任务执行）是大模型价值兑现的主战场，可靠性工程成为核心学科。", "relatedPointIds": ["agent", "rag"] },
+      { "title": "开源与闭源赛跑", "description": "开源旗舰以月级时差追赶闭源，能力民主化与安全治理的张力将持续定义行业格局。", "relatedPointIds": ["llama-open-weights", "llm-alignment"] }
+    ]
+  },
+  {
+    "categoryId": "math-theory",
+    "headline": "从「解释深度学习」走向「设计深度学习」的理论反哺",
+    "directions": [
+      { "title": "超越 NTK 的特征学习理论", "description": "μP/张量程序等理论已开始直接指导大模型超参数设计与迁移，理论从后见之明变成先行工具。", "relatedPointIds": ["neural-tangent-kernel", "scaling-laws"] },
+      { "title": "涌现现象的度量科学", "description": "对「涌现是否为度量假象」的争论催生了更严谨的能力评测学，能力-规模关系的可预测性研究升温。", "relatedPointIds": ["emergent-abilities", "vc-dimension"] },
+      { "title": "对齐的可扩展监督理论", "description": "「用弱模型监督强模型」的可信度、博弈论安全协议等成为学习理论的新前沿。", "relatedPointIds": ["preference-modeling", "pac-learning"] }
+    ]
+  }
+]
