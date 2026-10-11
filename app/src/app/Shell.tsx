@@ -59,11 +59,11 @@ export function Shell() {
           <div className="ml-auto flex items-center gap-4">
             <button
               onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 text-sm text-dim transition-colors hover:text-star"
+              aria-label="搜索"
+              title="搜索 (⌘K)"
+              className="text-base text-dim transition-colors hover:text-star"
             >
               <span aria-hidden>⌕</span>
-              <span className="hidden sm:inline">搜索</span>
-              <kbd className="hidden font-mono text-[10px] text-faint md:inline">⌘K</kbd>
             </button>
             <button
               onClick={toggleTheme}

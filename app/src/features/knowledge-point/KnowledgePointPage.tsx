@@ -164,7 +164,6 @@ export function KnowledgePointPage() {
 
       <section className="mt-12">
         <h2 className="font-display text-base">依赖关系</h2>
-        <p className="mb-4 mt-1 text-xs text-dim">左：需要先懂的前置 · 右：建立在其上的衍生/相关</p>
         <DepMiniGraph color={category.color} prereqs={prerequisites} derived={derived} />
         <Link to="/graph" className="mt-4 inline-block text-xs text-accent underline underline-offset-2">
           在全景图谱中查看 →
@@ -173,7 +172,7 @@ export function KnowledgePointPage() {
 
       {point.related.length > 0 && (
         <section className="mt-8">
-          <h2 className="font-display text-base">相关知识点</h2>
+          <h2 className="font-display text-base">相关</h2>
           <p className="mt-2 leading-loose">
             {relatedPoints.map((rel, i) => (
               <span key={rel.id}>
@@ -201,7 +200,7 @@ export function KnowledgePointPage() {
 
       <section className="mt-8">
         <h2 className="font-display text-base">我的笔记</h2>
-        <p className="mt-1 text-xs text-dim">仅保存在本机浏览器中</p>
+        
         <textarea
           defaultValue={profile.notes[point.id] ?? ''}
           onBlur={(e) => setNote(point.id, e.target.value)}

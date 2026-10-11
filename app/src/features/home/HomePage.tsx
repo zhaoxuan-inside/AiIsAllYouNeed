@@ -32,17 +32,12 @@ export function HomePage() {
       <section className="relative -mx-4 -mt-6 px-6 pb-14 pt-14 lg:-mx-8 lg:px-8">
         <Constellation className="mb-10 h-24 w-full max-w-[880px] opacity-70" />
         <div className="mx-auto w-full max-w-[1120px]">
-          <p className="text-xs text-dim">AIS ALL YOU NEED · 知识即星空</p>
-          <h1 className="font-display mt-3 text-3xl leading-snug text-star sm:text-4xl">
+          <h1 className="font-display text-3xl leading-snug text-star sm:text-4xl">
             把人工智能的知识
             <br />
             绘成一张可漫游的星图
           </h1>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-dim">
-            以知识点为星、依赖关系为星线、时间为轨道——浏览 {stats.points} 个 AI 核心知识点的发展脉络、
-            领域路线与趋势预测。
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/graph"
               className="pixel-press rounded-lg bg-star px-5 py-2.5 text-sm text-void hover:opacity-90"
@@ -84,7 +79,6 @@ export function HomePage() {
               >
                 <span className="h-2 w-2 shrink-0 self-center rounded-full" style={{ backgroundColor: c.color }} />
                 <span className="shrink-0 text-base font-bold text-star group-hover:text-accent">{c.name}</span>
-                <span className="shrink-0 text-xs text-faint">{c.nameEn}</span>
                 <span className="truncate text-sm text-dim">{c.description}</span>
                 <span className="ml-auto shrink-0 font-mono text-xs text-faint">{count}</span>
               </Link>

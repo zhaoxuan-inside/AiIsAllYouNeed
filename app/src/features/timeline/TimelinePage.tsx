@@ -56,7 +56,6 @@ export function TimelinePage() {
   return (
     <div className="rise-in">
       <h1 className="font-display text-2xl">时间线</h1>
-      <p className="mt-1 text-sm text-dim">AI 知识的编年长河：每个节点是一个知识点的诞生时刻。</p>
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <CategoryFilter categories={categories} selected={selected} onToggle={toggleCategory} onClear={clearCategories} />

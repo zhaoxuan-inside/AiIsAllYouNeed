@@ -14,7 +14,6 @@ export function RoadmapPage() {
   return (
     <div className="rise-in">
       <h1 className="font-display text-2xl">发展路线</h1>
-      <p className="mt-1 text-sm text-dim">每个领域的学习与演化路径：从基础概念到前沿突破，按依赖顺序编排。</p>
 
       {/* 领域 Tab */}
       <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
@@ -35,7 +34,7 @@ export function RoadmapPage() {
       {/* 领域趋势（发展轨迹预测） */}
       {trend && (
         <section className="mt-10">
-          <p className="text-xs text-dim">发展趋势预测（编辑标注）</p>
+          <p className="text-xs text-dim">趋势预测</p>
           <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             {trend.directions.map((d) => (

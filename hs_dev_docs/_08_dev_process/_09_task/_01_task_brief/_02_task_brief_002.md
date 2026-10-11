@@ -1,0 +1,14 @@
+# 任务简述清单分片 002
+
+### 任务简述：minimal-text-pass
+- **标题**：简洁 first：全站清除非必要文字（副标题/双语冗余/操作说明句）
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：简洁 first：全站清除非必要文字（副标题/双语冗余/操作说明句）
+- **详情索引**：`_02_task_detail/_01_minimal-text-pass/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_minimal-text-pass/_00_context_pack.md`
+- **更新时间**：`2026-10-11T07:17:53Z`
+---
+

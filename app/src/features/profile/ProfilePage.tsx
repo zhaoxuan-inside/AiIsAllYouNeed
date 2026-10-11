@@ -44,7 +44,7 @@ export function ProfilePage() {
             aria-label="昵称"
             className="font-display w-48 border-b border-transparent bg-transparent text-xl outline-none hover:border-edge focus:border-accent"
           />
-          <p className="mt-1 text-xs text-dim">档案信息仅保存在本机浏览器，不上传任何服务器</p>
+          <p className="mt-1 text-xs text-dim">仅存于本机浏览器</p>
           <div className="mt-2 flex gap-1.5">
             {COLORS.map((c) => (
               <button

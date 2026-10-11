@@ -152,7 +152,7 @@ export function GraphPage() {
         <div>
           <h1 className="font-display text-2xl">知识图谱</h1>
           <p className="mt-1 text-sm text-dim">
-            节点大小 = 被依赖数（入度）· 色彩 = K-Means 空间聚类 · 虚线 = 相关 · 拖拽节点、滚轮缩放
+            节点大小 = 被依赖数 · 色彩 = 空间聚类
           </p>
         </div>
         <div className="flex items-center gap-4 text-xs">

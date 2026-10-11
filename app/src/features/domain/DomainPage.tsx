@@ -16,9 +16,7 @@ export function DomainPage() {
   return (
     <div className="rise-in">
       <header className="pb-2" style={{ borderLeft: `3px solid ${category.color}` }}>
-        <p className="text-xs text-dim">
-          领域 · {category.nameEn}
-        </p>
+
         <h1 className="font-display mt-1 text-2xl">{category.name}</h1>
         <p className="mt-2 max-w-xl text-sm text-dim">{category.description}</p>
         <div className="mt-3 flex gap-5 font-mono text-xs text-dim">
@@ -46,7 +44,7 @@ export function DomainPage() {
       )}
 
       <section className="mt-8">
-        <h2 className="font-display text-xl">知识脉络（按诞生年份）</h2>
+        <h2 className="font-display text-xl">知识脉络</h2>
         <div className="mt-4 space-y-5">
           {points.map((p) => (
             <KnowledgeCard key={p.id} point={p} category={category} />

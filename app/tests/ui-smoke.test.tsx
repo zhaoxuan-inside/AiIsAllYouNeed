@@ -74,13 +74,13 @@ describe('页面冒烟（真实种子数据）', () => {
 
   it('路线页：默认领域三阶段 + 趋势卡', () => {
     renderWithRouter(<Shell />, { path: '/roadmap' })
-    expect(screen.getByText(/发展趋势预测/)).toBeInTheDocument()
+    expect(screen.getByText('趋势预测')).toBeInTheDocument()
     expect(screen.getByText('基础')).toBeInTheDocument()
   })
 
   it('领域页：渲染领域概览', () => {
     renderWithRouter(<Shell />, { path: '/domain/nlp' })
-    expect(screen.getByText(/领域 · Natural Language Processing/)).toBeInTheDocument()
+    expect(screen.getByText('知识脉络')).toBeInTheDocument()
     expect(screen.getByText(/知识脉络/)).toBeInTheDocument()
   })
 
@@ -95,6 +95,6 @@ describe('页面冒烟（真实种子数据）', () => {
   it('档案页：默认访客与三个 Tab', () => {
     renderWithRouter(<Shell />, { path: '/profile' })
     expect(screen.getByDisplayValue('访客')).toBeInTheDocument()
-    expect(screen.getByText(/仅保存在本机浏览器/)).toBeInTheDocument()
+    expect(screen.getByText('仅存于本机浏览器')).toBeInTheDocument()
   })
 })
