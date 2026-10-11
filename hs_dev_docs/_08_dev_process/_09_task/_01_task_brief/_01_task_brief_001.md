@@ -96,3 +96,15 @@
 - **更新时间**：`2026-10-11T06:37:48Z`
 ---
 
+### 任务简述：graph-redesign-obsidian-style
+- **标题**：图谱页重设计：对齐 GitHub 知识图谱可视化设计语言（邻域聚焦/低饱和/局部文本图）
+- **change_size**：`M`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：图谱页重设计：对齐 GitHub 知识图谱可视化设计语言（邻域聚焦/低饱和/局部文本图）
+- **详情索引**：`_02_task_detail/_01_graph-redesign-obsidian-style/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_graph-redesign-obsidian-style/_00_context_pack.md`
+- **更新时间**：`2026-10-11T06:48:00Z`
+---
+
