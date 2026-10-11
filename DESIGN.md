@@ -45,8 +45,8 @@ iA Writer 式的「写作台」：打开就是一页干净的纸，顶栏与侧�
 
 | 角色 | 族 | 说明 |
 |------|-----|------|
-| 全站 | `'iA Writer Quattro', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif` | 标题=同族 700；正文 400 |
-| 代码/年份/统计 | `'iA Writer Mono', ui-monospace, Consolas, monospace` | 数字对齐 |
+| 全站 | `'iA Writer Quattro', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif` | **官方字体已内置**（iaolo/iA-Fonts woff2 在 `src/assets/fonts/`，OFL）；标题=同族 700；正文 400 |
+| 代码/年份/统计 | `'iA Writer Mono', ui-monospace, Consolas, monospace` | 官方 Mono S 已内置；数字对齐 |
 
 - 层级：H1 30px/700 → H2 20px/700 → H3 16px/700；正文 16px/400/1.85；行长 ≤38em。
 - 禁止：第二字体族（含衬线标题回归）、彩色正文文字、斜体、<12px、标题字距装饰。

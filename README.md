@@ -68,6 +68,8 @@ app/src/features  home · graph · timeline · roadmap · domain · knowledge-po
 app/src-tauri     六端壳（desktop + mobile）
 ```
 
+**字体**：iA 官方开源字体（[iaolo/iA-Fonts](https://github.com/iaolo/iA-Fonts)，OFL）直接内置在 `app/src/assets/fonts/`，无第三方字体运行时依赖。
+
 **分层边界**：展示层只允许 `import from '@/backend'`；数据管理的加载、校验、派生、检索全部在应用后端内。
 v2 服务器化时仅替换 backend 内部实现为 HTTP Adapter，视图层零改动（详见 `hs_dev_docs/_03_architecture_design/arch_v1.md` §5.5）。
 

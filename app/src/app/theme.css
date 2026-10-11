@@ -1,3 +1,33 @@
+/* ===== 内置官方字体（iaolo/iA-Fonts，OFL；文件见 src/assets/fonts/） ===== */
+@font-face {
+  font-family: 'iA Writer Quattro';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/iAWriterQuattroS-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'iA Writer Quattro';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/iAWriterQuattroS-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'iA Writer Quattro';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/iAWriterQuattroS-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'iA Writer Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/iAWriterMonoS-Regular.woff2') format('woff2');
+}
+
 @import "tailwindcss";
 
 /* ===== 主题令牌 v4「iA 极简文库」（对标 iA Writer 设计语言：一族字体 · 近单色 · 零阴影 · 发丝线 · 单蓝强调） ===== */

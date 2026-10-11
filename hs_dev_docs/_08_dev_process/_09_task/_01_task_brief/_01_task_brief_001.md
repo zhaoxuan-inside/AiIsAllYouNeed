@@ -84,3 +84,15 @@
 - **更新时间**：`2026-10-11T06:33:45Z`
 ---
 
+### 任务简述：bundle-official-ia-fonts
+- **标题**：内置 iA 官方开源字体（iaolo/iA-Fonts woff2 + OFL 许可）
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：内置 iA 官方开源字体（iaolo/iA-Fonts woff2 + OFL 许可）
+- **详情索引**：`_02_task_detail/_01_bundle-official-ia-fonts/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_bundle-official-ia-fonts/_00_context_pack.md`
+- **更新时间**：`2026-10-11T06:37:48Z`
+---
+
