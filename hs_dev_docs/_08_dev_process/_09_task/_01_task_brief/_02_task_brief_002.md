@@ -36,3 +36,15 @@
 - **更新时间**：`2026-10-11T07:35:21Z`
 ---
 
+### 任务简述：user-icon-line-style
+- **标题**：用户图标改为线条人形，与全站 icon 统一
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：用户图标改为线条人形，与全站 icon 统一
+- **详情索引**：`_02_task_detail/_01_user-icon-line-style/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_user-icon-line-style/_00_context_pack.md`
+- **更新时间**：`2026-10-11T07:41:06Z`
+---
+

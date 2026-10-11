@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useProfileStore } from '@/backend/profile-store'
 import { getPointSummary } from '@/backend/knowledge-service'
 import { EmptyState } from '@/components/ui'
+import { UserIcon } from '@/components/icons'
 
 const COLORS = ['#E5B85C', '#5B8DEF', '#3FBEA8', '#E0705A', '#9D7BE8', '#D46A9E']
 
@@ -32,10 +33,10 @@ export function ProfilePage() {
     <div className="rise-in">
       <header className="flex flex-wrap items-center gap-4 pb-2">
         <span
-          className="grid h-14 w-14 place-items-center rounded-full text-xl text-accent-ink"
+          className="grid h-14 w-14 place-items-center rounded-full text-accent-ink"
           style={{ backgroundColor: profile.color }}
         >
-          {profile.name.slice(0, 1)}
+          <UserIcon className="h-7 w-7" />
         </span>
         <div className="min-w-0">
           <input

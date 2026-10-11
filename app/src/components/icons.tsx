@@ -67,6 +67,17 @@ export function MaximizeIcon({ className }: IconProps) {
   )
 }
 
+/** 本地档案：半身人形（头 + 肩） */
+export function UserIcon({ className }: IconProps) {
+  return svg(
+    className,
+    <>
+      <circle cx={12} cy={8} r={3.5} />
+      <path d="M5.5 19.5c1.2-3.4 3.6-5 6.5-5s5.3 1.6 6.5 5" />
+    </>,
+  )
+}
+
 /** 关闭 */
 export function CloseIcon({ className }: IconProps) {
   return svg(className, <path d="M6 6l12 12M18 6 6 18" />)

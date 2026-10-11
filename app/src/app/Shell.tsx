@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { usePreferenceStore } from '@/backend/preference-store'
-import { useProfileStore } from '@/backend/profile-store'
 import { SearchOverlay } from '@/components/SearchOverlay'
-import { MoonIcon, SearchIcon, SunIcon } from '@/components/icons'
+import { MoonIcon, SearchIcon, SunIcon, UserIcon } from '@/components/icons'
 
 const NAV = [
   { to: '/', label: '首页' },
@@ -17,8 +16,6 @@ const NAV = [
 export function Shell() {
   const theme = usePreferenceStore((s) => s.theme)
   const toggleTheme = usePreferenceStore((s) => s.toggleTheme)
-  const profileName = useProfileStore((s) => s.profile.name)
-  const profileColor = useProfileStore((s) => s.profile.color)
   const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
@@ -77,11 +74,10 @@ export function Shell() {
             <NavLink
               to="/profile"
               aria-label="本地档案"
-              title={`${profileName} · 本地档案`}
-              className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs text-accent-ink"
-              style={{ backgroundColor: profileColor }}
+              title="本地档案"
+              className="grid h-7 w-7 shrink-0 place-items-center text-dim transition-colors hover:text-star"
             >
-              {profileName.slice(0, 1)}
+              <UserIcon />
             </NavLink>
           </div>
         </div>
