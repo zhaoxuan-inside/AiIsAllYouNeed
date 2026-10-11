@@ -84,11 +84,15 @@ describe('页面冒烟（真实种子数据）', () => {
     expect(screen.getByText(/知识脉络/)).toBeInTheDocument()
   })
 
-  it('详情页：标题、论文、依赖小图与收藏', () => {
+  it('详情页：标题、论文、依赖/应用拆分与收藏', () => {
     renderWithRouter(<Shell />, { path: '/point/transformer' })
     expect(screen.getByRole('heading', { name: /Transformer/ })).toBeInTheDocument()
     expect(screen.getAllByText(/Attention Is All You Need/).length).toBeGreaterThan(0)
-    expect(screen.getByText('依赖关系')).toBeInTheDocument()
+    expect(screen.getByText('依赖')).toBeInTheDocument()
+    expect(screen.getByText('应用')).toBeInTheDocument()
+    // 依赖/应用列表来自后端视图模型：transformer 的应用应含 BERT 与 GPT-1
+    expect(screen.getAllByText('BERT 与双向预训练').length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: /在全景图谱中定位/ })).toHaveAttribute('href', '/graph?focus=transformer')
     expect(screen.getByRole('button', { name: /收藏/ })).toBeInTheDocument()
   })
 

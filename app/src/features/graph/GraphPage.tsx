@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   forceCenter,
   forceCollide,
@@ -12,6 +12,7 @@ import {
 import { getGraphView, getPointDetailView } from '@/backend/knowledge-service'
 import { kmeansCluster, type ClusterPoint } from '@/domain/clusters'
 import { useFilterStore } from '@/backend/filter-store'
+import { useProfileStore } from '@/backend/profile-store'
 import { CategoryFilter, EmptyState, HelpHint } from '@/components/ui'
 import { CloseIcon, MaximizeIcon, MinusIcon, PlusIcon } from '@/components/icons'
 import type { GraphEdge, GraphNode } from '@/backend'
@@ -45,8 +46,12 @@ export function GraphPage() {
   const [nodes, setNodes] = useState<PositionedNode[]>([])
   const [clusters, setClusters] = useState<number[]>([])
   const simRef = useRef<Simulation<PositionedNode, undefined> | null>(null)
-  const [zoom, setZoom] = useState(1)
+  // 画布变换：k 缩放 + tx/ty 平移（viewBox 单位）
+  const [view, setView] = useState({ k: 1, tx: 0, ty: 0 })
   const dragRef = useRef<{ id: string | null; moved: boolean }>({ id: null, moved: false })
+  const panRef = useRef<{ x: number; y: number } | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const progress = useProfileStore((s) => s.profile.progress)
 
   useEffect(() => {
     const initial: PositionedNode[] = graph.nodes.map((n, i) => ({
@@ -94,10 +99,10 @@ export function GraphPage() {
 
   const toSvg = (e: React.PointerEvent) => {
     const rect = containerRef.current!.getBoundingClientRect()
-    return {
-      x: ((e.clientX - rect.left) / rect.width) * VIEW.w / zoom,
-      y: ((e.clientY - rect.top) / rect.height) * VIEW.h / zoom,
-    }
+    // 指针 px → viewBox 单位 → 逆变换回节点坐标（含平移与缩放）
+    const ux = ((e.clientX - rect.left) / rect.width) * VIEW.w
+    const uy = ((e.clientY - rect.top) / rect.height) * VIEW.h
+    return { x: (ux - view.tx) / view.k, y: (uy - view.ty) / view.k }
   }
 
   const onNodePointerDown = (id: string) => (e: React.PointerEvent) => {
@@ -106,16 +111,43 @@ export function GraphPage() {
     ;(e.target as Element).setPointerCapture?.(e.pointerId)
   }
   const onPointerMove = (e: React.PointerEvent) => {
-    const { id } = dragRef.current
-    if (!id) return
-    const p = toSvg(e)
-    dragRef.current.moved = true
-    setNodes((ns) => ns.map((n) => (n.id === id ? { ...n, fx: p.x, fy: p.y, x: p.x, y: p.y } : n)))
+    if (dragRef.current.id) {
+      const p = toSvg(e)
+      dragRef.current.moved = true
+      setNodes((ns) => ns.map((n) => (n.id === dragRef.current.id ? { ...n, fx: p.x, fy: p.y, x: p.x, y: p.y } : n)))
+      return
+    }
+    if (panRef.current) {
+      const rect = containerRef.current!.getBoundingClientRect()
+      const scale = VIEW.w / rect.width
+      setView((v) => ({
+        ...v,
+        tx: v.tx + (e.clientX - panRef.current!.x) * scale,
+        ty: v.ty + (e.clientY - panRef.current!.y) * scale,
+      }))
+      panRef.current = { x: e.clientX, y: e.clientY }
+    }
   }
   const onPointerUp = () => {
     dragRef.current = { id: null, moved: false }
+    panRef.current = null
     setNodes((ns) => ns.map((n) => ({ ...n, fx: null, fy: null })))
   }
+
+  // focus 参数：定位并居中指定知识点（详情页『在全景图谱中定位』入口）
+  const focusParam = searchParams.get('focus')
+  const focusApplied = useRef<string | null>(null)
+  useLayoutEffect(() => {
+    if (!focusParam || nodes.length === 0) return
+    if (focusApplied.current === focusParam) return
+    const target = nodes.find((n) => n.id === focusParam)
+    if (!target) return
+    focusApplied.current = focusParam
+    const k = 1.35
+    setView({ k, tx: VIEW.w / 2 - target.x * k, ty: VIEW.h / 2 - target.y * k })
+    setSelectedNode(target.id)
+    setSearchParams({}, { replace: true })
+  }, [focusParam, nodes, setSearchParams])
 
   const selectedPoint = selectedNode ? getPointDetailView(selectedNode) : null
   const selectedDetail = selectedPoint?.point ?? null
@@ -139,6 +171,11 @@ export function GraphPage() {
   }, [graph.edges])
   const focusId = hoveredNode ?? selectedNode
   const neighbors = focusId ? neighborIds.get(focusId) : undefined
+  const learnedSet = useMemo(
+    () => new Set(Object.entries(progress).filter(([, done]) => done).map(([id]) => id)),
+    [progress],
+  )
+  const learnedCount = nodes.filter((n) => learnedSet.has(n.id)).length
   const mutedColor = (hex: string) => `color-mix(in srgb, ${hex} 60%, var(--void))`
   const CLUSTER_TONES = ['#6B7F99', '#7E9684', '#A69379', '#96819B', '#A67F72']
   const clusterLegend = useMemo(() => {
@@ -154,7 +191,7 @@ export function GraphPage() {
           <h1 className="font-display text-2xl">知识图谱</h1>
           <HelpHint
             label="图谱说明"
-            text="节点大小 = 被依赖数（入度）；色彩 = K-Means 空间聚类；虚线 = 相关边。可拖拽节点、滚轮缩放，点击节点查看局部信息。"
+            text="节点大小 = 被依赖数（入度）；色彩 = K-Means 空间聚类；实心 = 已学，空心 = 未学。虚线 = 相关边。可拖拽背景平移、滚轮缩放，点击节点查看局部信息。"
           />
         </div>
         <div className="flex items-center gap-4 text-xs">
@@ -187,31 +224,50 @@ export function GraphPage() {
       ) : (
         <div
           ref={containerRef}
-          className="relative mt-6"
+          className="relative mt-6 cursor-grab active:cursor-grabbing"
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onWheel={(e) => {
             e.preventDefault()
-            setZoom((z) => Math.min(2.4, Math.max(0.5, z * (e.deltaY > 0 ? 0.92 : 1.08))))
+            const factor = e.deltaY > 0 ? 0.92 : 1.08
+            setView((v) => {
+              const k = Math.min(2.4, Math.max(0.5, v.k * factor))
+              const cx = VIEW.w / 2
+              const cy = VIEW.h / 2
+              return { k, tx: cx - ((cx - v.tx) * k) / v.k, ty: cy - ((cy - v.ty) * k) / v.k }
+            })
+          }}
+          onPointerDown={(e) => {
+            if (dragRef.current.id) return
+            panRef.current = { x: e.clientX, y: e.clientY }
+            ;(e.currentTarget as Element).setPointerCapture?.(e.pointerId)
           }}
         >
           <div className="pointer-events-none absolute left-3 top-3 font-mono text-[11px] text-faint">
-            {nodes.length} nodes · {visibleEdges.length} edges
+            {nodes.length} nodes · {visibleEdges.length} edges · 已学 {learnedCount}
           </div>
           <div className="absolute bottom-3 right-3 flex items-center gap-3 rounded-[2px] border border-edge bg-void/85 px-3 py-1.5 text-xs text-dim">
-            <button onClick={() => setZoom((z) => Math.max(0.5, z * 0.85))} aria-label="缩小" className="transition-colors hover:text-star">
+            <button
+              onClick={() => setView((v) => ({ ...v, k: Math.max(0.5, v.k * 0.85) }))}
+              aria-label="缩小"
+              className="transition-colors hover:text-star"
+            >
               <MinusIcon className="h-3.5 w-3.5" />
             </button>
-            <span className="w-10 text-center font-mono text-[11px] text-faint">{Math.round(zoom * 100)}%</span>
-            <button onClick={() => setZoom((z) => Math.min(2.4, z * 1.15))} aria-label="放大" className="transition-colors hover:text-star">
+            <span className="w-10 text-center font-mono text-[11px] text-faint">{Math.round(view.k * 100)}%</span>
+            <button
+              onClick={() => setView((v) => ({ ...v, k: Math.min(2.4, v.k * 1.15) }))}
+              aria-label="放大"
+              className="transition-colors hover:text-star"
+            >
               <PlusIcon className="h-3.5 w-3.5" />
             </button>
-            <button onClick={() => setZoom(1)} aria-label="重置缩放" className="transition-colors hover:text-star">
+            <button onClick={() => setView({ k: 1, tx: 0, ty: 0 })} aria-label="重置视图" className="transition-colors hover:text-star">
               <MaximizeIcon className="h-3.5 w-3.5" />
             </button>
           </div>
           <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} className="h-[70vh] max-h-[640px] w-full touch-none" role="img" aria-label="知识依赖图谱">
-            <g transform={`translate(${(VIEW.w * (1 - zoom)) / 2} ${(VIEW.h * (1 - zoom)) / 2}) scale(${zoom})`}>
+            <g transform={`translate(${view.tx} ${view.ty}) scale(${view.k})`}>
               {visibleEdges.map((e, i) => {
                 const a = nodeMap.get(e.from)
                 const b = nodeMap.get(e.to)
@@ -252,7 +308,11 @@ export function GraphPage() {
                     className="cursor-pointer"
                   >
                     {active && <circle r={r + 3.5} fill="none" stroke="var(--accent)" strokeWidth={1} />}
-                    <circle r={r} fill={mutedColor(tone)} opacity={inFocus ? 1 : 0.12} />
+                    {learnedSet.has(n.id) ? (
+                      <circle r={r} fill={mutedColor(tone)} opacity={inFocus ? 1 : 0.12} />
+                    ) : (
+                      <circle r={r} fill="none" stroke={mutedColor(tone)} strokeWidth={1.2} opacity={inFocus ? 1 : 0.12} />
+                    )}
                     {showLabel && (
                       <text y={r + 11} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.9}>
                         {n.title}

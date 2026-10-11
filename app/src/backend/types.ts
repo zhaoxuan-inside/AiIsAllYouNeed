@@ -69,6 +69,8 @@ export interface PointDetailView {
   prerequisites: KnowledgePoint[]
   /** 相关知识点（解析后） */
   relatedPoints: KnowledgePoint[]
+  /** 应用（反向依赖）：把本知识点列为前置的知识点 */
+  appliedBy: KnowledgePoint[]
   /** 衍生 + 相关（去重，截断 8 条，供依赖小图） */
   derived: KnowledgePoint[]
 }
@@ -80,6 +82,7 @@ export interface PaperView {
   year: number
   venue?: string
   url?: string
+  doi?: string
 }
 
 export interface PointSummaryView {

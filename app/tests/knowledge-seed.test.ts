@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadKnowledge } from '@/domain/load'
+import { autolinkKnowledge, getPointDetailView } from '@/backend/knowledge-service'
 import { buildGraph } from '@/domain/graph'
 import { buildTimeline } from '@/domain/timeline'
 import { buildRoadmap } from '@/domain/roadmap'
@@ -52,6 +53,23 @@ describe('种子知识数据（集成）', () => {
     expect(timeline[0]!.year).toBeLessThanOrEqual(1700)
     expect(timeline.at(-1)!.year).toBeGreaterThanOrEqual(2020)
     for (const entry of timeline) expect(entry.points.length).toBeGreaterThan(0)
+  })
+
+  it('PointDetailView：应用（反向依赖）正确解析', () => {
+    const detail = getPointDetailView('transformer')!
+    const ids = detail.appliedBy.map((p) => p.id)
+    expect(ids).toContain('bert')
+    expect(ids).toContain('gpt-1')
+    expect(ids).toContain('vision-transformer')
+  })
+
+  it('autolinkKnowledge：正文中的知识点标题转为站内链接', () => {
+    const linked = autolinkKnowledge('Transformer 依赖注意力机制，RNN 是它的前身。', 'attention')
+    expect(linked).toContain('[注意力机制](#/point/attention-mechanism)')
+    expect(linked).toContain('[RNN](#/point/rnn)')
+    const protectedText = autolinkKnowledge('`transformer` 与 [注意力](#/point/x) 不应被改写。')
+    expect(protectedText).toContain('`transformer`')
+    expect(protectedText).toContain('[注意力](#/point/x)')
   })
 
   it('搜索能命中核心知识点（中文与英文别名）', () => {

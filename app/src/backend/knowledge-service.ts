@@ -124,6 +124,7 @@ export function getPointDetailView(id: string): PointDetailView | null {
     trend: getTrendView(point.categoryId),
     papers: point.paperIds.map((pid) => base.paperById.get(pid)!).filter(Boolean),
     prerequisites: point.prerequisites.map((pid) => base.pointById.get(pid)!).filter(Boolean),
+    appliedBy: base.points.filter((p) => p.prerequisites.includes(id)),
     relatedPoints: point.related.map((pid) => base.pointById.get(pid)!).filter(Boolean),
     derived,
   }
@@ -170,6 +171,41 @@ export function searchKnowledge(q: string, limit = 8): SearchHitView[] {
       snippet: snippet(point.summary, q, 10),
     }
   })
+}
+
+// ---- 正文自动关联 ----
+
+let wikiTerms: { term: string; id: string }[] | null = null
+
+/**
+ * 正文自动关联：把文本中出现的其他知识点标题/别名替换为站内链接（Markdown 形态）。
+ * 规则：跳过代码段与已有链接；每个词条最多链接一次；单篇最多 8 个链接，避免过度关联。
+ */
+export function autolinkKnowledge(text: string, excludeId?: string): string {
+  const base = kb()
+  if (!wikiTerms) {
+    wikiTerms = base.points
+      .flatMap((p) => [p.title, ...p.aliases].map((term) => ({ term, id: p.id })))
+      .filter((t) => t.term.length >= 2)
+      .sort((a, b) => b.term.length - a.term.length)
+  }
+  const PROTECTED = /(`[^`]*`|\[[^\]]*\]\([^)]*\))/g
+  let linkBudget = 8
+  const linkify = (chunk: string): string => {
+    for (const { term, id } of wikiTerms!) {
+      if (linkBudget <= 0) break
+      if (id === excludeId) continue
+      const idx = chunk.indexOf(term)
+      if (idx < 0) continue
+      chunk = chunk.replace(term, `[${term}](#/point/${id})`)
+      linkBudget -= 1
+    }
+    return chunk
+  }
+  return text
+    .split(PROTECTED)
+    .map((part) => (part.startsWith('`') || part.startsWith('[') ? part : linkify(part)))
+    .join('')
 }
 
 // ---- 内部：趋势视图装配 ----

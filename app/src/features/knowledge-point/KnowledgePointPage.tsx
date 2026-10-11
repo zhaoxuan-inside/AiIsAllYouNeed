@@ -2,38 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { getPointDetailView } from '@/backend/knowledge-service'
+import { autolinkKnowledge, getPointDetailView } from '@/backend/knowledge-service'
 import { useProfileStore } from '@/backend/profile-store'
 import { CategoryBadge, EmptyState, HelpHint, ImportanceStars } from '@/components/ui'
-
-/** 依赖小图：前置 ← 本知识点 → 衍生（同屏三列微缩图谱） */
-function DepMiniGraph({ color, prereqs, derived }: { color: string; prereqs: { id: string; title: string }[]; derived: { id: string; title: string }[] }) {
-  return (
-    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-5">
-      <div className="flex flex-col items-end gap-1.5">
-        {prereqs.length === 0 && <span className="text-xs text-dim/60">（无前置）</span>}
-        {prereqs.map((p) => (
-          <Link key={p.id} to={`/point/${p.id}`} className="max-w-full truncate text-xs text-dim underline-offset-2 hover:text-accent hover:underline">
-            {p.title}
-          </Link>
-        ))}
-      </div>
-      <div className="flex items-center gap-0 text-dim" aria-hidden>
-        <span>→</span>
-        <span className="mx-2 h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
-        <span>→</span>
-      </div>
-      <div className="flex flex-col items-start gap-1.5">
-        {derived.length === 0 && <span className="text-xs text-dim/60">（暂无衍生）</span>}
-        {derived.map((p) => (
-          <Link key={p.id} to={`/point/${p.id}`} className="max-w-full truncate text-xs text-dim underline-offset-2 hover:text-accent hover:underline">
-            {p.title}
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 /**
  * Focus Mode（iA Writer 招牌）：开启后除「当前段」外全部退灰。
@@ -88,7 +59,7 @@ export function KnowledgePointPage() {
     return <EmptyState title="未找到该知识点" action={{ to: '/graph', label: '去图谱探索' }} />
   }
 
-  const { point, category, trend, papers, prerequisites, relatedPoints, derived } = detail
+  const { point, category, trend, papers, prerequisites, appliedBy, relatedPoints } = detail
   const favorited = profile.favorites.includes(point.id)
   const read = profile.progress[point.id] === true
 
@@ -136,7 +107,7 @@ export function KnowledgePointPage() {
       </header>
 
       <section ref={proseRef} className={`prose-knowledge mt-6 text-sm ${focusMode ? 'prose-focus' : ''}`}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{point.detail}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{autolinkKnowledge(point.detail, point.id)}</ReactMarkdown>
       </section>
 
       {papers.length > 0 && (
@@ -151,22 +122,53 @@ export function KnowledgePointPage() {
                   {paper.authors.length > 2 ? ' et al.' : ''} · {paper.year}
                   {paper.venue ? ` · ${paper.venue}` : ''}
                 </span>
-                {paper.url && (
-                  <a href={paper.url} target="_blank" rel="noreferrer" className="ml-2 text-xs text-accent underline underline-offset-2">
-                    原文 ↗
-                  </a>
-                )}
+                {(() => {
+                  const href = paper.url ?? (paper.doi ? `https://doi.org/${paper.doi}` : undefined)
+                  const label = paper.url || paper.doi ? '原文 ↗' : '检索 ↗'
+                  const target = href ?? `https://scholar.google.com/scholar?q=${encodeURIComponent(paper.title)}`
+                  return (
+                    <a href={target} target="_blank" rel="noreferrer" className="ml-2 text-xs text-accent underline underline-offset-2">
+                      {label}
+                    </a>
+                  )
+                })()}
               </li>
             ))}
           </ul>
         </section>
       )}
 
-      <section className="mt-12">
-        <h2 className="font-display text-base">依赖关系</h2>
-        <DepMiniGraph color={category.color} prereqs={prerequisites} derived={derived} />
-        <Link to="/graph" className="mt-4 inline-block text-xs text-accent underline underline-offset-2">
-          在全景图谱中查看 →
+      <section className="mt-12 grid gap-8 sm:grid-cols-2">
+        <div>
+          <h2 className="font-display text-base">依赖</h2>
+          <p className="mt-2 leading-loose">
+            {prerequisites.length === 0 && <span className="text-xs text-faint">无前置</span>}
+            {prerequisites.map((p, i) => (
+              <span key={p.id}>
+                {i > 0 && <span className="text-faint"> · </span>}
+                <Link to={`/point/${p.id}`} className="text-sm text-star underline-offset-4 hover:text-accent hover:underline">
+                  {p.title}
+                </Link>
+              </span>
+            ))}
+          </p>
+        </div>
+        <div>
+          <h2 className="font-display text-base">应用</h2>
+          <p className="mt-2 leading-loose">
+            {appliedBy.length === 0 && <span className="text-xs text-faint">暂无应用</span>}
+            {appliedBy.map((p, i) => (
+              <span key={p.id}>
+                {i > 0 && <span className="text-faint"> · </span>}
+                <Link to={`/point/${p.id}`} className="text-sm text-star underline-offset-4 hover:text-accent hover:underline">
+                  {p.title}
+                </Link>
+              </span>
+            ))}
+          </p>
+        </div>
+        <Link to={`/graph?focus=${point.id}`} className="text-xs text-accent underline underline-offset-2 sm:col-span-2">
+          在全景图谱中定位 →
         </Link>
       </section>
 

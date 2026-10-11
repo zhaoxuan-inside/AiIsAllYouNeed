@@ -62,6 +62,6 @@ export const useProfileStore = create<ProfileState>()(
         }),
       resetProfile: () => set({ profile: { ...GUEST_PROFILE, favorites: [], progress: {}, notes: {} } }),
     }),
-    { name: 'aiana.profile.v1' },
+    { name: 'aiana.profile.v2' },
   ),
 )
