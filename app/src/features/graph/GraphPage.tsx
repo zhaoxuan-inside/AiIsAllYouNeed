@@ -10,6 +10,7 @@ import {
   type SimulationLinkDatum,
 } from 'd3-force'
 import { getGraphView, getPointDetailView } from '@/backend/knowledge-service'
+import { kmeansCluster, type ClusterPoint } from '@/domain/clusters'
 import { useFilterStore } from '@/backend/filter-store'
 import { CategoryFilter, EmptyState } from '@/components/ui'
 import type { GraphEdge, GraphNode } from '@/backend'
@@ -38,13 +39,10 @@ export function GraphPage() {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
 
   const { categories, graph } = useMemo(() => getGraphView(selected), [selected])
-  const categoryColorById = useMemo(
-    () => new Map(categories.map((c) => [c.id, c.color])),
-    [categories],
-  )
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [nodes, setNodes] = useState<PositionedNode[]>([])
+  const [clusters, setClusters] = useState<number[]>([])
   const simRef = useRef<Simulation<PositionedNode, undefined> | null>(null)
   const [zoom, setZoom] = useState(1)
   const dragRef = useRef<{ id: string | null; moved: boolean }>({ id: null, moved: false })
@@ -58,10 +56,10 @@ export function GraphPage() {
     const sim = forceSimulation<PositionedNode, SimEdge>(initial)
       .force(
         'charge',
-        forceManyBody<PositionedNode>().strength((n: PositionedNode) => -60 - n.importance * 14),
+        forceManyBody<PositionedNode>().strength((n: PositionedNode) => -40 - n.inDegree * 12),
       )
       .force('center', forceCenter(VIEW.w / 2, VIEW.h / 2))
-      .force('collide', forceCollide<PositionedNode>((n: PositionedNode) => n.importance * 2.4 + 8))
+      .force('collide', forceCollide<PositionedNode>((n: PositionedNode) => 2.5 + Math.sqrt(n.inDegree) * 2.2 + 3))
       .force(
         'link',
         forceLink<PositionedNode, SimEdge>(
@@ -77,6 +75,10 @@ export function GraphPage() {
     // 预热 500 步，静态呈现（无持续动画，符合动效克制原则）
     for (let i = 0; i < 500; i++) sim.tick()
     setNodes([...initial])
+    // K-Means 空间聚类（确定性）：对布局最终坐标分簇，节点按簇着色
+    const clusterCount = Math.min(5, Math.max(3, Math.round(Math.sqrt(initial.length / 3))))
+    const clusterPoints: ClusterPoint[] = initial.map((n) => ({ x: n.x, y: n.y }))
+    setClusters(kmeansCluster(clusterPoints, clusterCount))
     simRef.current = sim
     return () => {
       sim.stop()
@@ -136,7 +138,13 @@ export function GraphPage() {
   }, [graph.edges])
   const focusId = hoveredNode ?? selectedNode
   const neighbors = focusId ? neighborIds.get(focusId) : undefined
-  const mutedColor = (hex: string) => `color-mix(in srgb, ${hex} 55%, var(--void))`
+  const mutedColor = (hex: string) => `color-mix(in srgb, ${hex} 60%, var(--void))`
+  const CLUSTER_TONES = ['#6B7F99', '#7E9684', '#A69379', '#96819B', '#A67F72']
+  const clusterLegend = useMemo(() => {
+    const counts = new Map<number, number>()
+    for (const c of clusters) counts.set(c, (counts.get(c) ?? 0) + 1)
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])
+  }, [clusters])
 
   return (
     <div className="rise-in">
@@ -144,7 +152,7 @@ export function GraphPage() {
         <div>
           <h1 className="font-display text-2xl">知识图谱</h1>
           <p className="mt-1 text-sm text-dim">
-            实线箭头 = 依赖（先学前置）· 虚线 = 相关 · 节点大小 = 影响力 · 拖拽节点、滚轮缩放
+            节点大小 = 被依赖数（入度）· 色彩 = K-Means 空间聚类 · 虚线 = 相关 · 拖拽节点、滚轮缩放
           </p>
         </div>
         <div className="flex items-center gap-4 text-xs">
@@ -217,9 +225,9 @@ export function GraphPage() {
                   />
                 )
               })}
-              {nodes.map((n) => {
-                const color = categoryColorById.get(n.categoryId)!
-                const r = 2.5 + n.importance * 1.2
+              {nodes.map((n, i) => {
+                const r = 2.5 + Math.sqrt(n.inDegree) * 2.2
+                const tone = CLUSTER_TONES[clusters[i] ?? 0] ?? CLUSTER_TONES[0]
                 const active = selectedNode === n.id
                 const inFocus = !focusId || n.id === focusId || neighbors?.has(n.id)
                 const showLabel = focusId != null ? n.id === focusId || neighbors?.has(n.id) : false
@@ -236,7 +244,7 @@ export function GraphPage() {
                     className="cursor-pointer"
                   >
                     {active && <circle r={r + 3.5} fill="none" stroke="var(--accent)" strokeWidth={1} />}
-                    <circle r={r} fill={mutedColor(color)} opacity={inFocus ? 1 : 0.12} />
+                    <circle r={r} fill={mutedColor(tone)} opacity={inFocus ? 1 : 0.12} />
                     {showLabel && (
                       <text y={r + 11} textAnchor="middle" fontSize={10} fill="var(--star)" opacity={0.9}>
                         {n.title}
@@ -304,13 +312,13 @@ export function GraphPage() {
 
       {/* 图例 */}
       <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-dim">
-        {categories.map((c) => (
-          <span key={c.id} className="inline-flex items-center gap-1.5">
+        {clusterLegend.map(([cluster, count]) => (
+          <span key={cluster} className="inline-flex items-center gap-1.5">
             <span
               className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: `color-mix(in srgb, ${c.color} 55%, var(--void))` }}
+              style={{ backgroundColor: mutedColor(CLUSTER_TONES[cluster] ?? CLUSTER_TONES[0]) }}
             />
-            {c.name}
+            簇 {cluster + 1} · {count}
           </span>
         ))}
         <Link to="/timeline" className="ml-auto text-dim hover:text-accent">

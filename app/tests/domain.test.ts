@@ -88,7 +88,9 @@ describe('buildGraph（seam：图谱数据派生）', () => {
   it('节点含领域/重要性，依赖边方向为 前置→本点，相关边标记 kind', () => {
     const kb = loadKnowledge(fixture())
     const g = buildGraph(kb)
-    expect(g.nodes.find((n) => n.id === 'transformer')).toMatchObject({ categoryId: 'nlp', importance: 5 })
+    expect(g.nodes.find((n) => n.id === 'transformer')).toMatchObject({ categoryId: 'nlp', importance: 5, inDegree: 0 })
+    // ngram 被 rnn 依赖 1 次 → 入度 1
+    expect(g.nodes.find((n) => n.id === 'ngram')).toMatchObject({ inDegree: 1 })
     const dep = g.edges.find((e) => e.kind === 'prerequisite' && e.to === 'transformer')
     expect(dep?.from).toBe('lstm')
     expect(g.edges.filter((e) => e.kind === 'related').length).toBeGreaterThan(0)

@@ -5,6 +5,8 @@ export interface GraphNode {
   title: string
   categoryId: string
   importance: number
+  /** 入度 = 被多少个知识点依赖（作为前置）——节点尺寸的依据 */
+  inDegree: number
   year: number
 }
 
@@ -28,9 +30,22 @@ export interface GraphOptions {
 /** 知识库 → 力导向图数据。依赖边方向：前置 → 本点；相关边去重为一条。 */
 export function buildGraph(kb: KnowledgeBase, options: GraphOptions = {}): KnowledgeGraph {
   const filter = options.categoryIds ? new Set(options.categoryIds) : null
+  const inDegree = new Map<string, number>()
+  for (const p of kb.points) {
+    for (const pre of p.prerequisites) {
+      inDegree.set(pre, (inDegree.get(pre) ?? 0) + 1)
+    }
+  }
   const nodes = kb.points
     .filter((p) => !filter || filter.has(p.categoryId))
-    .map((p) => ({ id: p.id, title: p.title, categoryId: p.categoryId, importance: p.importance, year: p.year }))
+    .map((p) => ({
+      id: p.id,
+      title: p.title,
+      categoryId: p.categoryId,
+      importance: p.importance,
+      inDegree: inDegree.get(p.id) ?? 0,
+      year: p.year,
+    }))
   const nodeIds = new Set(nodes.map((n) => n.id))
 
   const edges: GraphEdge[] = []

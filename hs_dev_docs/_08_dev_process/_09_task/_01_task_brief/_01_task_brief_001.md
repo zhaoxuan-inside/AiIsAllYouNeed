@@ -108,3 +108,15 @@
 - **更新时间**：`2026-10-11T06:48:00Z`
 ---
 
+### 任务简述：graph-kmeans-indegree
+- **标题**：图谱：节点尺寸=入度、K-Means 空间聚类着色、去领域彩色
+- **change_size**：`M`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：图谱：节点尺寸=入度、K-Means 空间聚类着色、去领域彩色
+- **详情索引**：`_02_task_detail/_01_graph-kmeans-indegree/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_graph-kmeans-indegree/_00_context_pack.md`
+- **更新时间**：`2026-10-11T07:12:51Z`
+---
+
