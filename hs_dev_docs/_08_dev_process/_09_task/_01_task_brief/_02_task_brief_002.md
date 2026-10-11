@@ -12,3 +12,15 @@
 - **更新时间**：`2026-10-11T07:17:53Z`
 ---
 
+### 任务简述：help-hint-pattern
+- **标题**：补充说明信息收敛：HelpHint ?角标（hover/focus/点击唤出）
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：补充说明信息收敛：HelpHint ?角标（hover/focus/点击唤出）
+- **详情索引**：`_02_task_detail/_01_help-hint-pattern/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_help-hint-pattern/_00_context_pack.md`
+- **更新时间**：`2026-10-11T07:28:17Z`
+---
+

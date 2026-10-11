@@ -12,7 +12,7 @@ import {
 import { getGraphView, getPointDetailView } from '@/backend/knowledge-service'
 import { kmeansCluster, type ClusterPoint } from '@/domain/clusters'
 import { useFilterStore } from '@/backend/filter-store'
-import { CategoryFilter, EmptyState } from '@/components/ui'
+import { CategoryFilter, EmptyState, HelpHint } from '@/components/ui'
 import type { GraphEdge, GraphNode } from '@/backend'
 
 interface PositionedNode extends GraphNode {
@@ -149,11 +149,12 @@ export function GraphPage() {
   return (
     <div className="rise-in">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
+        <div className="flex items-center gap-2">
           <h1 className="font-display text-2xl">知识图谱</h1>
-          <p className="mt-1 text-sm text-dim">
-            节点大小 = 被依赖数 · 色彩 = 空间聚类
-          </p>
+          <HelpHint
+            label="图谱说明"
+            text="节点大小 = 被依赖数（入度）；色彩 = K-Means 空间聚类；虚线 = 相关边。可拖拽节点、滚轮缩放，点击节点查看局部信息。"
+          />
         </div>
         <div className="flex items-center gap-4 text-xs">
           {(

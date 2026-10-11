@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getRoadmapView } from '@/backend/knowledge-service'
-import { ImportanceStars } from '@/components/ui'
+import { ImportanceStars, HelpHint } from '@/components/ui'
 
 /** 发展路线：领域 Tab + 阶段泳道（基础→进阶→前沿），依赖顺序编号 */
 export function RoadmapPage() {
@@ -34,7 +34,10 @@ export function RoadmapPage() {
       {/* 领域趋势（发展轨迹预测） */}
       {trend && (
         <section className="mt-10">
-          <p className="text-xs text-dim">趋势预测</p>
+          <p className="flex items-center gap-1 text-xs text-dim">
+            趋势预测
+            <HelpHint label="趋势预测说明" text="由编辑整理的方向判断，非算法生成。" />
+          </p>
           <h2 className="font-display mt-1 text-lg">{trend.headline}</h2>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             {trend.directions.map((d) => (

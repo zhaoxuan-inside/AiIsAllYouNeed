@@ -1,5 +1,40 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Category, KnowledgePoint } from '@/backend'
+
+/**
+ * HelpHint：补充说明角标（?）。不影响直接使用的说明文字收进这里，
+ * hover / 键盘 focus / 点击（触屏）唤出，纯边框 tooltip。
+ */
+export function HelpHint({ text, label = '说明' }: { text: string; label?: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <span
+      className="relative inline-flex align-middle"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        aria-label={label}
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setOpen(false)}
+        className="grid h-4 w-4 place-items-center rounded-full border border-edge text-[10px] leading-none text-faint transition-colors hover:border-accent hover:text-accent"
+      >
+        ?
+      </button>
+      {open && (
+        <span
+          role="tooltip"
+          className="absolute left-1/2 top-6 z-50 w-64 -translate-x-1/2 border border-edge bg-void px-3 py-2 text-xs leading-relaxed text-dim"
+        >
+          {text}
+        </span>
+      )}
+    </span>
+  )
+}
 
 /** 领域徽章（iA 式）：彩色圆点承担领域标识，文字一律墨色，1px 发丝边 */
 export function CategoryBadge({ category }: { category: Category }) {

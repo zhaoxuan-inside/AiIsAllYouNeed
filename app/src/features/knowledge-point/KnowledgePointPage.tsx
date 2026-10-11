@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getPointDetailView } from '@/backend/knowledge-service'
 import { useProfileStore } from '@/backend/profile-store'
-import { CategoryBadge, EmptyState, ImportanceStars } from '@/components/ui'
+import { CategoryBadge, EmptyState, HelpHint, ImportanceStars } from '@/components/ui'
 
 /** 依赖小图：前置 ← 本知识点 → 衍生（同屏三列微缩图谱） */
 function DepMiniGraph({ color, prereqs, derived }: { color: string; prereqs: { id: string; title: string }[]; derived: { id: string; title: string }[] }) {
@@ -188,7 +188,10 @@ export function KnowledgePointPage() {
 
       {point.trend && (
         <section className="mt-12">
-          <p className="text-xs text-accent">发展方向（编辑标注）</p>
+          <p className="flex items-center gap-1 text-xs text-accent">
+            发展方向
+            <HelpHint label="发展方向说明" text="由编辑整理的方向判断，非算法生成。" />
+          </p>
           <p className="mt-1 text-sm leading-relaxed text-star">{point.trend}</p>
           {trend && (
             <Link to="/roadmap" className="mt-3 inline-block text-xs text-accent underline underline-offset-2">
