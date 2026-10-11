@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { usePreferenceStore } from '@/backend/preference-store'
 import { useProfileStore } from '@/backend/profile-store'
 import { SearchOverlay } from '@/components/SearchOverlay'
+import { MoonIcon, SearchIcon, SunIcon } from '@/components/icons'
 
 const NAV = [
   { to: '/', label: '首页' },
@@ -61,16 +62,17 @@ export function Shell() {
               onClick={() => setSearchOpen(true)}
               aria-label="搜索"
               title="搜索 (⌘K)"
-              className="text-base text-dim transition-colors hover:text-star"
+              className="grid h-7 w-7 place-items-center text-dim transition-colors hover:text-star"
             >
-              <span aria-hidden>⌕</span>
+              <SearchIcon />
             </button>
             <button
               onClick={toggleTheme}
               aria-label="切换主题"
-              className="text-sm text-dim transition-colors hover:text-star"
+              title="切换主题"
+              className="grid h-7 w-7 place-items-center text-dim transition-colors hover:text-star"
             >
-              {theme === 'night' ? '☾' : '☀'}
+              {theme === 'night' ? <SunIcon /> : <MoonIcon />}
             </button>
             <NavLink
               to="/profile"

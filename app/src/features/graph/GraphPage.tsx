@@ -13,6 +13,7 @@ import { getGraphView, getPointDetailView } from '@/backend/knowledge-service'
 import { kmeansCluster, type ClusterPoint } from '@/domain/clusters'
 import { useFilterStore } from '@/backend/filter-store'
 import { CategoryFilter, EmptyState, HelpHint } from '@/components/ui'
+import { CloseIcon, MaximizeIcon, MinusIcon, PlusIcon } from '@/components/icons'
 import type { GraphEdge, GraphNode } from '@/backend'
 
 interface PositionedNode extends GraphNode {
@@ -198,10 +199,16 @@ export function GraphPage() {
             {nodes.length} nodes · {visibleEdges.length} edges
           </div>
           <div className="absolute bottom-3 right-3 flex items-center gap-3 rounded-[2px] border border-edge bg-void/85 px-3 py-1.5 text-xs text-dim">
-            <button onClick={() => setZoom((z) => Math.max(0.5, z * 0.85))} aria-label="缩小" className="hover:text-star">−</button>
+            <button onClick={() => setZoom((z) => Math.max(0.5, z * 0.85))} aria-label="缩小" className="transition-colors hover:text-star">
+              <MinusIcon className="h-3.5 w-3.5" />
+            </button>
             <span className="w-10 text-center font-mono text-[11px] text-faint">{Math.round(zoom * 100)}%</span>
-            <button onClick={() => setZoom((z) => Math.min(2.4, z * 1.15))} aria-label="放大" className="hover:text-star">＋</button>
-            <button onClick={() => setZoom(1)} aria-label="重置缩放" className="hover:text-star">⤢</button>
+            <button onClick={() => setZoom((z) => Math.min(2.4, z * 1.15))} aria-label="放大" className="transition-colors hover:text-star">
+              <PlusIcon className="h-3.5 w-3.5" />
+            </button>
+            <button onClick={() => setZoom(1)} aria-label="重置缩放" className="transition-colors hover:text-star">
+              <MaximizeIcon className="h-3.5 w-3.5" />
+            </button>
           </div>
           <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} className="h-[70vh] max-h-[640px] w-full touch-none" role="img" aria-label="知识依赖图谱">
             <g transform={`translate(${(VIEW.w * (1 - zoom)) / 2} ${(VIEW.h * (1 - zoom)) / 2}) scale(${zoom})`}>
@@ -265,8 +272,8 @@ export function GraphPage() {
           {/* 详情侧栏（桌面）/ 底部抽屉（移动，样式简化为同组件） */}
           {selectedDetail && selectedPoint && (
             <aside className="absolute right-0 top-0 h-full w-full max-w-xs overflow-y-auto border-l border-edge bg-panel p-5">
-              <button onClick={() => setSelectedNode(null)} className="float-right text-dim hover:text-star" aria-label="关闭">
-                ✕
+              <button onClick={() => setSelectedNode(null)} className="float-right text-dim transition-colors hover:text-star" aria-label="关闭">
+                <CloseIcon className="h-4 w-4" />
               </button>
               <span className="text-xs text-dim">
                 <span style={{ color: selectedPoint.category.color }}>●</span> {selectedPoint.category.name}

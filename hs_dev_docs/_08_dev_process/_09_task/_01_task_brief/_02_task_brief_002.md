@@ -24,3 +24,15 @@
 - **更新时间**：`2026-10-11T07:28:17Z`
 ---
 
+### 任务简述：icon-harmony-pass
+- **标题**：图标和谐度审查：Unicode 字形 → 内联 SVG，顶栏动作区统一
+- **change_size**：`S`
+- **状态**：`COMPLETED`
+- **优先级**：P1
+- **负责人**：agent
+- **核心目标**：图标和谐度审查：Unicode 字形 → 内联 SVG，顶栏动作区统一
+- **详情索引**：`_02_task_detail/_01_icon-harmony-pass/_00_task_detail.md`
+- **上下文包**：`_03_task_context_pack/_01_icon-harmony-pass/_00_context_pack.md`
+- **更新时间**：`2026-10-11T07:35:21Z`
+---
+
