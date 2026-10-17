@@ -27,7 +27,7 @@
     --hover:rgba(40,34,24,.05);
     --lamplight:rgba(255,204,130,.60); --bloom1:rgba(255,214,160,.5); --bloom2:rgba(210,232,214,.4); --bloom3:rgba(214,206,238,.32);
     --shadow:rgba(70,52,20,.28); --noise:.045; --sheen:rgba(255,255,255,.9);
-    --cursorlight:rgba(255,214,150,.55); --cursor-blend:soft-light; --hoverlight:rgba(255,205,140,.45);
+    --cursorlight:rgba(255,214,150,.42); --cursor-core:rgba(255,240,214,.85); --cursor-blend:soft-light; --hoverlight:rgba(255,205,140,.5);
   }
   [data-theme="night"]{
     --canvas:#12100B; --canvas2:#0D0B08; --surface:rgba(28,25,19,.94);
@@ -39,7 +39,7 @@
     --hover:rgba(255,230,180,.06);
     --lamplight:rgba(255,190,110,.46); --bloom1:rgba(120,80,30,.42); --bloom2:rgba(42,38,66,.5); --bloom3:rgba(60,34,62,.42);
     --shadow:rgba(0,0,0,.82); --noise:.05; --sheen:rgba(255,220,170,.35);
-    --cursorlight:rgba(255,196,120,.5); --cursor-blend:screen; --hoverlight:rgba(255,200,120,.22);
+    --cursorlight:rgba(255,196,120,.6); --cursor-core:rgba(255,236,205,.95); --cursor-blend:screen; --hoverlight:rgba(255,200,120,.26);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -66,19 +66,22 @@
   .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums;}
   .muted{color:var(--ink-2);} .faint{color:var(--ink-3);}
   .caption{font-size:12.5px;}
-  /* 全局鼠标光（手持台灯）：常驻跟随，覆盖全页面 */
-  #cursorlight{position:fixed; width:460px; height:460px; left:0; top:0; z-index:55; pointer-events:none;
-    border-radius:50%; transform:translate(-50%,-50%); opacity:0; transition:opacity .25s ease;
-    background:radial-gradient(closest-side, var(--cursorlight), transparent 72%);
+  /* 全局鼠标光（手持台灯）：双层光核 + 静止自动变暗 */
+  #cursorlight{position:fixed; width:520px; height:520px; left:0; top:0; z-index:55; pointer-events:none;
+    border-radius:50%; transform:translate(-50%,-50%); opacity:0; transition:opacity .35s ease;
+    background:
+      radial-gradient(120px 120px at 50% 50%, var(--cursor-core), transparent 62%),
+      radial-gradient(260px 260px at 50% 50%, var(--cursorlight), transparent 74%);
     mix-blend-mode:var(--cursor-blend);}
+  #cursorlight.is-idle{opacity:.35;}
   /* 纸面元素的局部光点（hover 时跟随光标） */
-  .row,.drow,.lane{position:relative;}
-  .row::before,.drow::before,.lane::before{
+  .row,.drow,.lane,.chip{position:relative;}
+  .row::before,.drow::before,.lane::before,.chip::before{
     content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
     background:radial-gradient(320px 220px at var(--mx,50%) var(--my,50%), var(--hoverlight), transparent 72%);
     opacity:0; transition:opacity .3s ease;}
-  .row:hover::before,.drow:hover::before,.lane:hover::before{opacity:1;}
-  .row > *,.drow > *,.lane > *{position:relative; z-index:1;}
+  .row:hover::before,.drow:hover::before,.lane:hover::before,.chip:hover::before{opacity:1;}
+  .row > *,.drow > *,.lane > *,.chip > *{position:relative; z-index:1;}
   /* ===== 玻璃：只做灯罩 / 展柜（GUP）===== */
   .glass{
     position:relative; border-radius:var(--r-case); isolation:isolate;
@@ -613,17 +616,20 @@
     tp.classList.remove('on'); tb.setAttribute('aria-expanded','false');});
   document.addEventListener('click',()=>{tp.classList.remove('on'); tb.setAttribute('aria-expanded','false');});
 
-  // 全页面鼠标光效：全局光常驻跟随 + 元素局部光点
+  // 全页面鼠标光效：双层光核跟随 + 静止自动变暗 + 元素局部光点
   const cl=document.getElementById('cursorlight');
+  let lightTimer=null;
   window.addEventListener('pointermove',e=>{
     cl.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
-    if(cl.style.opacity!=='1') cl.style.opacity='1';
+    cl.classList.remove('is-idle'); cl.style.opacity='1';
+    clearTimeout(lightTimer);
+    lightTimer=setTimeout(()=>cl.classList.add('is-idle'),1400);
     const el=e.target.closest&&e.target.closest('.glass,.paper,.row,.drow,.lane,.chip,.seg,.btn,.icon-btn,.graph-canvas');
     if(el){ const r=el.getBoundingClientRect();
       el.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
       el.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%'); }
   }, {passive:true});
-  document.addEventListener('mouseleave',()=>{cl.style.opacity='0';});
+  document.addEventListener('mouseleave',()=>{cl.style.opacity='0'; clearTimeout(lightTimer);});
 
   // 屏切换
   function go(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
