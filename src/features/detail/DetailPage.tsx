@@ -5,6 +5,7 @@ import { repo } from '../../data/repo';
 import { profileStore } from '../../data/profileStore';
 import type { BodyBlock, KnowledgePoint } from '../../data/types';
 import { IconBookmark, IconCheck, IconPen } from '../../components/icons';
+import { renderMath } from '../../components/math';
 
 const DOMAIN_COLORS = ['var(--d1)', 'var(--d2)', 'var(--d3)', 'var(--d4)', 'var(--d5)', 'var(--d6)'];
 
@@ -27,11 +28,7 @@ function WikiText({ text }: { text: string }) {
           return <span key={i}>{m[2] ?? m[1]}</span>;
         }
         if (part.startsWith('$') && part.endsWith('$')) {
-          return (
-            <code key={i} className="formula-inline" style={{ fontFamily: 'var(--font-mono)', fontSize: '.9em' }}>
-              {part.slice(1, -1)}
-            </code>
-          );
+          return <span key={i} dangerouslySetInnerHTML={{ __html: renderMath(part.slice(1, -1), false) }} />;
         }
         return <span key={i}>{part}</span>;
       })}
@@ -41,11 +38,7 @@ function WikiText({ text }: { text: string }) {
 
 function Block({ b }: { b: BodyBlock }) {
   if (b.t === 'formula') {
-    return (
-      <div className="formula" style={{ fontFamily: 'var(--font-mono)' }}>
-        {b.tex}
-      </div>
-    );
+    return <div className="formula" dangerouslySetInnerHTML={{ __html: renderMath(b.tex, true) }} />;
   }
   if (b.t === 'list') {
     return (

@@ -4,8 +4,8 @@
 - **标题**：用 hs-dev-skill 从阶段 0 满配重建 AiIsAllYouNeed（AI 知识星图）
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
-- **当前阶段**：`5` — 实现切片（IMPLEMENT：TS-01 → TS-11）
-- **断点**：`TS-01` — 脚手架 + DESIGN tokens + 全局壳（地基）
+- **当前阶段**：`5→6` — 实现切片完成，阶段 6 验证已提交（待交付验收）
+- **断点**：`TS-11` — 需求验证矩阵已提交，待开发者交付验收
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -53,11 +53,11 @@
 | S5-TS04 | 图谱（星图册 SVG + d3-force + 透镜 + 详情栏） | done | 12 节点/26 连线渲染；筛选/选中/透镜高亮 |
 | S5-TS05 | 时间线（纵向 + 时代分段 + 领域筛选） | done | 4 时代分段 |
 | S5-TS06 | 路线（三阶段泳道 + 趋势唯一呈现） | done | llm-gen 路线 |
-| S5-TS07 | 领域页（独立聚合页） | pending | 目前以各视图领域筛选/路线覆盖 |
+| S5-TS07 | 领域页（独立聚合页） | done | `/domain/:key`；关键点/规模/三视图入口/趋势仅入口 |
 | S5-TS08 | 档案（建档/收藏/已读/笔记 + 持久化） | done | 端到端：详情点收藏→档案可见；localStorage |
-| S5-TS09 | 详情增强（媒体/KaTeX 公式/backlinks 全字段链接） | doing | backlinks/media 已通；公式暂为等宽渲染，KaTeX 待接入 |
-| S5-TS10 | 六端壳（Tauri 2） | pending | 本机无 Rust 工具链（环境约束） |
-| S5-TS11 | 阶段6 验证 | pending | — |
+| S5-TS09 | 详情增强（媒体/KaTeX 公式/backlinks 全字段链接） | done | KaTeX 公式/行内；媒体块；backlinks 自动反解 |
+| S5-TS10 | 六端壳（Tauri 2） | pending | 本机无 Rust 工具链（环境约束）；接入备忘已落盘 `docs/tauri_onboarding.md` |
+| S5-TS11 | 阶段6 验证（需求验证矩阵 + 演练） | done | `_05_verification/verification_matrix.md`（DELIV-01..05 提交） |
 | S5 | 阶段 5：实现切片（垂直曳光弹 → 全量） | pending | 含内容生产管线 |
 | S6 | 阶段 6：验收与交付 | pending | |
 

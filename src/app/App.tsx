@@ -12,6 +12,7 @@ import GraphPage from '../features/graph/GraphPage';
 import TimelinePage from '../features/timeline/TimelinePage';
 import RoadmapPage from '../features/roadmap/RoadmapPage';
 import ProfilePage from '../features/profile/ProfilePage';
+import DomainPage from '../features/domain/DomainPage';
 
 const NAV = [
   { to: '/', label: '首页' },
@@ -191,6 +192,7 @@ export default function App() {
             <Route path="/timeline" element={<TimelinePage />} />
             <Route path="/roadmap" element={<RoadmapPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/domain/:key" element={<DomainPage />} />
             <Route path="/point/:id" element={<DetailPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>

@@ -261,6 +261,13 @@
 - **采纳**：TS-03/04/05/06/08 完成；TS-09 部分（媒体/反向链接已通，KaTeX 待接入）；TS-07 领域页、TS-10 Tauri 壳、TS-11 阶段6 验证待续。
 - **关联落盘**：`src/features/{graph,timeline,roadmap,profile,detail}`、`src/data/profileStore.ts`。
 
+### Q28. 阶段 5 完成 + 阶段 6 验证提交（TS-07/TS-09 + DELIV-01..05）
+
+- **证据**：领域页（`/domain/:key` 5 关键点 + 三视图入口）与 KaTeX 公式（块级/行内 `.katex`）浏览器实测；`npm run build` + `npm test` 8/8 通过。
+- **偏差登记**：① 内容为 demo fixture（开发者已裁定可接受，正式内容后续替换）；② Tauri 桌面/移动产物未验证（无工具链，接入备忘已落盘）；③ 档案建档浮层简化为即用即建。
+- **采纳**：TS-01..TS-09 + TS-11 完成；阶段 6 需求验证矩阵提交（11 FEAT：10 PASS + FEAT-011 部分[Web PASS/壳 PENDING]）。
+- **关联落盘**：`_05_verification/verification_matrix.md`、`docs/tauri_onboarding.md`、`src/features/domain`、`src/components/math.ts`。
+
 ---
 
 ## 变更请求登记（CR）

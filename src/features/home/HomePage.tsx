@@ -75,13 +75,13 @@ export default function HomePage() {
 
       <div style={{ marginTop: 12 }}>
         {domains.map((d) => (
-          <div key={d.key} className="drow">
+          <Link key={d.key} to={`/domain/${d.key}`} className="drow" style={{ textDecoration: 'none', color: 'inherit' }}>
             <span className="dot" style={{ background: DOMAIN_COLORS[d.colorIndex % 6] }} />
             <span>{d.name}</span>
             <span className="bar">
               <span className="faint mono caption">{domainCount(d.key)}</span>
             </span>
-          </div>
+          </Link>
         ))}
       </div>
 
