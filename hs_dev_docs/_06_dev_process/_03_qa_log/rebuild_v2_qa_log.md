@@ -240,6 +240,13 @@
 - **采纳**：待开发者确认切片顺序与交付边界；确认后进入阶段 5（实现）。
 - **关联落盘**：`_04_task_planning/stage4_task_breakdown.md`。
 
+### Q25. 阶段 4 确认通过（进入阶段 5 · IMPLEMENT）
+
+- **题域**：任务拆解验收
+- **开发者裁定**：**「确认，进入阶段 5」**——11 切片 TS-01..11 与顺序、交付边界确认。
+- **采纳**：阶段 4 **ACCEPTED**（TASK-01..05）；**work_mode → IMPLEMENT**，阶段 5 实现切片开始（TS-01 地基起，按 TS-01→TS-02→…→TS-11）。
+- **关联落盘**：`stage4_task_breakdown.md`、`rebuild_v2_plan.md`(S5)。
+
 ---
 
 ## 变更请求登记（CR）

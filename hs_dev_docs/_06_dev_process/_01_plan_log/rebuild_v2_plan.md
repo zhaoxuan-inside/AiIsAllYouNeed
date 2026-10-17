@@ -4,8 +4,8 @@
 - **标题**：用 hs-dev-skill 从阶段 0 满配重建 AiIsAllYouNeed（AI 知识星图）
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
-- **当前阶段**：`4` — 任务拆解与上下文装配（已提交，待确认）
-- **断点**：`S4-03` — 任务拆解已提交（TASK-05），待开发者确认切片顺序与交付边界
+- **当前阶段**：`5` — 实现切片（IMPLEMENT：TS-01 → TS-11）
+- **断点**：`TS-01` — 脚手架 + DESIGN tokens + 全局壳（地基）
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -46,7 +46,9 @@
 | S3-04 | 提交详细设计验收（含数据 schema 开发者决策） | submitted | 待开发者确认 |
 | S4-01 | TASK-01/02 需求全覆盖切片（TS-01..11）+ DoD | done | `_04_task_planning/stage4_task_breakdown.md` §1 |
 | S4-02 | TASK-03/04 依赖·风险 + Context Pack 绑定 | done | 同上 §2/§3 |
-| S4-03 | TASK-05 执行计划 + 提交拆解验收 | submitted | 同上 §4（待开发者确认） |
+| S4-03 | TASK-05 执行计划 + 提交拆解验收 | done | **APPROVED（Q25 开发者拍板）** |
+| S5-TS01 | 地基：脚手架 + tokens.css + 全局壳（顶栏/主题唯一控件/导航/路由）+ 图标族骨架 + 测试 | doing | 阶段5 切片 1 |
+| S5-TS02 | 曳光弹：内容管线(静态源)→zod→JSON+索引 → data 加载 → 首页列表 → 详情 | pending | 阶段5 切片 2 |
 | S5 | 阶段 5：实现切片（垂直曳光弹 → 全量） | pending | 含内容生产管线 |
 | S6 | 阶段 6：验收与交付 | pending | |
 
