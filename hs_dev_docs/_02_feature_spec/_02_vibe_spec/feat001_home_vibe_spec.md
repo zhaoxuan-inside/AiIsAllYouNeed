@@ -1,7 +1,7 @@
 # VIBECODING EXECUTION SPEC — FEAT-001 首页全景
 # Source PRD: _02_feature_spec/_01_human_prd/features/feat001_home_prd.md
 # Source Prototype: _02_feature_spec/_04_prototype_wireframe/feat001_home_prototype.md
-# Macro Taste Charter: Inherits /DESIGN.md (Aurora Glass · 日/夜双主题)
+# Macro Taste Charter: Inherits /DESIGN.md (Liuli Glass v6 · 日/夜双主题)
 # 读写约定：高信息密度、可直接映射代码与测试。
 
 meta:
@@ -16,15 +16,16 @@ meta:
 design_tokens:
   inherit: "/DESIGN.md"
   css_variables:
-    --canvas: "var(--canvas)"          # 日 #E9EDF4 / 夜 #0A0D13
+    --canvas: "var(--canvas)"          # 日 #EFEBE3 / 夜 #0B0D12
     --glass: "var(--glass)"
-    --glass-strong: "var(--glass-strong)"
+    --surface: "var(--surface)"        # 阅读/大面板（近不透明 ≥0.86）
     --ink: "var(--ink)"; --ink-2: "var(--ink-2)"; --ink-3: "var(--ink-3)"
     --accent: "var(--accent)"          # 首屏强调 ≤3 处
   tailwind_shorthands:
-    glass_panel: "rounded-[18px] border border-[var(--glass-border)] bg-[var(--glass)] backdrop-blur-[20px]"
+    glass_panel: "rounded-[16px] bg-[var(--glass)] backdrop-blur-[22px] shadow-[inset_0_1px_0_var(--edge),inset_0_0_0_1px_var(--ring)]"
     stat_line: "font-mono tabular-nums text-[var(--ink-3)] text-[12.5px]"
-    domain_row: "flex items-center gap-3 h-11 hover:bg-[var(--hover)] rounded-[12px] px-2"
+    display_serif: "font-[var(--font-serif)] tracking-[-0.02em]"
+    domain_row: "flex items-center gap-3 h-12 hover:bg-[var(--hover)] rounded-[10px] px-3"
 
 component_tree:
   - component: "HomePage"

@@ -1,6 +1,6 @@
 # VIBECODING EXECUTION SPEC — FEAT-009 主题与阅读偏好
 # Source PRD: .../features/feat009_theme_prd.md · Prototype: .../feat009_theme_prototype.md
-# Macro Taste Charter: Inherits /DESIGN.md (§2 色表 / §4 主题切换)
+# Macro Taste Charter: Inherits /DESIGN.md (§2 色表 / §8 主题切换)
 
 meta: { feature_id: "FEAT-009", feature_name: "theme", route: "global", density: "balanced" }
 design_tokens:
@@ -35,3 +35,4 @@ hard_guardrails:
   - "STRICTLY FORBIDDEN: 首屏先亮后暗闪烁"
   - "STRICTLY FORBIDDEN: 任一主题正文对比度 < 4.5:1"
   - "STRICTLY FORBIDDEN: 为某主题额外堆叠装饰"
+  - "STRICTLY FORBIDDEN: 全站出现第二个主题控件（唯一入口铁律）"

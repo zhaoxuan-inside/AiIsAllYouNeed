@@ -5,14 +5,14 @@
 meta: { feature_id: "FEAT-007", feature_name: "point_detail", route: "/point/:pointId", density: "balanced", primary_anchor_cta: "收藏" }
 design_tokens:
   inherit: "/DESIGN.md"
-  overrides: { reading_surface: "--glass-strong (>=0.80 alpha)", reading_measure: "<=66ch", reading_line_height: 1.85 }
+  overrides: { reading_surface: "--surface (>=0.86 alpha)", reading_font: "serif", reading_measure: "<=66ch", reading_line_height: 1.9 }
 
 component_tree:
   - component: "PointDetailPage"
     children:
       - { component: "PointHeader", props: { aliases: true, meta: ["category","year","importance","difficulty","learnTime","tags"] } }
       - { component: "SummaryLead", props: { links: true } }
-      - { component: "BodyMarkdown", props: { container: "glass-strong", wikiLinks: true, math: true, media: true } }
+      - { component: "BodyMarkdown", props: { container: "surface", wikiLinks: true, math: true, media: true } }
       - { component: "PapersList", props: { collapsible: true, externalLink: true } }
       - { component: "MiniDependencyGraph", props: { prereq: true, derivatives: true, clickable: true } }
       - { component: "RelatedChips", props: { clickable: true } }
@@ -46,7 +46,7 @@ executable_tests_gherkin:
   - id: "T007-06-DEGRADE"  # 缺字段不渲染空区块
 
 hard_guardrails:
-  - "STRICTLY FORBIDDEN: 正文压在低不透明玻璃上（必须 glass-strong）"
+  - "STRICTLY FORBIDDEN: 正文压在低不透明玻璃上（必须 --surface）"
   - "STRICTLY FORBIDDEN: 悬空 WikiLink 产生死链"
   - "STRICTLY FORBIDDEN: 缺字段渲染『暂无』空占位导致破版"
   - "STRICTLY FORBIDDEN: 阅读行宽 > 66ch 或行高 < 1.8"
