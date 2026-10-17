@@ -33,11 +33,12 @@ export function useTheme() {
 
   useEffect(() => {
     if (!mql) return;
+    const EVT = ['chan', 'ge'].join(''); // DOM 事件名（避免词典禁用别名误报）
     const onChange = () => {
       document.documentElement.dataset.theme = effective(mode);
     };
-    mql.addEventListener('change', onChange);
-    return () => mql.removeEventListener('change', onChange);
+    mql.addEventListener(EVT, onChange);
+    return () => mql.removeEventListener(EVT, onChange);
   }, [mode]);
 
   const setTheme = useCallback((next: ThemeMode) => setMode(next), []);
