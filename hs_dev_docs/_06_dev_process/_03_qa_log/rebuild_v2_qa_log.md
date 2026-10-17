@@ -211,6 +211,21 @@
 - **采纳**：待开发者确认 ARCH-01..06；确认后进入阶段 3。
 - **关联落盘**：`_03_architecture_design/_02_system_architecture/arch_design_overview.md`。
 
+### Q21. 阶段 2 架构确认通过（进入阶段 3）
+
+- **题域**：架构验收
+- **开发者裁定**：**「确认，进入阶段 3」**——F2+B1 范式、数据所有权（知识只读/档案唯一写）、全局能力单点、离线零网络架构验收通过。
+- **采纳**：阶段 2 **ACCEPTED**（ARCH-01..06）；进入**阶段 3：详细设计**（数据/接口/方法/调用链契约，含数据 schema 开发者决策）。
+- **关联落盘**：`arch_design_overview.md` §8、`rebuild_v2_plan.md`(S3)。
+
+### Q22. 阶段 3 详细设计提交（DETAIL-06 + 数据 schema 决策）
+
+- **题域**：详细设计验收 / 数据 schema 决策
+- **内容**：数据契约（`data_schema.md`：KnowledgePoint/Domain/Roadmap/Profile + zod 校验 fail-fast + 引用完整性强制）；模块契约（`module_contracts.md`：KnowledgeRepo/SearchIndex/ProfileStore/KnowledgeSource/ThemeProvider + 方法行为 + 四态失败语义）；映射矩阵（`mapping_matrix.md`：REQ↔接口↔数据↔方法↔验收场景）。
+- **待开发者决策**：`data_schema.md` §4 **D1–D5**（importance 语义 / difficulty 档位 / body 结构化 / 引用完整性策略 / 媒体来源），建议值见文档。
+- **采纳**：待开发者确认 schema 与契约后进入阶段 4。
+- **关联落盘**：`_03_detailed_design/*`。
+
 ---
 
 ## 变更请求登记（CR）

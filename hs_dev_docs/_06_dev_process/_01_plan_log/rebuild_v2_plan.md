@@ -4,8 +4,8 @@
 - **标题**：用 hs-dev-skill 从阶段 0 满配重建 AiIsAllYouNeed（AI 知识星图）
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
-- **当前阶段**：`2` — 系统架构设计（已提交，待确认）
-- **断点**：`S2-03` — 架构设计已提交（ARCH-06），待开发者确认后进入阶段 3
+- **当前阶段**：`3` — 详细设计（已提交，待确认）
+- **断点**：`S3-04` — 详细设计已提交（含数据 schema D1–D5 开发者决策），待确认后进入阶段 4
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -40,7 +40,10 @@
 | S2-01 | ARCH-01/02/03 边界·职责·运行场景 | done | `_03_architecture_design/_02_system_architecture/arch_design_overview.md` §1/§3/§5 |
 | S2-02 | ARCH-04/05 部署与质量安全（离线/零网络/CSP/档案唯一写） | done | 同上 §1/§3/§4 |
 | S2-03 | ARCH-06 权衡与风险 + 提交架构验收 | submitted | 同上 §8（待开发者确认） |
-| S3 | 阶段 3：工程四要素详设（数据/接口/方法/调用链） | pending | 含数据 schema 开发者决策 |
+| S3-01 | DETAIL-01 数据契约（schema + zod + 校验） | done | `_03_detailed_design/data_schema.md`（含 D1–D5 待决策） |
+| S3-02 | DETAIL-02/03/04 接口/方法/状态失败语义 | done | `_03_detailed_design/module_contracts.md` |
+| S3-03 | DETAIL-05/06 映射矩阵 + 实现准备度 | done | `_03_detailed_design/mapping_matrix.md` |
+| S3-04 | 提交详细设计验收（含数据 schema 开发者决策） | submitted | 待开发者确认 |
 | S4 | 阶段 4：任务拆解与上下文装配 | pending | |
 | S5 | 阶段 5：实现切片（垂直曳光弹 → 全量） | pending | 含内容生产管线 |
 | S6 | 阶段 6：验收与交付 | pending | |
