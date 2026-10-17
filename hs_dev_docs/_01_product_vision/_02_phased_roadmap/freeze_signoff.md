@@ -1,29 +1,40 @@
 # 阶段 0 冻结确认单（AI 知识星图 · rebuild_v2）
 
-- **验收状态**：SUBMITTED（v6 重提，待开发者确认 → ACCEPTED）
+- **验收状态**：SUBMITTED（v6.1 重提，待开发者确认 → ACCEPTED）
 - **本次 PRD / 原型 / Vibe Spec 版本或内容摘要**：
-  - 宏观品味宪章：`/DESIGN.md`（**v6 琉璃 / Liuli Glass**，高保真液态玻璃，日/夜双主题）
-  - 视觉真理源（可打开）：`_02_feature_spec/_03_prototype_html/overview_prototype.html`（v6，日/夜、多屏）
+  - 宏观品味宪章：`/DESIGN.md`（**v6.1 琉璃 / Liuli Glass**，厚液态玻璃 + 悬浮光效，iA Writer 布局哲学，日/夜双主题）
+  - 视觉真理源（可打开）：`_02_feature_spec/_03_prototype_html/overview_prototype.html`（v6.1，日/夜、多屏）
   - 全景 PRD：`_02_feature_spec/_01_human_prd/overview_prd.md`（v2.1.0，含 §6 单一呈现铁律）
   - 子特性 PRD：`_02_feature_spec/_01_human_prd/features/feat001..011_*_prd.md`（11 份）
   - 双轨原型：`_02_feature_spec/_04_prototype_wireframe/overview_prototype.md` + 11 份特性原型
   - 机器契约：`_02_feature_spec/_02_vibe_spec/feat001..011_*_vibe_spec.md`（11 份）
   - 分阶段规划：`_01_product_vision/_02_phased_roadmap/rebuild_v2_phased_plan.md`
-  - 决策日志：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md`（Q1–Q9）
+  - 决策日志：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md`（Q1–Q10）
 - **DISC / PROD 检查表与证据位置**：见本单 §D 自审
 - **场景演练及预期对账记录**：见各子 PRD 的 Gherkin；待开发者按真实样例走查
 
 > 遵循 Skill 的 references/stage_acceptance.md；已有明确确认可引用，禁止 Agent 代勾开发者签收。
 
-## 0. 本轮（v6）回应 v5 被否的整改
+## 0. 视觉整改回应（v5 → v6 → v6.1）
+
+### 第一轮（v6）回应 Q9
 
 | v5 被否点（开发者 Q9） | v6 整改 | 落盘证据 |
 |---|---|---|
 | 字体与排版问题 | 建立**四角色字体系统**（衬线 Display/Reading + Inter Text + Mono）；重定字阶 | `/DESIGN.md` §3、`overview_prototype.html` |
 | 配色问题 / 不够有辨识度 | 改为**暖纸 × 深墨**冷暖对位 + **琉璃青**强调色；星图签名 + 自绘图标族 | `/DESIGN.md` §2、§1 |
-| 玻璃过满 / 不够高级 | **三级模糊**（14/22/32）+ 光边(inset ring) + 折射光泽；阅读面近不透明 | `/DESIGN.md` §4、§7 |
+| 玻璃过满 / 不够高级 | **三级模糊**（14/24/34）+ 厚玻璃（光边/厚度/色散/悬浮光泽）；阅读面近不透明 | `/DESIGN.md` §4、§7 |
 | 边框廉价 | **禁止 1px 实描边**；控件改用光边 + 面；分页/切换用「轨道 + 滑块」 | `/DESIGN.md` §7、§5 |
 | 部分功能重复（日/夜切换） | **单一呈现铁律**：主题控件唯一、搜索入口唯一、领域趋势主呈现唯一；演示壳与产品视觉隔离 | `/DESIGN.md` §12、`overview_prd.md` §6、`FEAT-009`/`FEAT-001`/`FEAT-002` |
+
+### 二轮（v6.1）回应（Q10）
+
+| Q10 不满 | v6.1 整改 | 落盘证据 |
+|---|---|---|
+| 玻璃不够「液态」 | 升级为**厚玻璃**：渐变填充 + 上缘高光 + 底部厚度 + 色散暗示 | `/DESIGN.md` §4 |
+| 无鼠标悬浮光效 | **跟随光标的 specular** 覆盖所有玻璃面/阅读面 + 全局"光标光" + 图谱节点光环 | `/DESIGN.md` §4/§7、HTML 原型 |
+| 图谱太丑 | **图谱重做**：曲线边、节点高光/投影/光环/标签、点阵网格、图例、玻璃详情栏 | HTML 原型 graph 屏、`/DESIGN.md` §7 |
+| 不够惊艳 / 细节糙 | 布局对齐 **iA Writer**（居中阅读列 ≤68ch、克制框架、大量留白）；字号/间距/分割线细修 | `/DESIGN.md` §6/§3、HTML 原型 |
 
 ## A. 业务语义签收（逐条确认，缺一不可）
 
@@ -47,6 +58,9 @@
 - [ ] 工程实现可映射（ASCII 线框与组件树可直接转组件 + CSS 变量）
 - [ ] **日/夜双主题均通过上述检查**，正文对比度 ≥ 4.5:1
 - [ ] **全站仅一个主题控件**（唯一入口）
+- [ ] **液态玻璃达标**：厚玻璃（上缘高光 + 底部厚度 + 色散暗示）齐备，且**全部玻璃面/节点有跟随光标的悬浮光效**
+- [ ] **图谱屏达标**：曲线边（依赖/相关）+ 节点高光/光环/标签 + 点阵网格 + 图例 + 玻璃详情栏，无丑陋感
+- [ ] **布局对齐 iA Writer**：克制框架、居中阅读列（≤68ch、内左对齐）、大量留白
 
 ## C. 冻结确认
 

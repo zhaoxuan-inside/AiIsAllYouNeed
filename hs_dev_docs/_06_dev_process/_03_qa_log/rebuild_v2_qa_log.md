@@ -112,6 +112,19 @@
   - 业务语义：确立 **单一呈现铁律**（一能力一控件、一信息一主呈现）；**主题控件唯一**、**搜索入口唯一**、**领域趋势主呈现唯一**；演示壳(harness)与产品视觉隔离且不得重复产品控件。
 - **关联落盘**：`/DESIGN.md`(v6)、`overview_prototype.html`(v6 视觉真理源)、`overview_prd.md`(v2.1.0 §6)、`FEAT-009`/`FEAT-001`/`FEAT-002`、`design_charter.md`、`freeze_signoff.md`、CR-rebuild_v2-03/04。
 
+### Q10. 视觉二轮（v6 → v6.1）：液态玻璃加强 + iA 布局哲学
+
+- **题域**：视觉细则
+- **开发者裁定**：**仍不通过，继续改视觉**
+- **具体不满（多选）**：玻璃不够「液态」（要更明显）／ 不够惊艳、高级 ／ 细节、精致度不够 ／ **图谱页面太丑陋** ／ **鼠标悬浮的光效缺失**
+- **对标参考**：**Apple 的液态玻璃 + iA Writer（ia.net/writer）的布局哲学**
+- **采纳决策**：
+  - 玻璃升级为**厚玻璃**：渐变填充 + `blur(200% saturate, brightness 1.10)` + 上缘高光 + 底部厚度 + 色散暗示 + **跟随光标的悬浮折射光泽**（页面另加一层全局"光标光"）。
+  - 布局哲学对齐 **iA Writer**：框架克制、文字优先、**居中阅读列（≤68ch、内左对齐）**、大量留白；中文正文禁用首字下沉。
+  - **图谱重做**：曲线边（依赖实线 / 相关虚线）+ 节点上缘高光 / 底部投影 / 悬浮光环与标签浮出 + 点阵网格（径向淡出）+ 左下角图例 + 右侧玻璃详情栏。
+  - 数据规模：**Demo 少量数据即可**（足以看布局 / 字体 / 颜色），完整标题清单后续提供（不阻断设计冻结，亦不阻断阶段 1）。
+- **关联落盘**：`/DESIGN.md`(v6.1)、`overview_prototype.html`(v6.1 视觉真理源)、`design_charter.md`、`overview_prototype.md`、`feat007_point_detail_prototype.md`、CR-rebuild_v2-05。
+
 ---
 
 ## 变更请求登记（CR）
@@ -122,3 +135,4 @@
 | `CR-rebuild_v2-02` | 知识点字段扩充 + 全字段可链接跳转 | 数据 schema、后端服务、详情页、搜索 | 中 | APPROVED | `FEAT-007`/`FEAT-010` |
 | `CR-rebuild_v2-03` | 视觉基线 v5(极光玻璃) 被否，重做为 v6「琉璃」高保真液态玻璃（字体/配色/材质/边框全改） | DESIGN.md、HTML 原型、design_charter、全部原型与前端 | 高 | APPROVED | `/DESIGN.md`(v6) |
 | `CR-rebuild_v2-04` | 业务语义收敛：单一呈现铁律（主题控件唯一、搜索入口唯一、领域趋势主呈现唯一） | overview PRD §6、FEAT-001/002/009、原型/演示壳 | 中 | APPROVED | `overview_prd.md` §6 |
+| `CR-rebuild_v2-05` | 视觉二轮：玻璃升级为「厚玻璃 + 悬浮光效」、布局对齐 iA Writer、图谱重做（曲线边/节点高光/点阵/图例） | DESIGN.md(v6.1)、HTML 原型、design_charter、原型线框 | 高 | APPROVED | `/DESIGN.md`(v6.1) |

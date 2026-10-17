@@ -42,7 +42,7 @@ flowchart TB
 
 ## 3. 设计令牌速查（继承 `/DESIGN.md`）
 
-- 玻璃：**三级** `L1 blur14 / L2 blur22 / L3 blur32` + **光边(inset ring) + 折射光泽**；阅读面用 `--surface`（近不透明 ≥0.86）。**禁止 1px 实描边**。
+- 玻璃：**三级厚玻璃** `L1 blur14 / L2 blur24 / L3 blur34` + **光边(inset ring) + 底部厚度 + 色散暗示 + 悬浮光泽(跟随光标)**；阅读面用 `--surface`（近不透明 ≥0.90）。**禁止 1px 实描边**。
 - 色：日 `--canvas #EFEBE3` / `--accent #0E7C7B`；夜 `--canvas #0B0D12` / `--accent #5EEAD4`；领域色仅功能点。
 - 字：**四角色** `衬线(Display/Reading) + Inter(Text) + JetBrains Mono(Mono)`；层级 `Display46/H1 32/H2 19/H3 15/Body15/Reading17/Caption12.5`。
 - 圆角：`chip999 / control10 / panel16 / overlay22`（同心圆角）。

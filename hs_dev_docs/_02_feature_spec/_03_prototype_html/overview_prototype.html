@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI 知识星图 · 琉璃 Liuli Glass 原型（阶段 0 视觉真理源 v6）</title>
+<title>AI 知识星图 · 琉璃 Liuli Liquid Glass 原型（阶段 0 视觉真理源 v6.1）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     琉璃 Liuli Glass — tokens (mirror of /DESIGN.md v6)
+     琉璃 · Liuli Liquid Glass — tokens (mirror of /DESIGN.md v6.1)
       ============================================================ */
   :root{
     --font-serif:'Source Serif 4','Noto Serif CJK SC','Songti SC',Georgia,serif;
@@ -19,304 +19,329 @@
     --d1:#4C8DF5; --d2:#24A98F; --d3:#E1755A; --d4:#9B7BE6; --d5:#D9A441; --d6:#D2659A;
   }
   [data-theme="day"]{
-    --canvas:#EFEBE3;
-    --surface:rgba(255,253,249,.86);
-    --glass-hi:rgba(255,255,255,.68); --glass-lo:rgba(255,255,255,.40);
-    --glass2-hi:rgba(255,255,255,.82); --glass2-lo:rgba(255,255,255,.56);
-    --edge:rgba(255,255,255,.88); --ring:rgba(255,255,255,.50);
-    --line:rgba(28,24,18,.12);
-    --ink:#1B1A17; --ink-2:#5A554B; --ink-3:#8B8478;
-    --accent:#0E7C7B; --accent-ink:#FFFFFF;
+    --canvas:#EFEBE3; --canvas2:#E8E2D7;
+    --surface:rgba(255,253,250,.90);
+    --g-hi:rgba(255,255,255,.70); --g-mid:rgba(255,255,255,.42); --g-lo:rgba(255,255,255,.28);
+    --rim:rgba(255,255,255,.98); --ring:rgba(255,255,255,.55); --ring-d:rgba(120,108,86,.07);
+    --line:rgba(28,24,18,.13);
+    --ink:#191814; --ink-2:#57534A; --ink-3:#8A8377;
+    --accent:#0E7C7B; --accent-soft:rgba(14,124,123,.12); --accent-ink:#FFFFFF;
     --hover:rgba(28,24,18,.05);
-    --sheen:rgba(255,255,255,.95);
-    --shadow:rgba(60,46,24,.32);
-    --bloom1:rgba(255,196,150,.60); --bloom2:rgba(150,225,205,.50);
-    --bloom3:rgba(188,180,242,.48); --bloom4:rgba(240,180,198,.40);
-    --noise:.05; --hero-fill:var(--ink);
+    --shadow:rgba(64,48,24,.34);
+    --bloom1:rgba(255,186,132,.62); --bloom2:rgba(140,226,202,.52);
+    --bloom3:rgba(180,172,246,.50); --bloom4:rgba(244,172,196,.42);
+    --noise:.05; --cursorlight:rgba(255,246,230,.85);
   }
   [data-theme="night"]{
-    --canvas:#0B0D12;
-    --surface:rgba(20,22,28,.88);
-    --glass-hi:rgba(44,49,60,.60); --glass-lo:rgba(17,19,26,.46);
-    --glass2-hi:rgba(48,54,66,.74); --glass2-lo:rgba(22,25,33,.60);
-    --edge:rgba(255,255,255,.20); --ring:rgba(255,255,255,.10);
+    --canvas:#090B10; --canvas2:#0E1119;
+    --surface:rgba(20,23,30,.92);
+    --g-hi:rgba(66,74,92,.66); --g-mid:rgba(26,30,40,.50); --g-lo:rgba(14,16,22,.42);
+    --rim:rgba(255,255,255,.30); --ring:rgba(255,255,255,.13); --ring-d:rgba(0,0,0,.35);
     --line:rgba(255,255,255,.10);
-    --ink:#ECE9E2; --ink-2:#A9A69D; --ink-3:#77746B;
-    --accent:#5EEAD4; --accent-ink:#04211E;
+    --ink:#EDEAE3; --ink-2:#A8A69D; --ink-3:#75726A;
+    --accent:#63F0D8; --accent-soft:rgba(99,240,216,.14); --accent-ink:#04211E;
     --hover:rgba(255,255,255,.06);
-    --sheen:rgba(255,255,255,.34);
-    --shadow:rgba(0,0,0,.72);
-    --bloom1:rgba(16,92,88,.60); --bloom2:rgba(48,52,120,.58);
-    --bloom3:rgba(92,36,102,.46); --bloom4:rgba(20,78,98,.44);
-    --noise:.045; --hero-fill:var(--ink);
+    --shadow:rgba(0,0,0,.78);
+    --bloom1:rgba(14,104,98,.62); --bloom2:rgba(50,56,132,.60);
+    --bloom3:rgba(104,38,116,.50); --bloom4:rgba(18,86,110,.48);
+    --noise:.05; --cursorlight:rgba(120,200,255,.5);
   }
 
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--canvas); color:var(--ink);
-    font-family:var(--font-sans); font-size:15px; line-height:1.6;
+    background:radial-gradient(120% 90% at 50% -10%, var(--canvas2), var(--canvas) 60%);
+    color:var(--ink);
+    font-family:var(--font-sans); font-size:15px; line-height:1.62;
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     min-height:100vh; position:relative; overflow-x:hidden;
-    transition:background .45s ease,color .45s ease;
+    transition:background .5s ease,color .5s ease;
   }
-  /* ── static backdrop: soft blooms (liquid glass needs a lively backdrop) ── */
+  /* ── living backdrop (liquid glass needs a rich backdrop to refract) ── */
   body::before{
     content:""; position:fixed; inset:-25%; z-index:-2; pointer-events:none;
     background:
-      radial-gradient(40% 34% at 16% 10%, var(--bloom1), transparent 62%),
-      radial-gradient(34% 32% at 86% 16%, var(--bloom2), transparent 60%),
-      radial-gradient(44% 42% at 62% 102%, var(--bloom3), transparent 64%),
-      radial-gradient(30% 28% at 28% 78%, var(--bloom4), transparent 62%);
-    filter:blur(46px) saturate(120%);
+      radial-gradient(38% 32% at 14% 8%, var(--bloom1), transparent 60%),
+      radial-gradient(32% 30% at 88% 14%, var(--bloom2), transparent 58%),
+      radial-gradient(46% 44% at 64% 104%, var(--bloom3), transparent 62%),
+      radial-gradient(30% 28% at 26% 80%, var(--bloom4), transparent 60%);
+    filter:blur(52px) saturate(125%);
   }
-  /* ── fine grain (premium touch) ── */
-  body::after{
+  body::after{ /* fine grain */
     content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:var(--noise);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+  /* ── cursor light (hover glow the user asked for) ── */
+  #cursorlight{
+    position:fixed; width:520px; height:520px; left:0; top:0; z-index:-1; pointer-events:none;
+    border-radius:50%; opacity:0; transition:opacity .5s ease;
+    background:radial-gradient(closest-side, var(--cursorlight), transparent 70%);
+    mix-blend-mode:soft-light; transform:translate(-50%,-50%);
+  }
+  body:hover #cursorlight{opacity:.9;}
 
-  .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums; font-feature-settings:"tnum";}
+  .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums;}
   .muted{color:var(--ink-2);} .faint{color:var(--ink-3);}
   .caption{font-size:12.5px;}
 
   /* ============================================================
-     Liquid glass material — 3 tiers, light-edge (no solid borders)
+     Liquid glass — thick glass: gradient + blur + rim + thickness + specular
      ============================================================ */
   .glass{
-    position:relative; border-radius:var(--r-panel);
-    background:linear-gradient(180deg,var(--glass-hi) 0%,var(--glass-lo) 100%);
-    backdrop-filter:blur(var(--blur,22px)) saturate(190%) brightness(1.04);
-    -webkit-backdrop-filter:blur(var(--blur,22px)) saturate(190%) brightness(1.04);
+    position:relative; border-radius:var(--r-panel); isolation:isolate;
+    background:linear-gradient(176deg, var(--g-hi) 0%, var(--g-mid) 44%, var(--g-lo) 100%);
+    backdrop-filter:blur(var(--blur,22px)) saturate(200%) brightness(1.10);
+    -webkit-backdrop-filter:blur(var(--blur,22px)) saturate(200%) brightness(1.10);
     box-shadow:
-      inset 0 1px 0 var(--edge),
-      inset 0 0 0 1px var(--ring),
-      inset 0 -1px 1px rgba(0,0,0,.03),
-      0 1px 1px rgba(20,16,10,.04),
-      0 18px 42px -26px var(--shadow);
+      inset 0 1px 1px var(--rim),                 /* bright top rim */
+      inset 0 -14px 26px -20px var(--ring-d),     /* bottom thickness */
+      inset 0 0 0 1px var(--ring),                /* hairline ring (not border) */
+      inset -1px -1px 0 rgba(255,170,130,.05),    /* dispersion hint */
+      inset 1px 1px 0 rgba(130,200,255,.06),
+      0 2px 4px rgba(0,0,0,.05),
+      0 28px 64px -34px var(--shadow);
   }
+  /* cursor-following specular highlight */
+  .glass::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:3;
+    background:radial-gradient(240px 240px at var(--mx,26%) var(--my,-6%), rgba(255,255,255,.55), transparent 62%);
+    opacity:0; transition:opacity .4s ease;
+  }
+  .glass:hover::before{opacity:1;}
+  /* static edge sheen */
   .glass::after{
-    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-    background:radial-gradient(130% 92% at 17% -14%, var(--sheen), transparent 56%); opacity:.45;
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:2;
+    background:radial-gradient(140% 100% at 16% -18%, rgba(255,255,255,.55), transparent 52%);
+    opacity:.5; mix-blend-mode:screen;
   }
-  .glass > *{position:relative; z-index:1;}
-  .chrome{                            /* top bar / tab bar surface (glass-2) */
-    background:linear-gradient(180deg,var(--glass2-hi) 0%,var(--glass2-lo) 100%);
-    backdrop-filter:blur(22px) saturate(190%) brightness(1.06);
-    -webkit-backdrop-filter:blur(22px) saturate(190%) brightness(1.06);
+  .glass > *{position:relative; z-index:4;}
+  .chrome{
+    background:linear-gradient(176deg, var(--g-hi) 0%, var(--g-mid) 40%, var(--g-lo) 100%);
+    backdrop-filter:blur(26px) saturate(210%) brightness(1.12);
+    -webkit-backdrop-filter:blur(26px) saturate(210%) brightness(1.12);
   }
-  .l1{--blur:14px;} .l2{--blur:22px;} .l3{--blur:32px;}
-  .paper{                             /* near-opaque reading surface (WCAG AA) */
-    position:relative; border-radius:var(--r-panel);
+  .l1{--blur:14px;} .l2{--blur:24px;} .l3{--blur:34px;}
+  .paper{
+    position:relative; border-radius:var(--r-panel); isolation:isolate;
     background:var(--surface);
-    backdrop-filter:blur(22px) saturate(150%);
-    -webkit-backdrop-filter:blur(22px) saturate(150%);
+    backdrop-filter:blur(24px) saturate(150%);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);
     box-shadow:
-      inset 0 1px 0 var(--edge),
+      inset 0 1px 1px var(--rim),
       inset 0 0 0 1px var(--ring),
-      0 1px 1px rgba(20,16,10,.04),
-      0 20px 44px -28px var(--shadow);
+      0 2px 4px rgba(0,0,0,.04),
+      0 30px 70px -38px var(--shadow);
   }
   .paper > *{position:relative; z-index:1;}
 
   /* ============================================================
-     Controls — track + thumb (no boxy borders)
+     Controls — track + thumb, light edges only (no solid borders)
      ============================================================ */
   .seg{display:inline-flex; gap:2px; padding:3px; border-radius:var(--r-chip);}
   .seg .opt{
-    padding:6px 15px; border-radius:var(--r-chip); font-size:13.5px; color:var(--ink-2);
+    position:relative; padding:6px 15px; border-radius:var(--r-chip); font-size:13.5px; color:var(--ink-2);
     cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:7px;
-    transition:color .18s ease;
+    transition:color .2s ease, background .2s ease;
   }
-  .seg .opt:hover{color:var(--ink);}
+  .seg .opt:hover{color:var(--ink); background:var(--hover);}
   .seg .opt[aria-selected="true"]{
     color:var(--ink);
-    background:linear-gradient(180deg,var(--glass-hi),var(--glass-lo));
-    box-shadow:inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--ring),
-               0 1px 2px rgba(20,16,10,.10), 0 6px 14px -10px var(--shadow);
+    background:linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.14));
+    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring),
+               0 1px 2px rgba(20,16,10,.12), 0 10px 22px -14px var(--shadow);
   }
   .chip{
     display:inline-flex; align-items:center; gap:7px; padding:6px 13px; font-size:13px;
     border-radius:var(--r-chip); color:var(--ink-2); cursor:pointer; user-select:none;
-    background:linear-gradient(180deg,var(--glass-hi),var(--glass-lo));
-    box-shadow:inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--ring);
-    transition:color .18s ease;
+    background:linear-gradient(180deg,var(--g-hi),var(--g-lo));
+    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring);
+    transition:color .2s ease, box-shadow .2s ease, transform .12s ease;
   }
-  .chip:hover{color:var(--ink);}
+  .chip:hover{color:var(--ink); box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring),
+              0 8px 20px -14px var(--shadow);}
+  .chip:active{transform:scale(.97);}
   .chip[aria-pressed="true"]{
     color:var(--ink);
-    box-shadow:inset 0 1px 0 var(--edge), inset 0 0 0 1.5px color-mix(in srgb,var(--accent) 65%,transparent),
-               inset 0 0 0 40px color-mix(in srgb,var(--accent) 12%,transparent);
+    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1.5px color-mix(in srgb,var(--accent) 70%,transparent),
+               inset 0 0 0 40px var(--accent-soft);
   }
-  .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.30) inset;}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35), 0 1px 3px -1px rgba(0,0,0,.4);}
   .btn{
     font:inherit; font-size:14px; border:0; cursor:pointer; border-radius:var(--r-control);
     padding:9px 18px; display:inline-flex; align-items:center; gap:8px; min-height:40px;
-    transition:transform .12s ease, filter .18s ease, background .18s ease;
+    transition:transform .12s ease, filter .2s ease, background .2s ease, box-shadow .2s ease;
   }
   .btn:active{transform:scale(.98);}
-  .btn-primary{background:var(--accent); color:var(--accent-ink);}
+  .btn-primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,#fff),var(--accent)); color:var(--accent-ink);
+    box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 10px 24px -12px color-mix(in srgb,var(--accent) 70%,transparent);}
   .btn-primary:hover{filter:brightness(1.08);}
   .btn-ghost{background:transparent; color:var(--ink-2);}
   .btn-ghost:hover{background:var(--hover); color:var(--ink);}
   .icon-btn{
     width:38px;height:38px;min-height:38px;padding:0;display:grid;place-items:center;
     border-radius:var(--r-control); color:var(--ink-2); background:transparent; border:0; cursor:pointer;
-    transition:background .18s ease,color .18s ease;
+    transition:background .2s ease,color .2s ease, box-shadow .2s ease;
   }
-  .icon-btn:hover{background:var(--hover); color:var(--ink);}
+  .icon-btn:hover{background:var(--hover); color:var(--ink); box-shadow:inset 0 1px 0 var(--rim);}
   .icon-btn[aria-pressed="true"]{color:var(--accent);}
   :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:8px;}
 
   /* ============================================================
-     Dev harness (scaffolding only — visually isolated, NOT product)
+     Dev harness (scaffolding — isolated, NOT product)
      ============================================================ */
   .harness{
-    position:sticky; top:0; z-index:80; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    position:sticky; top:0; z-index:90; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
     padding:7px 14px; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.02em;
-    color:#cfd3dc; background:#15171d; border-bottom:1px dashed rgba(255,255,255,.18);
+    color:#cfd3dc; background:#14161b; border-bottom:1px dashed rgba(255,255,255,.18);
   }
-  .harness .tag{
-    color:#8b93a3; border:1px dashed rgba(255,255,255,.24); border-radius:6px; padding:2px 7px;
-  }
-  .htab{
-    padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,.14);
-    color:#b6bcc8; cursor:pointer; background:transparent;
-  }
-  .htab.on{color:#15171d; background:#5EEAD4; border-color:#5EEAD4;}
+  .harness .tag{color:#8b93a3; border:1px dashed rgba(255,255,255,.24); border-radius:6px; padding:2px 7px;}
+  .htab{padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,.14); color:#b6bcc8; cursor:pointer; background:transparent;}
+  .htab.on{color:#14161b; background:#63F0D8; border-color:#63F0D8;}
 
   /* ============================================================
-     App shell
+     App shell — iA-like: quiet chrome, generous whitespace, text first
      ============================================================ */
-  .shell{max-width:1120px; margin:0 auto; padding:26px 22px 140px;}
+  .shell{max-width:1120px; margin:0 auto; padding:34px 26px 150px;}
   .topbar{
     position:sticky; top:46px; z-index:40; display:flex; align-items:center; gap:16px;
-    height:56px; padding:0 14px 0 18px; border-radius:var(--r-overlay); margin-bottom:30px;
+    height:54px; padding:0 12px 0 20px; border-radius:var(--r-overlay); margin-bottom:44px;
   }
   .brand{font-family:var(--font-serif); font-weight:600; font-size:17px; letter-spacing:-.01em;}
-  .brand .en{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; color:var(--ink-3); text-transform:uppercase; margin-left:9px;}
+  .brand .en{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; color:var(--ink-3); text-transform:uppercase; margin-left:9px;}
   .search{
     margin-left:auto; display:flex; align-items:center; gap:9px; color:var(--ink-3);
     border-radius:var(--r-control); padding:8px 12px; font-size:13.5px; min-width:250px; cursor:text;
-    background:linear-gradient(180deg,var(--glass-hi),var(--glass-lo));
-    box-shadow:inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--ring);
-    transition:box-shadow .2s ease;
+    background:linear-gradient(180deg,var(--g-hi),var(--g-lo));
+    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring);
+    transition:box-shadow .25s ease;
   }
-  .search:hover{box-shadow:inset 0 1px 0 var(--edge), inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,var(--ring));}
-  .kbd{font-family:var(--font-mono); font-size:11px; color:var(--ink-3); margin-left:auto;
-       padding:2px 6px; border-radius:6px; background:var(--hover);}
+  .search:hover{box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px color-mix(in srgb,var(--accent) 50%,var(--ring));}
+  .kbd{font-family:var(--font-mono); font-size:11px; color:var(--ink-3); margin-left:auto; padding:2px 6px; border-radius:6px; background:var(--hover);}
 
-  /* popover (single theme control) */
   .pop-wrap{position:relative;}
-  .popover{
-    position:absolute; top:48px; right:0; width:196px; padding:8px; border-radius:var(--r-overlay);
-    display:none; z-index:60;
-  }
-  .popover.on{display:block;}
-  .pop-item{
-    display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px;
-    font-size:13.5px; color:var(--ink-2); cursor:pointer;
-  }
+  .popover{position:absolute; top:48px; right:0; width:200px; padding:8px; border-radius:var(--r-overlay); display:none; z-index:60;}
+  .popover.on{display:block; animation:pop .16s ease;}
+  @keyframes pop{from{opacity:0; transform:translateY(-4px)}to{opacity:1}}
+  .pop-item{display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px; font-size:13.5px; color:var(--ink-2); cursor:pointer; transition:background .16s ease;}
   .pop-item:hover{background:var(--hover); color:var(--ink);}
   .pop-item .tick{margin-left:auto; color:var(--accent); opacity:0;}
   .pop-item[aria-checked="true"]{color:var(--ink);}
   .pop-item[aria-checked="true"] .tick{opacity:1;}
-  .pop-title{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); padding:6px 10px 4px;}
+  .pop-title{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); padding:6px 10px 4px;}
 
   /* ============================================================
      Home
      ============================================================ */
-  .constellation{position:relative; height:230px; margin:4px 0 2px;}
+  .constellation{position:relative; height:236px; margin:0 0 6px;}
   .constellation svg{width:100%; height:100%; overflow:visible;}
-  .clink{stroke:color-mix(in srgb,var(--ink) 26%,transparent); stroke-width:1;}
-  .clink.faint{stroke:color-mix(in srgb,var(--ink) 13%,transparent);}
-  .cnode{fill:var(--ink);}
-  .cnode.halo{fill:none; stroke:color-mix(in srgb,var(--ink) 20%,transparent);}
-  .star-dot{fill:color-mix(in srgb,var(--ink) 42%,transparent);}
-  .pulse{animation:float 7s ease-in-out infinite;}
-  .pulse.d1{animation-delay:-1.1s;} .pulse.d2{animation-delay:-2.3s;} .pulse.d3{animation-delay:-3.4s;}
-  .pulse.d4{animation-delay:-4.5s;} .pulse.d5{animation-delay:-5.6s;} .pulse.d6{animation-delay:-.6s;}
-  @keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-3.5px)}}
+  .clink{stroke:color-mix(in srgb,var(--ink) 22%,transparent); stroke-width:1; fill:none;}
+  .clink.hair{stroke:color-mix(in srgb,var(--ink) 10%,transparent);}
+  .cnode{fill:color-mix(in srgb,var(--ink) 34%,transparent);}
+  .stardot{fill:color-mix(in srgb,var(--ink) 30%,transparent);}
+  .pulse{animation:float 8s ease-in-out infinite; transform-box:fill-box; transform-origin:center;}
+  .pulse.d1{animation-delay:-1s;} .pulse.d2{animation-delay:-2.1s;} .pulse.d3{animation-delay:-3.3s;}
+  .pulse.d4{animation-delay:-4.4s;} .pulse.d5{animation-delay:-5.5s;} .pulse.d6{animation-delay:-.4s;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .dnode{cursor:pointer; transition:transform .25s ease;}
+  .dnode:hover{transform:scale(1.35);}
+  .dnode .glow{opacity:0; transition:opacity .3s ease;}
+  .dnode:hover .glow{opacity:.5;}
   @media (prefers-reduced-motion:reduce){.pulse{animation:none!important;}}
 
-  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; color:var(--ink-3); text-transform:uppercase;}
-  .hero{font-family:var(--font-serif); font-weight:600; font-size:46px; line-height:1.06;
-        letter-spacing:-.02em; margin:.34em 0 .18em; max-width:16ch;}
-  .lede{font-size:16px; line-height:1.7; color:var(--ink-2); max-width:58ch; margin:.4em 0 0;}
-  .stats{display:flex; gap:26px; flex-wrap:wrap; padding:14px 0; margin:22px 0 8px;
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--ink-3); text-transform:uppercase;}
+  .hero{font-family:var(--font-serif); font-weight:600; font-size:52px; line-height:1.05;
+        letter-spacing:-.022em; margin:.36em 0 .2em; max-width:20ch;}
+  .lede{font-family:var(--font-serif); font-size:17px; line-height:1.75; color:var(--ink-2); max-width:52ch; margin:.5em 0 0;}
+  .stats{display:flex; gap:30px; flex-wrap:wrap; padding:16px 0; margin:26px 0 8px;
          border-top:1px solid var(--line); border-bottom:1px solid var(--line); font-size:12.5px; color:var(--ink-3);}
   .stats b{color:var(--ink); font-weight:500;}
-  .sayt{font-size:15px; color:var(--ink-2);}
 
-  .domain-row{display:flex; align-items:center; gap:13px; height:48px; padding:0 14px;
-              border-radius:var(--r-control); cursor:pointer; transition:background .16s ease;}
+  .domain-row{display:flex; align-items:center; gap:13px; height:50px; padding:0 14px;
+              border-radius:var(--r-control); cursor:pointer; transition:background .18s ease;}
   .domain-row:hover{background:var(--hover);}
-  .domain-row .name{font-weight:450;}
   .domain-row .bar{margin-left:auto; display:flex; align-items:center; gap:12px;}
-  .domain-row .spark{width:64px;height:14px;opacity:.5;}
+  .domain-row .spark{width:66px;height:14px;opacity:.55;}
 
-  .row{display:flex; align-items:center; gap:13px; padding:15px 14px; border-radius:var(--r-control);
-       cursor:pointer; transition:background .16s ease;}
+  .row{position:relative; display:flex; align-items:center; gap:13px; padding:16px 14px; border-radius:var(--r-control);
+       cursor:pointer; transition:background .18s ease;}
+  .row::after{content:""; position:absolute; left:14px; right:14px; bottom:0; height:1px; background:var(--line);}
+  .row:last-child::after{display:none;}
   .row:hover{background:var(--hover);}
-  .row + .row{box-shadow:inset 0 1px 0 var(--line);}
   .row .name{font-weight:500;}
   .row .desc{color:var(--ink-2); font-size:14px;}
   .row .yr{margin-left:auto; color:var(--ink-3); font-size:12.5px;}
-  .sec-head{display:flex; align-items:center; gap:14px; margin:30px 0 6px;}
-  .sec-head h2{font-family:var(--font-sans); font-size:15px; font-weight:600; margin:0; letter-spacing:.01em;}
+  .sec-head{display:flex; align-items:center; gap:14px; margin:36px 0 8px;}
+  .sec-head h2{font-family:var(--font-sans); font-size:15px; font-weight:600; margin:0;}
 
   /* ============================================================
-     Graph
+     Graph (rebuilt)
      ============================================================ */
   .filter-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:18px;}
-  .graph-wrap{display:grid; grid-template-columns:1fr 372px; gap:20px;}
-  .graph-canvas{border-radius:var(--r-panel); min-height:540px; overflow:hidden;}
-  .rail{padding:24px 22px; align-self:start;}
-  .rail h3{font-family:var(--font-serif); font-size:22px; font-weight:600; margin:.5em 0 .15em; letter-spacing:-.01em;}
-  .rail .sec{font-family:var(--font-sans); font-size:12px; font-weight:600; letter-spacing:.08em;
-             text-transform:uppercase; color:var(--ink-3); margin:22px 0 8px;}
+  .graph-wrap{display:grid; grid-template-columns:1fr 368px; gap:20px;}
+  .graph-canvas{position:relative; border-radius:var(--r-panel); min-height:560px; overflow:hidden;}
+  .graph-canvas .grid{
+    position:absolute; inset:0; z-index:0; opacity:.5;
+    background-image:radial-gradient(color-mix(in srgb,var(--ink) 22%,transparent) .6px, transparent .6px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(120% 100% at 50% 45%, #000 30%, transparent 78%);
+  }
+  .graph-legend{position:absolute; left:16px; bottom:16px; z-index:4; display:flex; gap:8px; align-items:center;
+                font-size:12px; color:var(--ink-2);}
+  .graph-legend .item{display:flex; align-items:center; gap:6px;}
+  .gnode{cursor:pointer;}
+  .gnode .halo{opacity:0; transition:opacity .25s ease, transform .25s ease; transform-box:fill-box; transform-origin:center;}
+  .gnode:hover .halo{opacity:1;}
+  .gnode .lbl{opacity:0; transition:opacity .25s ease; font-family:var(--font-sans); font-weight:600;
+              fill:var(--ink); paint-order:stroke; stroke:var(--canvas); stroke-width:3px; stroke-linejoin:round;}
+  .gnode:hover .lbl, .gnode.on .lbl{opacity:1;}
+  .glink{fill:none; stroke:color-mix(in srgb,var(--ink) 20%,transparent); stroke-width:1.1; transition:stroke .25s ease;}
+  .glink.rel{stroke-dasharray:2 5; stroke:color-mix(in srgb,var(--ink) 12%,transparent);}
+  .glink.hot{stroke:color-mix(in srgb,var(--accent) 70%,transparent); stroke-width:1.6;}
+  .rail{padding:26px 24px; align-self:start;}
+  .rail h3{font-family:var(--font-serif); font-size:23px; font-weight:600; margin:.5em 0 .15em; letter-spacing:-.01em;}
+  .rail .sec{font-family:var(--font-sans); font-size:11.5px; font-weight:600; letter-spacing:.1em;
+             text-transform:uppercase; color:var(--ink-3); margin:24px 0 9px;}
   @media (max-width:1024px){ .graph-wrap{grid-template-columns:1fr;} .rail{display:none;} }
 
   /* ============================================================
      Timeline / Roadmap
      ============================================================ */
-  .era{display:flex; align-items:center; gap:10px; margin:26px 0 6px; font-size:12.5px; color:var(--ink-3);
-       letter-spacing:.04em; text-transform:uppercase; font-family:var(--font-mono);}
-  .era::before{content:""; width:18px; height:1px; background:var(--accent);}
-  .lane{border-radius:var(--r-panel); padding:18px 20px; margin-bottom:14px;}
-  .lane h4{margin:0 0 3px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3);}
-  .lane .steps{display:flex; flex-wrap:wrap; gap:8px 16px; color:var(--ink-2); font-size:14.5px;}
-  .lane .steps .n{font-family:var(--font-mono); color:var(--ink-3); font-size:12px; margin-right:5px;}
+  .era{display:flex; align-items:center; gap:10px; margin:34px 0 8px; font-size:12px; color:var(--ink-3);
+       letter-spacing:.1em; text-transform:uppercase; font-family:var(--font-mono);}
+  .era::before{content:""; width:20px; height:1px; background:var(--accent);}
+  .lane{border-radius:var(--r-panel); padding:19px 22px; margin-bottom:14px;}
+  .lane h4{margin:0 0 4px; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);}
+  .lane .steps{display:flex; flex-wrap:wrap; gap:9px 18px; color:var(--ink-2); font-size:14.5px;}
+  .lane .steps .n{font-family:var(--font-mono); color:var(--ink-3); font-size:12px; margin-right:6px;}
 
   /* ============================================================
-     Detail (reading)
+     Detail (reading — iA-like focus)
      ============================================================ */
-  .article-title{font-family:var(--font-serif); font-size:32px; font-weight:600; line-height:1.18;
-                 letter-spacing:-.015em; margin:.1em 0 .1em;}
-  .alias{color:var(--ink-3); font-size:13px; margin-bottom:14px;}
-  .meta-line{display:flex; gap:8px 16px; align-items:center; flex-wrap:wrap; color:var(--ink-2); font-size:13.5px;}
+  .article-title{font-family:var(--font-serif); font-size:36px; font-weight:600; line-height:1.16;
+                 letter-spacing:-.018em; margin:.1em 0 .12em;}
+  .alias{color:var(--ink-3); font-size:13px; margin-bottom:16px;}
+  .meta-line{display:flex; gap:10px 18px; align-items:center; flex-wrap:wrap; color:var(--ink-2); font-size:13.5px;}
   .meta-line .plain{display:inline-flex; align-items:center; gap:7px;}
   .stars{color:var(--accent); letter-spacing:2px;}
-  .reading{max-width:66ch; font-family:var(--font-serif); font-size:17px; line-height:1.9; color:var(--ink);}
-  .reading p{margin:.85em 0;}
-  .wiki{color:var(--accent); text-decoration:none; cursor:pointer;
-        border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent);}
-  .wiki:hover{border-bottom-color:var(--accent);}
-  .formula{font-family:var(--font-mono); font-size:13.5px; margin:20px 0; padding:15px 18px;
+  .paper-inner{max-width:68ch; margin:0 auto;}
+  .reading{font-family:var(--font-serif); font-size:17.5px; line-height:1.95; color:var(--ink);}
+  .reading p{margin:.9em 0;}
+  .wiki{color:var(--accent); text-decoration:none; cursor:pointer; border-bottom:1px solid color-mix(in srgb,var(--accent) 38%,transparent);
+        transition:border-color .2s ease, background .2s ease;}
+  .wiki:hover{border-bottom-color:var(--accent); background:var(--accent-soft);}
+  .formula{font-family:var(--font-mono); font-size:13.5px; margin:22px 0; padding:16px 18px;
            border-radius:var(--r-control); color:var(--ink);
-           background:linear-gradient(180deg,var(--glass-hi),var(--glass-lo));
-           box-shadow:inset 0 1px 0 var(--edge), inset 0 0 0 1px var(--ring); overflow-x:auto;}
-  .block-sec{font-family:var(--font-sans); font-size:12px; font-weight:600; letter-spacing:.08em;
-             text-transform:uppercase; color:var(--ink-3); margin:28px 0 8px;}
-  .dep-chain{font-size:14.5px; color:var(--ink-2); display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+           background:linear-gradient(180deg,var(--g-hi),var(--g-lo));
+           box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring); overflow-x:auto;}
+  .block-sec{font-family:var(--font-sans); font-size:11.5px; font-weight:600; letter-spacing:.1em;
+             text-transform:uppercase; color:var(--ink-3); margin:32px 0 10px;}
+  .dep-chain{font-size:14.5px; color:var(--ink-2); display:flex; align-items:center; gap:9px; flex-wrap:wrap;}
   .dep-chain .me{font-weight:600; color:var(--ink);}
   .arrow{color:var(--ink-3);}
-  .backlinks{font-size:14.5px; color:var(--ink-2); line-height:2;}
-  .fab{
-    position:fixed; left:50%; transform:translateX(-50%); bottom:22px; z-index:45;
-    display:inline-flex; gap:2px; padding:6px; border-radius:var(--r-overlay);
-  }
-  .fab .btn{min-height:38px; padding:8px 14px; font-size:13.5px;}
+  .backlinks{font-size:14.5px; color:var(--ink-2); line-height:2.1;}
+  .fab{position:fixed; left:50%; transform:translateX(-50%); bottom:24px; z-index:45;
+       display:inline-flex; gap:2px; padding:6px; border-radius:var(--r-overlay);}
+  .fab .btn{min-height:38px; padding:8px 15px; font-size:13.5px;}
   .fab .btn[aria-pressed="true"]{color:var(--accent); background:var(--hover);}
 
   /* ============================================================
@@ -325,30 +350,29 @@
   .who{display:flex; align-items:center; gap:16px;}
   .avatar{width:58px;height:58px;border-radius:50%;
           background:conic-gradient(from 210deg,var(--d1),var(--d2),var(--d5),var(--d4),var(--d3),var(--d1));
-          box-shadow:inset 0 0 0 1px rgba(255,255,255,.4), 0 8px 20px -12px var(--shadow);}
+          box-shadow:inset 0 0 0 1px rgba(255,255,255,.45), 0 10px 26px -14px var(--shadow);}
 
   /* ============================================================
      Search overlay
      ============================================================ */
   .overlay{position:fixed; inset:0; z-index:70; display:none; align-items:flex-start; justify-content:center;
-           padding-top:11vh; background:color-mix(in srgb,var(--canvas) 34%,rgba(0,0,0,.42));
-           backdrop-filter:blur(3px);}
-  .overlay.on{display:flex;}
-  .searchbox{width:min(660px,92vw); border-radius:var(--r-overlay); padding:12px 12px 8px;}
+           padding-top:11vh; background:color-mix(in srgb,var(--canvas) 30%,rgba(0,0,0,.46)); backdrop-filter:blur(4px);}
+  .overlay.on{display:flex; animation:pop .18s ease;}
+  .searchbox{width:min(680px,92vw); border-radius:var(--r-overlay); padding:12px 12px 8px;}
   .searchbox .field{display:flex; align-items:center; gap:11px; padding:8px 8px 14px; border-bottom:1px solid var(--line);}
   .searchbox input{flex:1; border:0; outline:0; background:transparent; color:var(--ink); font:inherit; font-size:16px;}
-  .hit{display:flex; align-items:center; gap:13px; padding:13px 12px; border-radius:var(--r-control); cursor:pointer;}
+  .hit{display:flex; align-items:center; gap:13px; padding:13px 12px; border-radius:var(--r-control); cursor:pointer; transition:background .16s ease;}
   .hit:hover{background:var(--hover);}
-  mark{background:color-mix(in srgb,var(--accent) 26%,transparent); color:inherit; border-radius:3px; padding:0 2px;}
+  mark{background:color-mix(in srgb,var(--accent) 30%,transparent); color:inherit; border-radius:3px; padding:0 2px;}
 
   .screen{display:none;} .screen.on{display:block;}
-  .badge{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-3);}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
-  @media (max-width:1024px){ .hero{font-size:34px;} }
-  @media (max-width:640px){ .shell{padding:20px 16px 120px;} .search{min-width:0;} .search .lbl{display:none;} .hero{font-size:30px;} }
+  @media (max-width:1024px){ .hero{font-size:38px;} }
+  @media (max-width:640px){ .shell{padding:24px 18px 130px;} .search{min-width:0;} .search .lbl{display:none;} .hero{font-size:31px;} }
 </style>
 </head>
 <body>
+<div id="cursorlight" aria-hidden="true"></div>
 
 <!-- ================= DEV harness (scaffolding — not part of the product UI) ================= -->
 <div class="harness" role="note" aria-label="原型演示壳（非产品界面）">
@@ -371,12 +395,11 @@
       <span class="lbl">搜索知识点…</span>
       <span class="kbd">⌘K</span>
     </div>
-
-    <!-- single theme control: icon button -> 3-choice popover -->
     <div class="pop-wrap">
       <button class="icon-btn" id="themeBtn" aria-haspopup="true" aria-expanded="false" title="主题·阅读偏好" aria-label="主题·阅读偏好">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="7.5"/><path d="M12 4.5v15" /><path d="M12 4.5a7.5 7.5 0 0 1 0 15z" fill="currentColor" stroke="none" opacity=".55"/>
+          <circle cx="12" cy="12" r="7.5"/><path d="M12 4.5v15"/>
+          <path d="M12 4.5a7.5 7.5 0 0 1 0 15z" fill="currentColor" stroke="none" opacity=".5"/>
         </svg>
       </button>
       <div class="popover glass l3" id="themePop" role="radiogroup" aria-label="主题模式">
@@ -386,7 +409,6 @@
         <div class="pop-item" role="radio" aria-checked="false" data-mode="night"><span>夜间 · 夜琉璃</span><span class="tick">✓</span></div>
       </div>
     </div>
-
     <button class="icon-btn" title="本地档案" aria-label="本地档案">
       <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M5.5 19.5c0-3.5 3-5.9 6.5-5.9s6.5 2.4 6.5 5.9"/></svg>
     </button>
@@ -395,31 +417,36 @@
   <!-- ================= HOME ================= -->
   <section class="screen on" id="screen-home">
     <div class="constellation" aria-hidden="true">
-      <svg viewBox="0 0 1000 210" preserveAspectRatio="xMidYMid meet">
-        <g class="clink faint">
-          <path d="M96 132 L232 74 L372 128 L494 58 L636 122 L774 66 L914 126" fill="none"/>
-          <path d="M232 74 L300 158 L494 58 L560 162 L774 66" fill="none"/>
-          <path d="M96 132 L300 158 L372 128 L560 162 L636 122 L914 126" fill="none"/>
+      <svg viewBox="0 0 1000 214" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="glowg"><stop offset="0%" stop-color="#fff" stop-opacity=".9"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient>
+        </defs>
+        <g class="clink hair">
+          <path d="M96 132 L232 74 L372 128 L494 58 L636 122 L774 66 L914 126"/>
+          <path d="M232 74 L300 158 L494 58 L560 162 L774 66"/>
+          <path d="M96 132 L300 158 L372 128 L560 162 L636 122 L914 126"/>
         </g>
         <g class="clink">
-          <path d="M232 74 L494 58 L774 66" fill="none"/>
-          <path d="M372 128 L636 122" fill="none"/>
+          <path d="M232 74 L494 58 L774 66"/><path d="M372 128 L636 122"/><path d="M96 132 L636 122"/>
         </g>
-        <g class="star-dot">
-          <circle cx="150" cy="52" r="1.4"/><circle cx="418" cy="34" r="1.2"/><circle cx="700" cy="46" r="1.4"/>
-          <circle cx="250" cy="182" r="1.2"/><circle cx="600" cy="188" r="1.3"/><circle cx="862" cy="170" r="1.2"/>
-          <circle cx="70" cy="88" r="1.1"/><circle cx="958" cy="84" r="1.1"/><circle cx="540" cy="104" r="1"/>
+        <g class="stardot">
+          <circle cx="150" cy="50" r="1.4"/><circle cx="418" cy="32" r="1.2"/><circle cx="700" cy="44" r="1.4"/>
+          <circle cx="250" cy="184" r="1.2"/><circle cx="602" cy="190" r="1.3"/><circle cx="862" cy="172" r="1.2"/>
+          <circle cx="70" cy="86" r="1.1"/><circle cx="958" cy="82" r="1.1"/><circle cx="540" cy="104" r="1"/>
         </g>
-        <g class="cnode">
-          <circle cx="300" cy="158" r="2.6"/><circle cx="560" cy="162" r="2.6"/>
-          <circle cx="494" cy="58" r="3"/><circle cx="636" cy="122" r="2.4"/>
-        </g>
-        <g class="pulse d1"><circle cx="96" cy="132" r="6.5" fill="var(--d1)"/></g>
-        <g class="pulse d2"><circle cx="232" cy="74" r="6.5" fill="var(--d2)"/></g>
-        <g class="pulse d3"><circle cx="372" cy="128" r="6.5" fill="var(--d3)"/></g>
-        <g class="pulse d5"><circle cx="494" cy="58" r="7.5" fill="var(--d5)"/></g>
-        <g class="pulse d4"><circle cx="774" cy="66" r="6.5" fill="var(--d4)"/></g>
-        <g class="pulse d6"><circle cx="914" cy="126" r="6.5" fill="var(--d6)"/></g>
+        <g class="cnode"><circle cx="300" cy="158" r="2.6"/><circle cx="560" cy="162" r="2.6"/><circle cx="494" cy="58" r="3"/><circle cx="636" cy="122" r="2.4"/></g>
+        <g class="pulse d1"><g class="dnode" tabindex="0" aria-label="机器学习基础"><title>机器学习基础</title>
+          <circle class="glow" cx="96" cy="132" r="22" fill="url(#glowg)"/><circle cx="96" cy="132" r="6.5" fill="var(--d1)"/><circle cx="94" cy="130" r="2.2" fill="#fff" opacity=".55"/></g></g>
+        <g class="pulse d2"><g class="dnode" tabindex="0" aria-label="自然语言处理"><title>自然语言处理</title>
+          <circle class="glow" cx="232" cy="74" r="22" fill="url(#glowg)"/><circle cx="232" cy="74" r="6.5" fill="var(--d2)"/><circle cx="230" cy="72" r="2.2" fill="#fff" opacity=".55"/></g></g>
+        <g class="pulse d3"><g class="dnode" tabindex="0" aria-label="计算机视觉"><title>计算机视觉</title>
+          <circle class="glow" cx="372" cy="128" r="22" fill="url(#glowg)"/><circle cx="372" cy="128" r="6.5" fill="var(--d3)"/><circle cx="370" cy="126" r="2.2" fill="#fff" opacity=".55"/></g></g>
+        <g class="pulse d5"><g class="dnode" tabindex="0" aria-label="大模型与生成"><title>大模型与生成</title>
+          <circle class="glow" cx="494" cy="58" r="26" fill="url(#glowg)"/><circle cx="494" cy="58" r="8" fill="var(--d5)"/><circle cx="491" cy="55" r="2.8" fill="#fff" opacity=".6"/></g></g>
+        <g class="pulse d4"><g class="dnode" tabindex="0" aria-label="数学与理论"><title>数学与理论</title>
+          <circle class="glow" cx="774" cy="66" r="22" fill="url(#glowg)"/><circle cx="774" cy="66" r="6.5" fill="var(--d4)"/><circle cx="772" cy="64" r="2.2" fill="#fff" opacity=".55"/></g></g>
+        <g class="pulse d6"><g class="dnode" tabindex="0" aria-label="强化学习"><title>强化学习</title>
+          <circle class="glow" cx="914" cy="126" r="22" fill="url(#glowg)"/><circle cx="914" cy="126" r="6.5" fill="var(--d6)"/><circle cx="912" cy="124" r="2.2" fill="#fff" opacity=".55"/></g></g>
       </svg>
     </div>
     <div class="eyebrow">1943 — 2026</div>
@@ -430,19 +457,19 @@
       <span><b>94</b> 知识点</span><span><b>6</b> 领域</span><span><b>72</b> 论文</span><span><b>83</b> 年跨度</span>
     </div>
 
-    <div style="margin-top:10px">
-      <div class="domain-row"><span class="dot" style="background:var(--d1)"></span><span class="name">机器学习基础</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 64 14" fill="none"><path d="M0 12 L10 9 L20 10 L30 5 L40 7 L52 2 L64 4" stroke="var(--d1)" stroke-width="1.5"/></svg><span class="faint mono caption">18</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d2)"></span><span class="name">自然语言处理</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 64 14" fill="none"><path d="M0 11 L12 10 L24 6 L36 8 L48 3 L64 3" stroke="var(--d2)" stroke-width="1.5"/></svg><span class="faint mono caption">16</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d3)"></span><span class="name">计算机视觉</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 64 14" fill="none"><path d="M0 12 L14 11 L28 9 L40 6 L52 6 L64 5" stroke="var(--d3)" stroke-width="1.5"/></svg><span class="faint mono caption">15</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d4)"></span><span class="name">强化学习</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 64 14" fill="none"><path d="M0 13 L12 11 L24 12 L36 8 L48 9 L64 4" stroke="var(--d4)" stroke-width="1.5"/></svg><span class="faint mono caption">12</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d5)"></span><span class="name">大模型与生成</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 64 14" fill="none"><path d="M0 12 L12 12 L24 8 L36 5 L48 2 L64 1" stroke="var(--d5)" stroke-width="1.5"/></svg><span class="faint mono caption">20</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d6)"></span><span class="name">数学与理论</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 64 14" fill="none"><path d="M0 12 L12 9 L24 10 L36 7 L48 5 L64 6" stroke="var(--d6)" stroke-width="1.5"/></svg><span class="faint mono caption">13</span></span></div>
+    <div style="margin-top:12px">
+      <div class="domain-row"><span class="dot" style="background:var(--d1)"></span><span>机器学习基础</span>
+        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L10 9 L20 10 L30 5 L40 7 L54 2 L66 4" stroke="var(--d1)" stroke-width="1.5"/></svg><span class="faint mono caption">18</span></span></div>
+      <div class="domain-row"><span class="dot" style="background:var(--d2)"></span><span>自然语言处理</span>
+        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 11 L12 10 L24 6 L36 8 L48 3 L66 3" stroke="var(--d2)" stroke-width="1.5"/></svg><span class="faint mono caption">16</span></span></div>
+      <div class="domain-row"><span class="dot" style="background:var(--d3)"></span><span>计算机视觉</span>
+        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L14 11 L28 9 L40 6 L52 6 L66 5" stroke="var(--d3)" stroke-width="1.5"/></svg><span class="faint mono caption">15</span></span></div>
+      <div class="domain-row"><span class="dot" style="background:var(--d4)"></span><span>强化学习</span>
+        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 13 L12 11 L24 12 L36 8 L48 9 L66 4" stroke="var(--d4)" stroke-width="1.5"/></svg><span class="faint mono caption">12</span></span></div>
+      <div class="domain-row"><span class="dot" style="background:var(--d5)"></span><span>大模型与生成</span>
+        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L12 12 L24 8 L36 5 L48 2 L66 1" stroke="var(--d5)" stroke-width="1.5"/></svg><span class="faint mono caption">20</span></span></div>
+      <div class="domain-row"><span class="dot" style="background:var(--d6)"></span><span>数学与理论</span>
+        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L12 9 L24 10 L36 7 L48 5 L66 6" stroke="var(--d6)" stroke-width="1.5"/></svg><span class="faint mono caption">13</span></span></div>
     </div>
 
     <div class="sec-head">
@@ -458,7 +485,7 @@
       <div class="row"><span class="dot" style="background:var(--d1)"></span><span class="name">反向传播</span><span class="desc">用链式法则训练神经网络</span><span class="yr mono">1986</span></div>
       <div class="row"><span class="dot" style="background:var(--d2)"></span><span class="name">词向量</span><span class="desc">把词语映射到连续语义空间</span><span class="yr mono">2013</span></div>
     </div>
-    <div style="margin-top:14px"><button class="btn btn-ghost">查看全部
+    <div style="margin-top:16px"><button class="btn btn-ghost">查看全部
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></div>
   </section>
 
@@ -473,31 +500,122 @@
       </div>
       <div class="seg glass l1" style="margin-left:auto">
         <span class="opt" role="tab" aria-selected="true">依赖</span>
-        <span class="opt" role="tab" aria-selected="true">相关</span>
+        <span class="opt" role="tab" aria-selected="false">相关</span>
       </div>
     </div>
     <div class="graph-wrap">
       <div class="graph-canvas glass l2">
-        <svg viewBox="0 0 700 540" width="100%" height="540">
-          <g stroke="color-mix(in srgb,var(--ink) 24%,transparent)" fill="none" stroke-width="1">
-            <line x1="180" y1="170" x2="330" y2="128"/><line x1="180" y1="170" x2="300" y2="312"/>
-            <line x1="330" y1="128" x2="520" y2="188"/><line x1="300" y1="312" x2="520" y2="188"/>
-            <line x1="520" y1="188" x2="560" y2="372"/><line x1="300" y1="312" x2="220" y2="432"/>
-            <line x1="180" y1="170" x2="560" y2="372"/>
-          </g>
-          <g stroke="color-mix(in srgb,var(--ink) 14%,transparent)" fill="none" stroke-width="1" stroke-dasharray="3 4">
-            <line x1="330" y1="128" x2="220" y2="432"/><line x1="520" y1="188" x2="300" y2="312"/>
-          </g>
+        <div class="grid"></div>
+        <svg viewBox="0 0 760 580" width="100%" height="580" style="position:relative;z-index:1">
+          <defs>
+            <radialGradient id="nHL" cx="34%" cy="30%" r="72%">
+              <stop offset="0%" stop-color="#fff" stop-opacity=".55"/><stop offset="46%" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="nShadow" cx="50%" cy="72%" r="60%">
+              <stop offset="0%" stop-color="#000" stop-opacity=".28"/><stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- links (curved) -->
           <g>
-            <circle cx="180" cy="170" r="15" fill="var(--d1)"/>
-            <circle cx="330" cy="128" r="21" fill="var(--d2)"/>
-            <circle cx="300" cy="312" r="18" fill="var(--d5)"/>
-            <circle cx="520" cy="188" r="26" fill="var(--d5)"/>
-            <circle cx="560" cy="372" r="12" fill="var(--d4)"/>
-            <circle cx="220" cy="432" r="10" fill="var(--d3)"/>
+            <path class="glink rel" d="M150 486 Q205 430 268 392"/>
+            <path class="glink" d="M150 486 Q188 452 205 402"/>
+            <path class="glink" d="M268 392 Q226 320 210 268"/>
+            <path class="glink" d="M268 392 Q300 344 330 300"/>
+            <path class="glink" d="M210 268 Q272 196 332 156"/>
+            <path class="glink" d="M332 156 Q420 150 508 196"/>
+            <path class="glink" d="M332 156 Q396 108 452 92"/>
+            <path class="glink" d="M210 268 Q150 372 205 402"/>
+            <path class="glink" d="M205 402 Q262 400 330 300"/>
+            <path class="glink" d="M508 196 Q558 156 596 136"/>
+            <path class="glink" d="M508 196 Q566 250 630 296"/>
+            <path class="glink" d="M330 300 Q432 306 508 196"/>
+            <path class="glink rel" d="M596 136 Q568 208 630 296"/>
+            <path class="glink" d="M330 300 Q430 386 512 462"/>
+            <path class="glink" d="M630 296 Q604 384 512 462"/>
+            <path class="glink rel" d="M205 402 Q340 476 512 462"/>
+            <path class="glink" d="M508 196 Q612 236 660 372"/>
           </g>
-          <text x="520" y="156" fill="var(--ink)" font-size="14" font-weight="600" text-anchor="middle" font-family="var(--font-sans)">Transformer</text>
+
+          <!-- nodes -->
+          <g class="gnode">
+            <circle class="halo" cx="508" cy="196" r="46" fill="none" stroke="var(--d5)" stroke-width="1.5" opacity=".5"/>
+            <circle cx="508" cy="196" r="26" fill="var(--d5)"/><circle cx="508" cy="196" r="26" fill="url(#nShadow)"/>
+            <circle cx="497" cy="183" r="17" fill="url(#nHL)"/>
+            <text class="lbl" x="508" y="160" text-anchor="middle" font-size="15">Transformer</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="330" cy="300" r="34" fill="none" stroke="var(--d5)" stroke-width="1.4" opacity=".5"/>
+            <circle cx="330" cy="300" r="17" fill="var(--d5)"/><circle cx="330" cy="300" r="17" fill="url(#nShadow)"/>
+            <circle cx="323" cy="292" r="11" fill="url(#nHL)"/>
+            <text class="lbl" x="330" y="276" text-anchor="middle" font-size="13">自注意力</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="332" cy="156" r="38" fill="none" stroke="var(--d2)" stroke-width="1.4" opacity=".5"/>
+            <circle cx="332" cy="156" r="19" fill="var(--d2)"/><circle cx="332" cy="156" r="19" fill="url(#nShadow)"/>
+            <circle cx="325" cy="148" r="12" fill="url(#nHL)"/>
+            <text class="lbl" x="332" y="130" text-anchor="middle" font-size="13">注意力机制</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="596" cy="136" r="34" fill="none" stroke="var(--d2)" stroke-width="1.4" opacity=".5"/>
+            <circle cx="596" cy="136" r="15" fill="var(--d2)"/><circle cx="596" cy="136" r="15" fill="url(#nShadow)"/>
+            <circle cx="590" cy="129" r="9" fill="url(#nHL)"/>
+            <text class="lbl" x="596" y="113" text-anchor="middle" font-size="13">BERT</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="630" cy="296" r="42" fill="none" stroke="var(--d5)" stroke-width="1.5" opacity=".5"/>
+            <circle cx="630" cy="296" r="21" fill="var(--d5)"/><circle cx="630" cy="296" r="21" fill="url(#nShadow)"/>
+            <circle cx="621" cy="286" r="13" fill="url(#nHL)"/>
+            <text class="lbl" x="630" y="270" text-anchor="middle" font-size="14">GPT</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="210" cy="268" r="34" fill="none" stroke="var(--d1)" stroke-width="1.4" opacity=".5"/>
+            <circle cx="210" cy="268" r="15" fill="var(--d1)"/><circle cx="210" cy="268" r="15" fill="url(#nShadow)"/>
+            <circle cx="204" cy="261" r="9" fill="url(#nHL)"/>
+            <text class="lbl" x="210" y="246" text-anchor="middle" font-size="13">循环神经网络</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="205" cy="402" r="34" fill="none" stroke="var(--d3)" stroke-width="1.4" opacity=".5"/>
+            <circle cx="205" cy="402" r="15" fill="var(--d3)"/><circle cx="205" cy="402" r="15" fill="url(#nShadow)"/>
+            <circle cx="199" cy="395" r="9" fill="url(#nHL)"/>
+            <text class="lbl" x="205" y="380" text-anchor="middle" font-size="13">卷积神经网络</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="268" cy="392" r="30" fill="none" stroke="var(--d1)" stroke-width="1.3" opacity=".5"/>
+            <circle cx="268" cy="392" r="13" fill="var(--d1)"/><circle cx="268" cy="392" r="13" fill="url(#nShadow)"/>
+            <circle cx="263" cy="386" r="8" fill="url(#nHL)"/>
+            <text class="lbl" x="268" y="378" text-anchor="middle" font-size="13">反向传播</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="150" cy="486" r="28" fill="none" stroke="var(--d1)" stroke-width="1.3" opacity=".5"/>
+            <circle cx="150" cy="486" r="12" fill="var(--d1)"/><circle cx="150" cy="486" r="12" fill="url(#nShadow)"/>
+            <circle cx="146" cy="481" r="7" fill="url(#nHL)"/>
+            <text class="lbl" x="150" y="508" text-anchor="middle" font-size="12">梯度下降</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="452" cy="92" r="28" fill="none" stroke="var(--d4)" stroke-width="1.3" opacity=".5"/>
+            <circle cx="452" cy="92" r="12" fill="var(--d4)"/><circle cx="452" cy="92" r="12" fill="url(#nShadow)"/>
+            <circle cx="448" cy="87" r="7" fill="url(#nHL)"/>
+            <text class="lbl" x="452" y="70" text-anchor="middle" font-size="12">位置编码</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="512" cy="462" r="30" fill="none" stroke="var(--d2)" stroke-width="1.3" opacity=".5"/>
+            <circle cx="512" cy="462" r="14" fill="var(--d2)"/><circle cx="512" cy="462" r="14" fill="url(#nShadow)"/>
+            <circle cx="507" cy="456" r="8" fill="url(#nHL)"/>
+            <text class="lbl" x="512" y="486" text-anchor="middle" font-size="12">词向量</text>
+          </g>
+          <g class="gnode">
+            <circle class="halo" cx="660" cy="372" r="30" fill="none" stroke="var(--d4)" stroke-width="1.3" opacity=".5"/>
+            <circle cx="660" cy="372" r="14" fill="var(--d4)"/><circle cx="660" cy="372" r="14" fill="url(#nShadow)"/>
+            <circle cx="655" cy="366" r="8" fill="url(#nHL)"/>
+            <text class="lbl" x="660" y="396" text-anchor="middle" font-size="12">强化学习</text>
+          </g>
         </svg>
+        <div class="graph-legend">
+          <span class="item"><svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="color-mix(in srgb,var(--ink) 30%,transparent)" stroke-width="1.3"/></svg>依赖</span>
+          <span class="item"><svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="color-mix(in srgb,var(--ink) 20%,transparent)" stroke-width="1.3" stroke-dasharray="2 4"/></svg>相关</span>
+          <span class="item faint">· 节点越大 = 被依赖越多</span>
+        </div>
       </div>
       <aside class="rail glass l2">
         <span class="dot" style="background:var(--d5);width:10px;height:10px"></span>
@@ -508,7 +626,7 @@
         <div class="muted" style="font-size:14px">← 注意力机制 · 循环神经网络</div>
         <div class="sec">相关</div>
         <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="chip">BERT</span><span class="chip">GPT</span><span class="chip">位置编码</span></div>
-        <p style="margin-top:22px"><button class="btn btn-ghost" onclick="go('detail')">查看完整详情
+        <p style="margin-top:24px"><button class="btn btn-ghost" onclick="go('detail')">查看完整详情
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></p>
       </aside>
     </div>
@@ -544,7 +662,7 @@
     <div class="lane glass l2"><h4>基础</h4><div class="steps"><span><span class="n">01</span>线性回归</span><span><span class="n">02</span>逻辑回归</span><span><span class="n">03</span>梯度下降</span></div></div>
     <div class="lane glass l2"><h4>进阶</h4><div class="steps"><span><span class="n">04</span>反向传播</span><span><span class="n">05</span>卷积网络</span><span><span class="n">06</span>循环网络</span></div></div>
     <div class="lane glass l2"><h4>前沿</h4><div class="steps"><span><span class="n">07</span>Transformer</span><span><span class="n">08</span>自监督学习</span></div></div>
-    <div class="lane glass l2" style="background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 10%,var(--glass-hi)),var(--glass-lo))">
+    <div class="lane glass l2" style="background:linear-gradient(176deg, color-mix(in srgb,var(--accent) 12%,var(--g-hi)), var(--g-lo))">
       <h4>领域趋势</h4><div class="muted" style="font-size:14.5px">向自监督与基础模型统一演进；表示学习与规模化仍是主线。</div>
     </div>
   </section>
@@ -561,7 +679,8 @@
       <span class="plain mono">~45 min</span>
       <span class="chip">#注意力</span><span class="chip">#Seq2Seq</span>
     </div>
-    <div class="paper" style="margin-top:20px;padding:26px 30px">
+    <div class="paper" style="margin-top:22px;padding:30px 34px">
+      <div class="paper-inner">
       <div class="reading">
         <p>一种完全基于 <a class="wiki">注意力机制</a> 的序列到序列架构，抛弃了 <a class="wiki">循环神经网络</a> 的循环结构，使训练可以充分并行化。</p>
         <div class="formula">Attention(Q, K, V) = softmax( QKᵀ / √d_k ) · V</div>
@@ -576,6 +695,7 @@
       <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="chip">注意力机制</span><span class="chip">BERT</span><span class="chip">位置编码</span></div>
       <div class="block-sec">反向链接</div>
       <div class="backlinks">被 <a class="wiki">BERT</a>、<a class="wiki">GPT</a>、<a class="wiki">自注意力</a> 引用</div>
+      </div>
     </div>
     <div class="fab glass l3">
       <button class="btn" aria-pressed="true">
@@ -591,10 +711,10 @@
   <section class="screen" id="screen-profile">
     <div class="who">
       <div class="avatar"></div>
-      <div><div style="font-family:var(--font-serif);font-weight:600;font-size:21px">学习者</div>
+      <div><div style="font-family:var(--font-serif);font-weight:600;font-size:22px">学习者</div>
         <div class="faint caption">数据仅存本机 · 无账号 · 无上传</div></div>
     </div>
-    <div class="sec-head">
+    <div class="sec-head" style="margin-top:28px">
       <div class="seg glass l1">
         <span class="opt" role="tab" aria-selected="true">我的收藏</span>
         <span class="opt" role="tab" aria-selected="false">阅读进度</span>
@@ -630,6 +750,20 @@
 </div>
 
 <script>
+  // ── cursor light + per-surface specular tracking (hover glow) ──
+  const cl = document.getElementById('cursorlight');
+  let mx=0,my=0;
+  window.addEventListener('pointermove', e=>{
+    mx = e.clientX; my = e.clientY;
+    cl.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    const el = e.target.closest && e.target.closest('.glass,.paper');
+    if(el){
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+      el.style.setProperty('--my', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+    }
+  }, {passive:true});
+
   // ── theme: ONE product control, 3 modes; default follows system ──
   const root = document.documentElement;
   let themeMode = 'system';
@@ -666,13 +800,15 @@
 
   // ── segmented controls (track + thumb) ──
   document.querySelectorAll('.seg').forEach(seg=>{
-    const multi = seg.dataset.multi === 'true';
     seg.querySelectorAll('.opt').forEach(opt=>{
-      opt.onclick = ()=>{
-        if(multi){ opt.setAttribute('aria-selected', opt.getAttribute('aria-selected')!=='true'); }
-        else { seg.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-selected', o===opt)); }
-      };
+      opt.onclick = ()=>seg.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-selected', o===opt));
     });
+  });
+
+  // ── graph node hover: highlight incident links + node ──
+  document.querySelectorAll('.gnode').forEach(n=>{
+    n.addEventListener('pointerenter', ()=>n.classList.add('on'));
+    n.addEventListener('pointerleave', ()=>n.classList.remove('on'));
   });
 
   // ── search ──

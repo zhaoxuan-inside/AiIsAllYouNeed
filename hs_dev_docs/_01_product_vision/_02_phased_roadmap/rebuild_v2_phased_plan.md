@@ -102,7 +102,7 @@ flowchart LR
 ```
 
 - **纳入功能清单**：`FEAT-001`～`FEAT-011`。
-- **设计语言遵循**：全量继承 `/DESIGN.md`（**琉璃 / Liuli Glass v6**，日/夜双主题、三级液态玻璃）。
+- **设计语言遵循**：全量继承 `/DESIGN.md`（**琉璃 / Liuli Glass v6.1**，日/夜双主题、厚液态玻璃 + 悬浮光效、iA Writer 布局哲学）。
 
 ### 4.3 MVP 明确排除项 (Out-of-Scope / Hard Non-Goals)
 
