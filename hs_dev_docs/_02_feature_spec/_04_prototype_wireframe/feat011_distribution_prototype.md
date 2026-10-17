@@ -7,7 +7,7 @@
 
 ```mermaid
 flowchart TB
-  Web["Web(Responsive) dist/"] --> Core["同一应用 + Liuli Glass v6"]
+  Web["Web(Responsive) dist/"] --> Core["同一应用 + Star Atlas Under the Lamp v7"]
   Shell["Tauri 2 壳"] --> Core
   Shell --> W["Windows(.msi/.exe)"]
   Shell --> L["Linux(.deb/.AppImage)"]

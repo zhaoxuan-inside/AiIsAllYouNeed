@@ -1,7 +1,7 @@
 # VIBECODING EXECUTION SPEC — FEAT-001 首页全景
 # Source PRD: _02_feature_spec/_01_human_prd/features/feat001_home_prd.md
 # Source Prototype: _02_feature_spec/_04_prototype_wireframe/feat001_home_prototype.md
-# Macro Taste Charter: Inherits /DESIGN.md (Liuli Glass v6 · 日/夜双主题)
+# Macro Taste Charter: Inherits /DESIGN.md (Star Atlas v7 · 日/夜=灯关/灯开)
 # 读写约定：高信息密度、可直接映射代码与测试。
 
 meta:
@@ -16,16 +16,17 @@ meta:
 design_tokens:
   inherit: "/DESIGN.md"
   css_variables:
-    --canvas: "var(--canvas)"          # 日 #EFEBE3 / 夜 #0B0D12
+    --canvas: "var(--canvas)"          # 日 #F7F3EA / 夜 #12100B
     --glass: "var(--glass)"
     --surface: "var(--surface)"        # 阅读/大面板（近不透明 ≥0.86）
     --ink: "var(--ink)"; --ink-2: "var(--ink-2)"; --ink-3: "var(--ink-3)"
     --accent: "var(--accent)"          # 首屏强调 ≤3 处
   tailwind_shorthands:
-    glass_panel: "rounded-[16px] bg-[var(--glass)] backdrop-blur-[22px] shadow-[inset_0_1px_0_var(--edge),inset_0_0_0_1px_var(--ring)]"
+    lamp_shade: "rounded-[18px] bg-[var(--g-mid)] backdrop-blur-[24px] shadow-[inset_0_1px_1px_var(--rim),inset_0_0_0_1px_var(--ring)]"
+    paper_row: "flex items-center gap-3 h-12 px-3 rounded-[10px] hover:bg-[var(--hover)] border-b border-[var(--line)]"
     stat_line: "font-mono tabular-nums text-[var(--ink-3)] text-[12.5px]"
-    display_serif: "font-[var(--font-serif)] tracking-[-0.02em]"
-    domain_row: "flex items-center gap-3 h-12 hover:bg-[var(--hover)] rounded-[10px] px-3"
+    display_bold: "font-[var(--font-disp)] font-bold tracking-[-0.02em]"
+    domain_row: "flex items-center gap-3 h-12 px-3 rounded-[10px] hover:bg-[var(--hover)]"
 
 component_tree:
   - component: "HomePage"

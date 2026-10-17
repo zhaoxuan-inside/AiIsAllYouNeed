@@ -3,8 +3,8 @@
 - **项目/系统全称**：AiIsAllYouNeed · AI 知识星图
 - **创建时间**：2026-10-16
 - **版本**：v2.1.0（整站重建 · v6 视觉重设计 + 单一呈现收敛）
-- **状态**：REVISED（v5 视觉被否 → v6 琉璃重做，待开发者签署冻结确认单）
-- **宏观品味宪章继承**：`Inherits: /DESIGN.md`（v6 琉璃 / Liuli Glass）
+- **状态**：REVISED（v5/v6 视觉被否 → **v7 星图册·台灯下**重写，待开发者签署冻结确认单）
+- **宏观品味宪章继承**：`Inherits: /DESIGN.md`（v7 星图册·台灯下）
 - **对应架构设计**：`hs_dev_docs/_03_architecture_design/_01_system_architecture/`（阶段 2 产出）
 
 > [!NOTE]
@@ -141,4 +141,4 @@ flowchart TD
 ## 10. 一源双视图与对账（PROD-09）
 
 - 已验收范围 ↔ REQ ↔ 规则/场景 ↔ 原型/Vibe Spec 的对应关系，逐特性维护于各子 PRD 与 `_04_prototype_wireframe/` 的映射矩阵中。
-- 冻结基线：`/DESIGN.md`(v6 琉璃)、`overview_prototype.html`(v6 视觉真理源)、`overview_prd.md`(v2.1.0)、11 份子 PRD、11 份原型、11 份 Vibe Spec、`rebuild_v2_phased_plan.md`。
+- 冻结基线：`/DESIGN.md`(v7 星图册·台灯下)、`overview_prototype.html`(v7 视觉真理源)、`overview_prd.md`(v2.1.0)、11 份子 PRD、11 份原型、11 份 Vibe Spec、`rebuild_v2_phased_plan.md`。

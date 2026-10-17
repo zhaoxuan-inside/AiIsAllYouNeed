@@ -102,7 +102,7 @@ flowchart LR
 ```
 
 - **纳入功能清单**：`FEAT-001`～`FEAT-011`。
-- **设计语言遵循**：全量继承 `/DESIGN.md`（**琉璃 / Liuli Glass v6.1**，日/夜双主题、厚液态玻璃 + 悬浮光效、iA Writer 布局哲学）。
+- **设计语言遵循**：全量继承 `/DESIGN.md`（**v7 星图册·台灯下 / Star Atlas Under the Lamp**：日/夜=灯关/灯开；玻璃仅灯罩/透镜/展柜；星图册线条；暖金台灯强调）。
 
 ### 4.3 MVP 明确排除项 (Out-of-Scope / Hard Non-Goals)
 

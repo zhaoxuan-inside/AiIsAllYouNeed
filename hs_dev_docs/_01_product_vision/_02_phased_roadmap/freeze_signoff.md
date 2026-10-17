@@ -1,21 +1,25 @@
 # 阶段 0 冻结确认单（AI 知识星图 · rebuild_v2）
 
-- **验收状态**：SUBMITTED（v6.1 重提，待开发者确认 → ACCEPTED）
+- **验收状态**：SUBMITTED（v7 哲学重开重提，待开发者确认 → ACCEPTED）
 - **本次 PRD / 原型 / Vibe Spec 版本或内容摘要**：
-  - 宏观品味宪章：`/DESIGN.md`（**v6.1 琉璃 / Liuli Glass**，厚液态玻璃 + 悬浮光效，iA Writer 布局哲学，日/夜双主题）
-  - 视觉真理源（可打开）：`_02_feature_spec/_03_prototype_html/overview_prototype.html`（v6.1，日/夜、多屏）
+  - 宏观品味宪章：`/DESIGN.md`（**v7 星图册·台灯下 / Star Atlas Under the Lamp**：日/夜=灯关/灯开；玻璃仅灯罩/透镜/展柜；星图册线条；暖金台灯强调）
+  - 视觉真理源（可打开）：`_02_feature_spec/_03_prototype_html/overview_prototype.html`（v7，日/夜、多屏）
   - 全景 PRD：`_02_feature_spec/_01_human_prd/overview_prd.md`（v2.1.0，含 §6 单一呈现铁律）
   - 子特性 PRD：`_02_feature_spec/_01_human_prd/features/feat001..011_*_prd.md`（11 份）
   - 双轨原型：`_02_feature_spec/_04_prototype_wireframe/overview_prototype.md` + 11 份特性原型
   - 机器契约：`_02_feature_spec/_02_vibe_spec/feat001..011_*_vibe_spec.md`（11 份）
   - 分阶段规划：`_01_product_vision/_02_phased_roadmap/rebuild_v2_phased_plan.md`
-  - 决策日志：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md`（Q1–Q11）
+  - 决策日志：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md`（Q1–Q13）
 - **DISC / PROD 检查表与证据位置**：见本单 §D 自审
 - **场景演练及预期对账记录**：见各子 PRD 的 Gherkin；待开发者按真实样例走查
 
 > 遵循 Skill 的 references/stage_acceptance.md；已有明确确认可引用，禁止 Agent 代勾开发者签收。
 
-## 0. 视觉整改回应（v5 → v6 → v6.1）
+## 0. 视觉整改回应（v5 → v6 → v6.1 → v7）
+
+### 三轮（v7）哲学重开（Q12 / Q13）
+
+> v6 系列三轮迭代仍不通过（Q12）。开发者裁定**推倒重来、从设计哲学重头**；Q13 拍板采用 **W1「星图册·台灯下」**（日/夜=灯关/灯开；玻璃仅灯罩/透镜/展柜；星图册线条；暖金台灯强调；粗黑体标题+衬线读书；自绘天文制图图标）。v6 全部骨架退役。
 
 ### 第一轮（v6）回应 Q9
 
@@ -51,28 +55,29 @@
 
 - [ ] 布局与容器结构明确（全站唯一内容列 max 1120px；桌面顶栏/移动底部 Tab）
 - [ ] 字体与字阶层级完整（**四角色：衬线 Display/Reading + Inter Text + JetBrains Mono；tabular-nums**）
-- [ ] 间距与 Design Tokens 一致（Liuli Glass v6；`/DESIGN.md` §2/§4/§5）
+- [ ] 间距与 Design Tokens 一致（Star Atlas v7；`/DESIGN.md` §2/§4/§5）
 - [ ] 材质合规（**三级模糊 14/22/32 + 光边 + 折射光泽；无 1px 实描边**）
 - [ ] 终端平台交互特性合规（桌面/移动/Web；⌘K/Esc；触控 ≥44px；安全区）
 - [ ] 页面四态无死角（Empty / Loading / Populated / Error）
 - [ ] 工程实现可映射（ASCII 线框与组件树可直接转组件 + CSS 变量）
 - [ ] **日/夜双主题均通过上述检查**，正文对比度 ≥ 4.5:1
 - [ ] **全站仅一个主题控件**（唯一入口）
-- [ ] **液态玻璃达标**：厚玻璃（上缘高光 + 底部厚度 + 色散暗示）齐备，且**全部玻璃面/节点有跟随光标的悬浮光效**
-- [ ] **图谱屏达标**：曲线边（依赖/相关）+ 节点高光/光环/标签 + 点阵网格 + 图例 + 玻璃详情栏，无丑陋感
-- [ ] **布局对齐 iA Writer**：克制框架、居中阅读列（≤68ch、内左对齐）、大量留白
+- [ ] **玻璃 GUP 达标**：玻璃只出现在灯罩（顶栏/浮层）、透镜（悬停聚焦）、展柜（画布/阅读面）；列表/卡片/chip 为纸面 + 发丝线
+- [ ] **图谱屏达标**：星图册线条（细曲线 + 星点 + 纸感噪点）+ 悬停透镜聚焦 + 星越大入度越高 + 图例 + 展柜画布
+- [ ] **世界观一致**：日/夜 = 灯关/灯开；页面顶部唯一台灯光；无别处再造光
+- [ ] **布局克制**：iA 式、居中阅读列（≤68ch、内左对齐）、大量留白
 
 ## C. 冻结确认
 
 - [ ] 一源双视图（PRD + vibe_spec）齐套且无语义冲突
 - [ ] 分阶段规划书落盘且源自审讯结论（MVP 范围已裁定）
-- [ ] Q&A 决策日志（`_03_qa_log/`）已记录关键问答与拍板（含 Q9 v6 重设计）
+- [ ] Q&A 决策日志（`_03_qa_log/`）已记录关键问答与拍板（含 Q13 v7 哲学定稿）
 
 ## D. Agent 阶段 0 自审（10 维，候选结论，不代替签收）
 
 | # | 维度 | 结论 | 依据 |
 |---|---|---|---|
-| 1 | 宏观品味合规（DESIGN.md 存在且被继承） | PASS | `/DESIGN.md` v6；各 PRD/原型声明 Inherits |
+| 1 | 宏观品味合规（DESIGN.md 存在且被继承） | PASS | `/DESIGN.md` v7；各 PRD/原型声明 Inherits |
 | 2 | 痛点与 JTBD 真伪 | PASS | 各子 PRD §1 Status Quo/JTBD |
 | 3 | Aha Moment 与冷启动 FTUE | PASS | 各子 PRD §1 + 原型四态 |
 | 4 | 方案博弈（≥2 形态） | PASS | 各子 PRD §2 Trade-offs |

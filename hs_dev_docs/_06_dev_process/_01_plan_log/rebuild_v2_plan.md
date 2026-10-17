@@ -5,7 +5,7 @@
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
 - **当前阶段**：`0` — 产品与需求对齐（discovery + product）
-- **断点**：`S0-15` — v6.2 配色方向对比已重提，待开发者指定方向或通过
+- **断点**：`S0-18` — v7 哲学重开视觉已重提，冻结确认单待开发者签署
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -24,10 +24,15 @@
 | S0-07 | 落盘《产品开发分阶段规划书》（MVP 裁定源自审讯） | done | `_01_product_vision/_02_phased_roadmap/rebuild_v2_phased_plan.md` |
 | S0-08 | Agent 10 维自审 + 提交冻结确认单 | doing | `freeze_signoff.md` |
 | S0-09 | 开发者业务语义 + 视觉签收 → 阶段 0 冻结 | rejected | **REJECTED（v5 视觉不通过 + 业务语义需调整）**，见 Q9 |
-| S0-10 | v6 重设计：琉璃液态玻璃（字体/配色/材质/边框）+ 业务语义收敛（单一呈现铁律） | done | `/DESIGN.md`(v6)、`overview_prototype.html`(v6)、`overview_prd.md` §6、FEAT-001/002/009 |
-| S0-11 | v6 重提冻结确认单 | rejected | **REJECTED（Q10：玻璃不够液态/不够惊艳/图谱丑/无悬浮光效）** |\n| S0-12 | v6.1 二次重设计：厚液态玻璃 + 悬浮光效 + 图谱重做 + iA Writer 布局哲学 | done | `/DESIGN.md`(v6.1)、`overview_prototype.html`(v6.1)、`design_charter.md` |\n| S0-13 | v6.1 重提冻结确认单 | rejected | **REJECTED（Q11：仍不通过，未指明具体点）** |
+| S0-10 | v6 重设计：琉璃液态玻璃 + 业务语义收敛（单一呈现铁律）—— **v6 系列已于 Q12 整体退役** | done | `/DESIGN.md`(v6)、`overview_prototype.html`(v6)、`overview_prd.md` §6、FEAT-001/002/009 |
+| S0-11 | v6 重提冻结确认单 | rejected | **REJECTED（Q10：玻璃不够液态/不够惊艳/图谱丑/无悬浮光效）** |
+| S0-12 | v6.1 二次重设计：厚液态玻璃 + 悬浮光效 + 图谱重做 + iA Writer 布局哲学 | done | `/DESIGN.md`(v6.1)、`overview_prototype.html`(v6.1)、`design_charter.md` |
+| S0-13 | v6.1 重提冻结确认单 | rejected | **REJECTED（Q11：仍不通过，未指明具体点）** |
 | S0-14 | v6.2 三轮：三套配色方向对比（暖纸/冷白/单色）+ 星座去气泡 + 领域行去 sparkline | done | `overview_prototype.html`(v6.2)、qa_log(Q11)、CR-06 |
-| S0-15 | v6.2 重提冻结确认单（待开发者指定配色方向或通过） | doing | `freeze_signoff.md` |
+| S0-15 | v6.2 重提冻结确认单（待开发者指定配色方向或通过） | rejected | **REJECTED（Q12：推倒重来，从设计哲学重头）** |
+| S0-16 | 设计哲学重开：先定 Design DNA（方向+硬约束）→ 再产出全新视觉 | done | Q12 推倒 → Q13 拍板 **W1「星图册·台灯下」** |
+| S0-17 | v7 全新视觉（星图册·台灯下）：DESIGN.md + HTML 原型重写 + 文档同步 | done | `/DESIGN.md`(v7)、`overview_prototype.html`(v7)、design_charter(v7)、overview_prototype.md、freeze_signoff |
+| S0-18 | v7 重提冻结确认单 | doing | `freeze_signoff.md` |
 | S1 | 阶段 1：技术选型（架构范式 + ADR） | pending | 冻结后开始 |
 | S2 | 阶段 2：系统架构设计 | pending | |
 | S3 | 阶段 3：工程四要素详设（数据/接口/方法/调用链） | pending | 含数据 schema 开发者决策 |

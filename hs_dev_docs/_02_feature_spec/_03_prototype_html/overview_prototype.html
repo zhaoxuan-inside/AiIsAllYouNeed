@@ -3,430 +3,264 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI 知识星图 · 琉璃 Liuli Liquid Glass 原型（阶段 0 视觉真理源 v6.1）</title>
+<title>AI 知识星图 · 星图册·台灯下（v7 视觉真理源）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;450;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ============================================================
-     琉璃 · Liuli Liquid Glass — tokens (mirror of /DESIGN.md v6.1)
-      ============================================================ */
+  /* ===== 星图册 · 台灯下 tokens ===== */
   :root{
-    --font-serif:'Source Serif 4','Noto Serif CJK SC','Songti SC',Georgia,serif;
-    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;
-    --font-mono:'JetBrains Mono',ui-monospace,Consolas,'Noto Sans Mono CJK SC',monospace;
-    --r-chip:999px; --r-control:10px; --r-panel:16px; --r-overlay:22px;
+    --font-disp:'Space Grotesk','Noto Sans CJK SC','PingFang SC',sans-serif;
+    --font-text:'Inter','Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif;
+    --font-read:'Source Serif 4','Noto Serif CJK SC','Songti SC',Georgia,serif;
+    --font-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
     --d1:#4C8DF5; --d2:#24A98F; --d3:#E1755A; --d4:#9B7BE6; --d5:#D9A441; --d6:#D2659A;
+    --r-control:10px; --r-panel:14px; --r-case:18px;
   }
   [data-theme="day"]{
-    --canvas:#EFEBE3; --canvas2:#E8E2D7;
-    --surface:rgba(255,253,250,.90);
-    --g-hi:rgba(255,255,255,.70); --g-mid:rgba(255,255,255,.42); --g-lo:rgba(255,255,255,.28);
-    --rim:rgba(255,255,255,.98); --ring:rgba(255,255,255,.55); --ring-d:rgba(120,108,86,.07);
-    --line:rgba(28,24,18,.13);
-    --ink:#191814; --ink-2:#57534A; --ink-3:#8A8377;
-    --accent:#0E7C7B; --accent-soft:rgba(14,124,123,.12); --accent-ink:#FFFFFF;
-    --hover:rgba(28,24,18,.05);
-    --shadow:rgba(64,48,24,.34);
-    --bloom1:rgba(255,186,132,.62); --bloom2:rgba(140,226,202,.52);
-    --bloom3:rgba(180,172,246,.50); --bloom4:rgba(244,172,196,.42);
-    --noise:.05; --cursorlight:rgba(255,246,230,.85);
+    --canvas:#F7F3EA; --canvas2:#EFE9DC; --surface:rgba(255,252,246,.94);
+    --g-hi:rgba(255,251,240,.72); --g-mid:rgba(255,248,230,.50); --g-lo:rgba(255,244,214,.34);
+    --rim:rgba(255,255,255,.92); --ring:rgba(255,255,255,.55); --ring-d:rgba(120,96,50,.08);
+    --line:rgba(40,34,24,.14);
+    --ink:#23201A; --ink-2:#5E574A; --ink-3:#948A78;
+    --accent:#A96812; --accent-soft:rgba(169,104,18,.12); --accent-ink:#FFFFFF;
+    --hover:rgba(40,34,24,.05);
+    --lamplight:rgba(255,204,130,.60); --bloom1:rgba(255,214,160,.5); --bloom2:rgba(210,232,214,.4); --bloom3:rgba(214,206,238,.32);
+    --shadow:rgba(70,52,20,.28); --noise:.045; --sheen:rgba(255,255,255,.9);
   }
   [data-theme="night"]{
-    --canvas:#090B10; --canvas2:#0E1119;
-    --surface:rgba(20,23,30,.92);
-    --g-hi:rgba(66,74,92,.66); --g-mid:rgba(26,30,40,.50); --g-lo:rgba(14,16,22,.42);
-    --rim:rgba(255,255,255,.30); --ring:rgba(255,255,255,.13); --ring-d:rgba(0,0,0,.35);
-    --line:rgba(255,255,255,.10);
-    --ink:#EDEAE3; --ink-2:#A8A69D; --ink-3:#75726A;
-    --accent:#63F0D8; --accent-soft:rgba(99,240,216,.14); --accent-ink:#04211E;
-    --hover:rgba(255,255,255,.06);
-    --shadow:rgba(0,0,0,.78);
-    --bloom1:rgba(14,104,98,.62); --bloom2:rgba(50,56,132,.60);
-    --bloom3:rgba(104,38,116,.50); --bloom4:rgba(18,86,110,.48);
-    --noise:.05; --cursorlight:rgba(120,200,255,.5);
+    --canvas:#12100B; --canvas2:#0D0B08; --surface:rgba(28,25,19,.94);
+    --g-hi:rgba(50,43,30,.62); --g-mid:rgba(33,29,20,.50); --g-lo:rgba(21,18,13,.42);
+    --rim:rgba(255,222,164,.20); --ring:rgba(255,222,164,.11); --ring-d:rgba(0,0,0,.4);
+    --line:rgba(255,230,180,.10);
+    --ink:#EFE9DA; --ink-2:#B3AA97; --ink-3:#7D7464;
+    --accent:#F2B64B; --accent-soft:rgba(242,182,75,.14); --accent-ink:#241A08;
+    --hover:rgba(255,230,180,.06);
+    --lamplight:rgba(255,190,110,.46); --bloom1:rgba(120,80,30,.42); --bloom2:rgba(42,38,66,.5); --bloom3:rgba(60,34,62,.42);
+    --shadow:rgba(0,0,0,.82); --noise:.05; --sheen:rgba(255,220,170,.35);
   }
-
-  /* ── 配色方向 B：冷白 · 苹果蓝 ── */
-  [data-theme="day"][data-palette="cool"]{
-    --canvas:#F3F4F6; --canvas2:#EBEEF3;
-    --surface:rgba(255,255,255,.93);
-    --g-hi:rgba(255,255,255,.82); --g-mid:rgba(255,255,255,.55); --g-lo:rgba(255,255,255,.40);
-    --rim:rgba(255,255,255,1); --ring:rgba(255,255,255,.60); --ring-d:rgba(70,90,120,.08);
-    --line:rgba(16,20,28,.12);
-    --ink:#10141C; --ink-2:#4C5564; --ink-3:#7C8694;
-    --accent:#0A6CF9; --accent-soft:rgba(10,108,249,.12); --accent-ink:#FFFFFF;
-    --hover:rgba(16,20,28,.05);
-    --bloom1:rgba(140,205,255,.55); --bloom2:rgba(160,220,255,.48);
-    --bloom3:rgba(196,186,255,.45); --bloom4:rgba(255,190,220,.35);
-  }
-  [data-theme="night"][data-palette="cool"]{
-    --canvas:#0A0C12; --canvas2:#0F1420;
-    --surface:rgba(22,26,36,.94);
-    --g-hi:rgba(52,62,84,.66); --g-mid:rgba(24,28,40,.50); --g-lo:rgba(12,15,22,.42);
-    --rim:rgba(255,255,255,.34); --ring:rgba(255,255,255,.14); --ring-d:rgba(0,0,0,.4);
-    --line:rgba(255,255,255,.10);
-    --ink:#E9EDF5; --ink-2:#9AA4B4; --ink-3:#6E7888;
-    --accent:#6FB3FF; --accent-soft:rgba(111,179,255,.15); --accent-ink:#06101F;
-    --hover:rgba(255,255,255,.06);
-    --bloom1:rgba(30,84,190,.62); --bloom2:rgba(42,124,206,.56);
-    --bloom3:rgba(96,84,206,.50); --bloom4:rgba(166,84,186,.46);
-  }
-
-  /* ── 配色方向 C：纯白 · 单色（iA 式，颜色只给领域点/节点）── */
-  [data-theme="day"][data-palette="mono"]{
-    --canvas:#FAFAF8; --canvas2:#F0F0ED;
-    --surface:rgba(255,255,255,.96);
-    --g-hi:rgba(255,255,255,.85); --g-mid:rgba(255,255,255,.60); --g-lo:rgba(255,255,255,.44);
-    --rim:rgba(255,255,255,1); --ring:rgba(255,255,255,.62); --ring-d:rgba(30,30,26,.07);
-    --line:rgba(20,20,16,.12);
-    --ink:#131312; --ink-2:#55554F; --ink-3:#8C8C84;
-    --accent:#0A57C8; --accent-soft:rgba(10,87,200,.10); --accent-ink:#FFFFFF;
-    --hover:rgba(20,20,16,.05);
-    --bloom1:rgba(220,224,230,.55); --bloom2:rgba(214,224,232,.5);
-    --bloom3:rgba(226,224,236,.45); --bloom4:rgba(232,224,228,.4);
-  }
-  [data-theme="night"][data-palette="mono"]{
-    --canvas:#0C0C0A; --canvas2:#13130F;
-    --surface:rgba(22,22,18,.94);
-    --g-hi:rgba(48,48,42,.66); --g-mid:rgba(24,24,20,.52); --g-lo:rgba(12,12,10,.44);
-    --rim:rgba(255,255,255,.20); --ring:rgba(255,255,255,.11); --ring-d:rgba(0,0,0,.45);
-    --line:rgba(255,255,255,.10);
-    --ink:#EDEDE8; --ink-2:#A0A09A; --ink-3:#6E6E68;
-    --accent:#7FB5F0; --accent-soft:rgba(127,181,240,.14); --accent-ink:#07111D;
-    --hover:rgba(255,255,255,.06);
-    --bloom1:rgba(40,52,66,.5); --bloom2:rgba(34,48,60,.46);
-    --bloom3:rgba(52,48,64,.42); --bloom4:rgba(60,48,56,.4);
-  }
-
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:radial-gradient(120% 90% at 50% -10%, var(--canvas2), var(--canvas) 60%);
-    color:var(--ink);
-    font-family:var(--font-sans); font-size:15px; line-height:1.62;
-    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    min-height:100vh; position:relative; overflow-x:hidden;
+    background:radial-gradient(120% 90% at 50% -10%, var(--canvas2), var(--canvas) 62%);
+    color:var(--ink); font-family:var(--font-text); font-size:15px; line-height:1.62;
+    -webkit-font-smoothing:antialiased; min-height:100vh; position:relative; overflow-x:hidden;
     transition:background .5s ease,color .5s ease;
   }
-  /* ── living backdrop (liquid glass needs a rich backdrop to refract) ── */
+  /* 台灯：顶部主光源 + 极淡纸感光晕 + 纸噪点 */
   body::before{
-    content:""; position:fixed; inset:-25%; z-index:-2; pointer-events:none;
+    content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
     background:
-      radial-gradient(38% 32% at 14% 8%, var(--bloom1), transparent 60%),
-      radial-gradient(32% 30% at 88% 14%, var(--bloom2), transparent 58%),
-      radial-gradient(46% 44% at 64% 104%, var(--bloom3), transparent 62%),
-      radial-gradient(30% 28% at 26% 80%, var(--bloom4), transparent 60%);
-    filter:blur(52px) saturate(125%);
+      radial-gradient(72% 44% at 50% -10%, var(--lamplight), transparent 70%),
+      radial-gradient(26% 22% at 20% 16%, var(--bloom1), transparent 60%),
+      radial-gradient(30% 26% at 82% 20%, var(--bloom2), transparent 60%),
+      radial-gradient(42% 38% at 60% 104%, var(--bloom3), transparent 62%);
+    filter:blur(30px) saturate(115%);
   }
-  body::after{ /* fine grain */
+  body::after{
     content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:var(--noise);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  /* ── cursor light (hover glow the user asked for) ── */
-  #cursorlight{
-    position:fixed; width:520px; height:520px; left:0; top:0; z-index:-1; pointer-events:none;
-    border-radius:50%; opacity:0; transition:opacity .5s ease;
-    background:radial-gradient(closest-side, var(--cursorlight), transparent 70%);
-    mix-blend-mode:soft-light; transform:translate(-50%,-50%);
-  }
-  body:hover #cursorlight{opacity:.9;}
-
   .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums;}
   .muted{color:var(--ink-2);} .faint{color:var(--ink-3);}
   .caption{font-size:12.5px;}
-
-  /* ============================================================
-     Liquid glass — thick glass: gradient + blur + rim + thickness + specular
-     ============================================================ */
+  /* ===== 玻璃：只做灯罩 / 展柜（GUP）===== */
   .glass{
-    position:relative; border-radius:var(--r-panel); isolation:isolate;
+    position:relative; border-radius:var(--r-case); isolation:isolate;
     background:linear-gradient(176deg, var(--g-hi) 0%, var(--g-mid) 44%, var(--g-lo) 100%);
-    backdrop-filter:blur(var(--blur,22px)) saturate(200%) brightness(1.10);
-    -webkit-backdrop-filter:blur(var(--blur,22px)) saturate(200%) brightness(1.10);
-    box-shadow:
-      inset 0 1px 1px var(--rim),                 /* bright top rim */
-      inset 0 -14px 26px -20px var(--ring-d),     /* bottom thickness */
-      inset 0 0 0 1px var(--ring),                /* hairline ring (not border) */
-      inset -1px -1px 0 rgba(255,170,130,.05),    /* dispersion hint */
-      inset 1px 1px 0 rgba(130,200,255,.06),
-      0 2px 4px rgba(0,0,0,.05),
-      0 28px 64px -34px var(--shadow);
+    backdrop-filter:blur(24px) saturate(180%) brightness(1.08);
+    -webkit-backdrop-filter:blur(24px) saturate(180%) brightness(1.08);
+    box-shadow: inset 0 1px 1px var(--rim), inset 0 0 0 1px var(--ring),
+      inset 0 -12px 24px -18px var(--ring-d), 0 1px 1px rgba(0,0,0,.04),
+      0 24px 56px -30px var(--shadow);
   }
-  /* cursor-following specular highlight */
   .glass::before{
     content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:3;
-    background:radial-gradient(240px 240px at var(--mx,26%) var(--my,-6%), rgba(255,255,255,.55), transparent 62%);
+    background:radial-gradient(220px 220px at var(--mx,26%) var(--my,-6%), var(--sheen), transparent 62%);
     opacity:0; transition:opacity .4s ease;
   }
   .glass:hover::before{opacity:1;}
-  /* static edge sheen */
   .glass::after{
     content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:2;
-    background:radial-gradient(140% 100% at 16% -18%, rgba(255,255,255,.55), transparent 52%);
-    opacity:.5; mix-blend-mode:screen;
+    background:radial-gradient(140% 100% at 16% -16%, var(--sheen), transparent 52%);
+    opacity:.35;
   }
   .glass > *{position:relative; z-index:4;}
-  .chrome{
-    background:linear-gradient(176deg, var(--g-hi) 0%, var(--g-mid) 40%, var(--g-lo) 100%);
-    backdrop-filter:blur(26px) saturate(210%) brightness(1.12);
-    -webkit-backdrop-filter:blur(26px) saturate(210%) brightness(1.12);
-  }
-  .l1{--blur:14px;} .l2{--blur:24px;} .l3{--blur:34px;}
-  .paper{
-    position:relative; border-radius:var(--r-panel); isolation:isolate;
-    background:var(--surface);
-    backdrop-filter:blur(24px) saturate(150%);
-    -webkit-backdrop-filter:blur(24px) saturate(150%);
-    box-shadow:
-      inset 0 1px 1px var(--rim),
-      inset 0 0 0 1px var(--ring),
-      0 2px 4px rgba(0,0,0,.04),
-      0 30px 70px -38px var(--shadow);
+  .paper{ /* 展柜：近不透明阅读面 */
+    position:relative; border-radius:var(--r-case); isolation:isolate; background:var(--surface);
+    box-shadow: inset 0 1px 1px var(--rim), inset 0 0 0 1px var(--ring),
+      0 1px 1px rgba(0,0,0,.04), 0 28px 60px -34px var(--shadow);
   }
   .paper > *{position:relative; z-index:1;}
 
-  /* ============================================================
-     Controls — track + thumb, light edges only (no solid borders)
-     ============================================================ */
-  .seg{display:inline-flex; gap:2px; padding:3px; border-radius:var(--r-chip);}
-  .seg .opt{
-    position:relative; padding:6px 15px; border-radius:var(--r-chip); font-size:13.5px; color:var(--ink-2);
-    cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:7px;
-    transition:color .2s ease, background .2s ease;
-  }
-  .seg .opt:hover{color:var(--ink); background:var(--hover);}
-  .seg .opt[aria-selected="true"]{
-    color:var(--ink);
-    background:linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.14));
-    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring),
-               0 1px 2px rgba(20,16,10,.12), 0 10px 22px -14px var(--shadow);
-  }
-  .chip{
-    display:inline-flex; align-items:center; gap:7px; padding:6px 13px; font-size:13px;
-    border-radius:var(--r-chip); color:var(--ink-2); cursor:pointer; user-select:none;
-    background:linear-gradient(180deg,var(--g-hi),var(--g-lo));
-    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring);
-    transition:color .2s ease, box-shadow .2s ease, transform .12s ease;
-  }
-  .chip:hover{color:var(--ink); box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring),
-              0 8px 20px -14px var(--shadow);}
-  .chip:active{transform:scale(.97);}
-  .chip[aria-pressed="true"]{
-    color:var(--ink);
-    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1.5px color-mix(in srgb,var(--accent) 70%,transparent),
-               inset 0 0 0 40px var(--accent-soft);
-  }
-  .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35), 0 1px 3px -1px rgba(0,0,0,.4);}
-  .btn{
-    font:inherit; font-size:14px; border:0; cursor:pointer; border-radius:var(--r-control);
+  /* ===== 纸面控件（不贴玻璃）===== */
+  .seg{display:inline-flex; gap:2px; padding:3px; border-radius:999px; background:var(--hover);}
+  .seg .opt{padding:6px 14px; border-radius:999px; font-size:13.5px; color:var(--ink-2); cursor:pointer;
+    user-select:none; display:inline-flex; align-items:center; gap:7px; transition:color .2s ease,background .2s ease;}
+  .seg .opt:hover{color:var(--ink);}
+  .seg .opt[aria-selected="true"]{color:var(--ink); background:var(--surface);
+    box-shadow:inset 0 0 0 1px var(--ring), 0 1px 2px rgba(0,0,0,.10);}
+  .chip{display:inline-flex; align-items:center; gap:7px; padding:5px 12px; font-size:13px; border-radius:999px;
+    color:var(--ink-2); cursor:pointer; background:var(--hover); transition:color .2s ease,background .2s ease;}
+  .chip:hover{color:var(--ink);}
+  .chip[aria-pressed="true"]{color:var(--ink); background:var(--accent-soft);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);}
+  .btn{font:inherit; font-size:14px; border:0; cursor:pointer; border-radius:var(--r-control);
     padding:9px 18px; display:inline-flex; align-items:center; gap:8px; min-height:40px;
-    transition:transform .12s ease, filter .2s ease, background .2s ease, box-shadow .2s ease;
-  }
+    transition:transform .12s ease,filter .2s ease,background .2s ease;}
   .btn:active{transform:scale(.98);}
-  .btn-primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,#fff),var(--accent)); color:var(--accent-ink);
-    box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 10px 24px -12px color-mix(in srgb,var(--accent) 70%,transparent);}
+  .btn-primary{background:var(--accent); color:var(--accent-ink);
+    box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 10px 22px -12px var(--shadow);}
   .btn-primary:hover{filter:brightness(1.08);}
   .btn-ghost{background:transparent; color:var(--ink-2);}
   .btn-ghost:hover{background:var(--hover); color:var(--ink);}
-  .icon-btn{
-    width:38px;height:38px;min-height:38px;padding:0;display:grid;place-items:center;
+  .icon-btn{width:38px;height:38px;min-height:38px;padding:0;display:grid;place-items:center;
     border-radius:var(--r-control); color:var(--ink-2); background:transparent; border:0; cursor:pointer;
-    transition:background .2s ease,color .2s ease, box-shadow .2s ease;
-  }
-  .icon-btn:hover{background:var(--hover); color:var(--ink); box-shadow:inset 0 1px 0 var(--rim);}
+    transition:background .2s ease,color .2s ease;}
+  .icon-btn:hover{background:var(--hover); color:var(--ink);}
   .icon-btn[aria-pressed="true"]{color:var(--accent);}
   :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:8px;}
 
-  /* ============================================================
-     Dev harness (scaffolding — isolated, NOT product)
-     ============================================================ */
-  .harness{
-    position:sticky; top:0; z-index:90; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    padding:7px 14px; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.02em;
-    color:#cfd3dc; background:#14161b; border-bottom:1px dashed rgba(255,255,255,.18);
-  }
+  /* ===== 演示壳（DEV，与产品隔离）===== */
+  .harness{position:sticky; top:0; z-index:90; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    padding:7px 14px; font-family:var(--font-mono); font-size:11.5px; color:#cfd3dc; background:#14161b;
+    border-bottom:1px dashed rgba(255,255,255,.18);}
   .harness .tag{color:#8b93a3; border:1px dashed rgba(255,255,255,.24); border-radius:6px; padding:2px 7px;}
   .htab{padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,.14); color:#b6bcc8; cursor:pointer; background:transparent;}
-  .htab.on{color:#14161b; background:#63F0D8; border-color:#63F0D8;}
+  .htab.on{color:#14161b; background:#F2B64B; border-color:#F2B64B;}
 
-  /* ============================================================
-     App shell — iA-like: quiet chrome, generous whitespace, text first
-     ============================================================ */
-  .shell{max-width:1120px; margin:0 auto; padding:34px 26px 150px;}
-  .topbar{
-    position:sticky; top:46px; z-index:40; display:flex; align-items:center; gap:16px;
-    height:54px; padding:0 12px 0 20px; border-radius:var(--r-overlay); margin-bottom:44px;
-  }
-  .brand{font-family:var(--font-serif); font-weight:600; font-size:17px; letter-spacing:-.01em;}
-  .brand .en{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; color:var(--ink-3); text-transform:uppercase; margin-left:9px;}
-  .search{
-    margin-left:auto; display:flex; align-items:center; gap:9px; color:var(--ink-3);
+  /* ===== 壳 ===== */
+  .shell{max-width:1120px; margin:0 auto; padding:30px 26px 150px;}
+  .topbar{position:sticky; top:46px; z-index:40; display:flex; align-items:center; gap:16px;
+    height:54px; padding:0 12px 0 20px; margin-bottom:42px;}
+  .brand{font-family:var(--font-disp); font-weight:700; font-size:16.5px; letter-spacing:-.01em;}
+  .brand .en{font-family:var(--font-mono); font-size:10px; letter-spacing:.18em; color:var(--ink-3); text-transform:uppercase; margin-left:9px;}
+  .search{margin-left:auto; display:flex; align-items:center; gap:9px; color:var(--ink-3);
     border-radius:var(--r-control); padding:8px 12px; font-size:13.5px; min-width:250px; cursor:text;
-    background:linear-gradient(180deg,var(--g-hi),var(--g-lo));
-    box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring);
-    transition:box-shadow .25s ease;
-  }
-  .search:hover{box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px color-mix(in srgb,var(--accent) 50%,var(--ring));}
-  .kbd{font-family:var(--font-mono); font-size:11px; color:var(--ink-3); margin-left:auto; padding:2px 6px; border-radius:6px; background:var(--hover);}
-
+    background:var(--hover); transition:background .2s ease, box-shadow .2s ease;}
+  .search:hover{background:var(--accent-soft);}
+  .kbd{font-family:var(--font-mono); font-size:11px; margin-left:auto; padding:2px 6px; border-radius:6px; background:var(--hover);}
   .pop-wrap{position:relative;}
-  .popover{position:absolute; top:48px; right:0; width:200px; padding:8px; border-radius:var(--r-overlay); display:none; z-index:60;}
+  .popover{position:absolute; top:48px; right:0; width:200px; padding:8px; border-radius:var(--r-case); display:none; z-index:60;}
   .popover.on{display:block; animation:pop .16s ease;}
   @keyframes pop{from{opacity:0; transform:translateY(-4px)}to{opacity:1}}
-  .pop-item{display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px; font-size:13.5px; color:var(--ink-2); cursor:pointer; transition:background .16s ease;}
+  .pop-item{display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px; font-size:13.5px; color:var(--ink-2); cursor:pointer;}
   .pop-item:hover{background:var(--hover); color:var(--ink);}
   .pop-item .tick{margin-left:auto; color:var(--accent); opacity:0;}
-  .pop-item[aria-checked="true"]{color:var(--ink);}
-  .pop-item[aria-checked="true"] .tick{opacity:1;}
+  .pop-item[aria-checked="true"]{color:var(--ink);} .pop-item[aria-checked="true"] .tick{opacity:1;}
   .pop-title{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); padding:6px 10px 4px;}
-
-  /* ============================================================
-     Home
-     ============================================================ */
-  .constellation{position:relative; height:236px; margin:0 0 6px;}
-  .constellation svg{width:100%; height:100%; overflow:visible;}
-  .clink{stroke:color-mix(in srgb,var(--ink) 22%,transparent); stroke-width:1; fill:none;}
-  .clink.hair{stroke:color-mix(in srgb,var(--ink) 10%,transparent);}
-  .cnode{fill:color-mix(in srgb,var(--ink) 34%,transparent);}
-  .stardot{fill:color-mix(in srgb,var(--ink) 30%,transparent);}
+  /* ===== 首页 ===== */
+  .star-chart{position:relative; height:220px; margin:0 0 4px;}
+  .star-chart svg{width:100%; height:100%; overflow:visible;}
+  .al{stroke:color-mix(in srgb,var(--ink) 24%,transparent); stroke-width:1; fill:none;}
+  .al.faint{stroke:color-mix(in srgb,var(--ink) 12%,transparent);}
+  .sdot{fill:color-mix(in srgb,var(--ink) 34%,transparent);}
+  .astar{cursor:pointer; transition:transform .25s ease; transform-box:fill-box; transform-origin:center;}
+  .astar:hover{transform:scale(1.3);}
+  .astar .ring{opacity:.45;}
   .pulse{animation:float 8s ease-in-out infinite; transform-box:fill-box; transform-origin:center;}
-  .pulse.d1{animation-delay:-1s;} .pulse.d2{animation-delay:-2.1s;} .pulse.d3{animation-delay:-3.3s;}
-  .pulse.d4{animation-delay:-4.4s;} .pulse.d5{animation-delay:-5.5s;} .pulse.d6{animation-delay:-.4s;}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-  .dnode{cursor:pointer; transition:transform .25s ease;}
-  .dnode:hover{transform:scale(1.35);}
-  .dnode .glow{opacity:0; transition:opacity .3s ease;}
-  .dnode:hover .glow{opacity:.5;}
+  .pulse.d1{animation-delay:-1s;} .pulse.d2{animation-delay:-2s;} .pulse.d3{animation-delay:-3s;}
+  .pulse.d4{animation-delay:-4s;} .pulse.d5{animation-delay:-5s;} .pulse.d6{animation-delay:-.5s;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
   @media (prefers-reduced-motion:reduce){.pulse{animation:none!important;}}
-
-  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--ink-3); text-transform:uppercase;}
-  .hero{font-family:var(--font-serif); font-weight:600; font-size:52px; line-height:1.05;
-        letter-spacing:-.022em; margin:.36em 0 .2em; max-width:20ch;}
-  .lede{font-family:var(--font-serif); font-size:17px; line-height:1.75; color:var(--ink-2); max-width:52ch; margin:.5em 0 0;}
-  .stats{display:flex; gap:30px; flex-wrap:wrap; padding:16px 0; margin:26px 0 8px;
-         border-top:1px solid var(--line); border-bottom:1px solid var(--line); font-size:12.5px; color:var(--ink-3);}
-  .stats b{color:var(--ink); font-weight:500;}
-
-  .domain-row{display:flex; align-items:center; gap:13px; height:50px; padding:0 14px;
-              border-radius:var(--r-control); cursor:pointer; transition:background .18s ease;}
-  .domain-row:hover{background:var(--hover);}
-  .domain-row .bar{margin-left:auto; display:flex; align-items:center; gap:12px;}
-  .domain-row .spark{width:66px;height:14px;opacity:.55;}
-
-  .row{position:relative; display:flex; align-items:center; gap:13px; padding:16px 14px; border-radius:var(--r-control);
-       cursor:pointer; transition:background .18s ease;}
-  .row::after{content:""; position:absolute; left:14px; right:14px; bottom:0; height:1px; background:var(--line);}
-  .row:last-child::after{display:none;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.16em; color:var(--ink-3); text-transform:uppercase;}
+  .hero{font-family:var(--font-disp); font-weight:700; font-size:44px; line-height:1.08;
+    letter-spacing:-.02em; margin:.34em 0 .2em; max-width:20ch;}
+  .lede{font-family:var(--font-read); font-size:16.5px; line-height:1.8; color:var(--ink-2); max-width:52ch; margin:.5em 0 0;}
+  .stats{display:flex; gap:30px; flex-wrap:wrap; padding:15px 0; margin:24px 0 6px;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); font-size:12.5px; color:var(--ink-3);}
+  .stats b{color:var(--ink); font-weight:600;}
+  .sec-head{display:flex; align-items:center; gap:14px; margin:34px 0 8px;}
+  .sec-head h2{font-family:var(--font-text); font-size:15px; font-weight:600; margin:0;}
+  .row{display:flex; align-items:center; gap:13px; padding:16px 14px; cursor:pointer; transition:background .18s ease;
+    border-bottom:1px solid var(--line);}
+  .row:last-of-type{border-bottom:0;}
   .row:hover{background:var(--hover);}
-  .row .name{font-weight:500;}
-  .row .desc{color:var(--ink-2); font-size:14px;}
+  .row .name{font-weight:500;} .row .desc{color:var(--ink-2); font-size:14px;}
   .row .yr{margin-left:auto; color:var(--ink-3); font-size:12.5px;}
-  .sec-head{display:flex; align-items:center; gap:14px; margin:36px 0 8px;}
-  .sec-head h2{font-family:var(--font-sans); font-size:15px; font-weight:600; margin:0;}
+  .drow{display:flex; align-items:center; gap:13px; height:48px; padding:0 14px; border-radius:var(--r-control); cursor:pointer; transition:background .18s ease;}
+  .drow:hover{background:var(--hover);}
+  .drow .bar{margin-left:auto; display:flex; align-items:center; gap:12px;}
 
-  /* ============================================================
-     Graph (rebuilt)
-     ============================================================ */
-  .filter-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:18px;}
-  .graph-wrap{display:grid; grid-template-columns:1fr 368px; gap:20px;}
-  .graph-canvas{position:relative; border-radius:var(--r-panel); min-height:560px; overflow:hidden;}
-  .graph-canvas .grid{
-    position:absolute; inset:0; z-index:0; opacity:.5;
-    background-image:radial-gradient(color-mix(in srgb,var(--ink) 22%,transparent) .6px, transparent .6px);
-    background-size:26px 26px;
-    mask-image:radial-gradient(120% 100% at 50% 45%, #000 30%, transparent 78%);
-  }
-  .graph-legend{position:absolute; left:16px; bottom:16px; z-index:4; display:flex; gap:8px; align-items:center;
-                font-size:12px; color:var(--ink-2);}
-  .graph-legend .item{display:flex; align-items:center; gap:6px;}
+  /* ===== 图谱（星图册）===== */
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px;}
+  .graph-wrap{display:grid; grid-template-columns:1fr 360px; gap:18px;}
+  .graph-canvas{position:relative; min-height:560px; overflow:hidden;}
+  .graph-canvas .stargrid{position:absolute; inset:0; z-index:0; opacity:.5;
+    background-image:radial-gradient(color-mix(in srgb,var(--ink) 24%,transparent) .6px, transparent .6px);
+    background-size:26px 26px; mask-image:radial-gradient(120% 100% at 50% 45%, #000 30%, transparent 78%);}
+  .glegend{position:absolute; left:16px; bottom:16px; z-index:4; display:flex; gap:12px; align-items:center;
+    font-size:12px; color:var(--ink-2);}
   .gnode{cursor:pointer;}
-  .gnode .halo{opacity:0; transition:opacity .25s ease, transform .25s ease; transform-box:fill-box; transform-origin:center;}
+  .gnode .halo{opacity:0; transition:opacity .25s ease; transform-box:fill-box; transform-origin:center;}
   .gnode:hover .halo{opacity:1;}
-  .gnode .lbl{opacity:0; transition:opacity .25s ease; font-family:var(--font-sans); font-weight:600;
-              fill:var(--ink); paint-order:stroke; stroke:var(--canvas); stroke-width:3px; stroke-linejoin:round;}
-  .gnode:hover .lbl, .gnode.on .lbl{opacity:1;}
-  .glink{fill:none; stroke:color-mix(in srgb,var(--ink) 20%,transparent); stroke-width:1.1; transition:stroke .25s ease;}
-  .glink.rel{stroke-dasharray:2 5; stroke:color-mix(in srgb,var(--ink) 12%,transparent);}
-  .glink.hot{stroke:color-mix(in srgb,var(--accent) 70%,transparent); stroke-width:1.6;}
+  .gnode .lbl{opacity:0; transition:opacity .25s ease; font-family:var(--font-text); font-weight:600;
+    fill:var(--ink); paint-order:stroke; stroke:var(--canvas); stroke-width:3px; stroke-linejoin:round;}
+  .gnode:hover .lbl{opacity:1;}
+  .glink{fill:none; stroke:color-mix(in srgb,var(--ink) 22%,transparent); stroke-width:1.1;}
+  .glink.rel{stroke-dasharray:2 5; stroke:color-mix(in srgb,var(--ink) 13%,transparent);}
   .rail{padding:26px 24px; align-self:start;}
-  .rail h3{font-family:var(--font-serif); font-size:23px; font-weight:600; margin:.5em 0 .15em; letter-spacing:-.01em;}
-  .rail .sec{font-family:var(--font-sans); font-size:11.5px; font-weight:600; letter-spacing:.1em;
-             text-transform:uppercase; color:var(--ink-3); margin:24px 0 9px;}
+  .rail h3{font-family:var(--font-disp); font-weight:700; font-size:22px; margin:.5em 0 .15em; letter-spacing:-.01em;}
+  .rail .sec{font-family:var(--font-text); font-size:11.5px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-3); margin:22px 0 9px;}
   @media (max-width:1024px){ .graph-wrap{grid-template-columns:1fr;} .rail{display:none;} }
 
-  /* ============================================================
-     Timeline / Roadmap
-     ============================================================ */
-  .era{display:flex; align-items:center; gap:10px; margin:34px 0 8px; font-size:12px; color:var(--ink-3);
-       letter-spacing:.1em; text-transform:uppercase; font-family:var(--font-mono);}
+  /* ===== 时间线 / 路线 ===== */
+  .era{display:flex; align-items:center; gap:10px; margin:30px 0 8px; font-size:12px; color:var(--ink-3);
+    letter-spacing:.1em; text-transform:uppercase; font-family:var(--font-mono);}
   .era::before{content:""; width:20px; height:1px; background:var(--accent);}
-  .lane{border-radius:var(--r-panel); padding:19px 22px; margin-bottom:14px;}
+  .lane{border-radius:var(--r-panel); padding:19px 22px; margin-bottom:14px; background:var(--hover);}
   .lane h4{margin:0 0 4px; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);}
   .lane .steps{display:flex; flex-wrap:wrap; gap:9px 18px; color:var(--ink-2); font-size:14.5px;}
   .lane .steps .n{font-family:var(--font-mono); color:var(--ink-3); font-size:12px; margin-right:6px;}
+  .lane.trend{background:var(--accent-soft); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent);}
 
-  /* ============================================================
-     Detail (reading — iA-like focus)
-     ============================================================ */
-  .article-title{font-family:var(--font-serif); font-size:36px; font-weight:600; line-height:1.16;
-                 letter-spacing:-.018em; margin:.1em 0 .12em;}
-  .alias{color:var(--ink-3); font-size:13px; margin-bottom:16px;}
+  /* ===== 详情（展柜 · 衬线读书）===== */
+  .article-title{font-family:var(--font-disp); font-weight:700; font-size:30px; line-height:1.18; letter-spacing:-.015em; margin:.1em 0 .1em;}
+  .alias{color:var(--ink-3); font-size:13px; margin-bottom:14px;}
   .meta-line{display:flex; gap:10px 18px; align-items:center; flex-wrap:wrap; color:var(--ink-2); font-size:13.5px;}
   .meta-line .plain{display:inline-flex; align-items:center; gap:7px;}
   .stars{color:var(--accent); letter-spacing:2px;}
-  .paper-inner{max-width:68ch; margin:0 auto;}
-  .reading{font-family:var(--font-serif); font-size:17.5px; line-height:1.95; color:var(--ink);}
+  .reading{max-width:68ch; margin:0 auto; font-family:var(--font-read); font-size:17.5px; line-height:1.95; color:var(--ink);}
   .reading p{margin:.9em 0;}
-  .wiki{color:var(--accent); text-decoration:none; cursor:pointer; border-bottom:1px solid color-mix(in srgb,var(--accent) 38%,transparent);
-        transition:border-color .2s ease, background .2s ease;}
-  .wiki:hover{border-bottom-color:var(--accent); background:var(--accent-soft);}
-  .formula{font-family:var(--font-mono); font-size:13.5px; margin:22px 0; padding:16px 18px;
-           border-radius:var(--r-control); color:var(--ink);
-           background:linear-gradient(180deg,var(--g-hi),var(--g-lo));
-           box-shadow:inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--ring); overflow-x:auto;}
-  .block-sec{font-family:var(--font-sans); font-size:11.5px; font-weight:600; letter-spacing:.1em;
-             text-transform:uppercase; color:var(--ink-3); margin:32px 0 10px;}
+  .wiki{color:var(--accent); text-decoration:none; cursor:pointer; border-bottom:1px solid color-mix(in srgb,var(--accent) 38%,transparent); transition:background .2s ease;}
+  .wiki:hover{background:var(--accent-soft);}
+  .formula{font-family:var(--font-mono); font-size:13.5px; margin:22px 0; padding:16px 18px; border-radius:var(--r-control);
+    color:var(--ink); background:var(--hover); overflow-x:auto;}
+  .block-sec{font-family:var(--font-text); font-size:11.5px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-3); margin:30px 0 10px;}
   .dep-chain{font-size:14.5px; color:var(--ink-2); display:flex; align-items:center; gap:9px; flex-wrap:wrap;}
   .dep-chain .me{font-weight:600; color:var(--ink);}
   .arrow{color:var(--ink-3);}
   .backlinks{font-size:14.5px; color:var(--ink-2); line-height:2.1;}
   .fab{position:fixed; left:50%; transform:translateX(-50%); bottom:24px; z-index:45;
-       display:inline-flex; gap:2px; padding:6px; border-radius:var(--r-overlay);}
+    display:inline-flex; gap:2px; padding:6px; border-radius:var(--r-case);}
   .fab .btn{min-height:38px; padding:8px 15px; font-size:13.5px;}
   .fab .btn[aria-pressed="true"]{color:var(--accent); background:var(--hover);}
 
-  /* ============================================================
-     Profile
-     ============================================================ */
+  /* ===== 档案 / 搜索 ===== */
   .who{display:flex; align-items:center; gap:16px;}
   .avatar{width:58px;height:58px;border-radius:50%;
-          background:conic-gradient(from 210deg,var(--d1),var(--d2),var(--d5),var(--d4),var(--d3),var(--d1));
-          box-shadow:inset 0 0 0 1px rgba(255,255,255,.45), 0 10px 26px -14px var(--shadow);}
-
-  /* ============================================================
-     Search overlay
-     ============================================================ */
+    background:conic-gradient(from 210deg,var(--d1),var(--d2),var(--d5),var(--d4),var(--d3),var(--d1));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.45), 0 10px 26px -14px var(--shadow);}
   .overlay{position:fixed; inset:0; z-index:70; display:none; align-items:flex-start; justify-content:center;
-           padding-top:11vh; background:color-mix(in srgb,var(--canvas) 30%,rgba(0,0,0,.46)); backdrop-filter:blur(4px);}
+    padding-top:11vh; background:color-mix(in srgb,var(--canvas) 30%,rgba(0,0,0,.46)); backdrop-filter:blur(4px);}
   .overlay.on{display:flex; animation:pop .18s ease;}
-  .searchbox{width:min(680px,92vw); border-radius:var(--r-overlay); padding:12px 12px 8px;}
+  .searchbox{width:min(680px,92vw); padding:12px 12px 8px;}
   .searchbox .field{display:flex; align-items:center; gap:11px; padding:8px 8px 14px; border-bottom:1px solid var(--line);}
   .searchbox input{flex:1; border:0; outline:0; background:transparent; color:var(--ink); font:inherit; font-size:16px;}
-  .hit{display:flex; align-items:center; gap:13px; padding:13px 12px; border-radius:var(--r-control); cursor:pointer; transition:background .16s ease;}
+  .hit{display:flex; align-items:center; gap:13px; padding:13px 12px; border-radius:var(--r-control); cursor:pointer;}
   .hit:hover{background:var(--hover);}
   mark{background:color-mix(in srgb,var(--accent) 30%,transparent); color:inherit; border-radius:3px; padding:0 2px;}
-
   .screen{display:none;} .screen.on{display:block;}
-  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
-  @media (max-width:1024px){ .hero{font-size:38px;} }
-  @media (max-width:640px){ .shell{padding:24px 18px 130px;} .search{min-width:0;} .search .lbl{display:none;} .hero{font-size:31px;} }
+  @media (max-width:1024px){ .hero{font-size:36px;} }
+  @media (max-width:640px){ .shell{padding:22px 18px 130px;} .search{min-width:0;} .search .lbl{display:none;} .hero{font-size:30px;} }
 </style>
 </head>
 <body>
-<div id="cursorlight" aria-hidden="true"></div>
 
-<!-- ================= DEV harness (scaffolding — not part of the product UI) ================= -->
+<!-- DEV 演示壳（非产品界面）-->
 <div class="harness" role="note" aria-label="原型演示壳（非产品界面）">
   <span class="tag">DEV 演示壳 · 非产品界面</span>
   <button class="htab on" data-screen="home">首页</button>
@@ -435,99 +269,79 @@
   <button class="htab" data-screen="roadmap">路线</button>
   <button class="htab" data-screen="detail">详情</button>
   <button class="htab" data-screen="profile">档案</button>
-  <span style="color:#8b93a3;margin-left:auto">配色方向(DEV):</span>
-  <button class="htab on" data-palette="warm">暖纸·琉璃青</button>
-  <button class="htab" data-palette="cool">冷白·苹果蓝</button>
-  <button class="htab" data-palette="mono">纯白·单色</button>
-  <span style="color:#8b93a3">主题控件在产品顶栏（唯一入口）</span>
+  <span style="margin-left:auto;color:#8b93a3">主题控件在产品顶栏（唯一入口）</span>
 </div>
 
 <div class="shell">
-  <!-- ================= Product top bar ================= -->
-  <header class="topbar glass chrome l2">
-    <span class="brand">知识星图<span class="en">Liuli</span></span>
+  <!-- 顶栏 = 台灯灯罩 -->
+  <header class="topbar glass">
+    <span class="brand">星图册<span class="en">Star Atlas</span></span>
     <div class="search" role="button" tabindex="0" onclick="openSearch()" onkeydown="if(event.key==='Enter')openSearch()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-      <span class="lbl">搜索知识点…</span>
-      <span class="kbd">⌘K</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/><path d="M11 8v6M8 11h6"/></svg>
+      <span class="lbl">搜索知识点…</span><span class="kbd">⌘K</span>
     </div>
     <div class="pop-wrap">
-      <button class="icon-btn" id="themeBtn" aria-haspopup="true" aria-expanded="false" title="主题·阅读偏好" aria-label="主题·阅读偏好">
+      <button class="icon-btn" id="themeBtn" aria-haspopup="true" aria-expanded="false" title="主题（台灯）" aria-label="主题（台灯）">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="7.5"/><path d="M12 4.5v15"/>
-          <path d="M12 4.5a7.5 7.5 0 0 1 0 15z" fill="currentColor" stroke="none" opacity=".5"/>
+          <path d="M6 3h12M6 6h12M7 6v5a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4V6"/><path d="M12 15v3M9 21h6"/><path d="M12 18l-1.5 3M12 18l1.5 3"/>
         </svg>
       </button>
-      <div class="popover glass l3" id="themePop" role="radiogroup" aria-label="主题模式">
-        <div class="pop-title">主题模式</div>
+      <div class="popover glass" id="themePop" role="radiogroup" aria-label="主题模式">
+        <div class="pop-title">台灯状态</div>
         <div class="pop-item" role="radio" aria-checked="true" data-mode="system"><span>跟随系统</span><span class="tick">✓</span></div>
-        <div class="pop-item" role="radio" aria-checked="false" data-mode="day"><span>日间 · 晨琉璃</span><span class="tick">✓</span></div>
-        <div class="pop-item" role="radio" aria-checked="false" data-mode="night"><span>夜间 · 夜琉璃</span><span class="tick">✓</span></div>
+        <div class="pop-item" role="radio" aria-checked="false" data-mode="day"><span>日间 · 灯关</span><span class="tick">✓</span></div>
+        <div class="pop-item" role="radio" aria-checked="false" data-mode="night"><span>夜间 · 灯开</span><span class="tick">✓</span></div>
       </div>
     </div>
     <button class="icon-btn" title="本地档案" aria-label="本地档案">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M5.5 19.5c0-3.5 3-5.9 6.5-5.9s6.5 2.4 6.5 5.9"/></svg>
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5.5C9.8 4 6.5 4 4 5v13c2.5-1 5.8-1 8 .5 2.2-1.5 5.5-1.5 8-.5V5c-2.5-1-5.8-1-8 .5z"/><path d="M12 5.5V18.5"/>
+      </svg>
     </button>
   </header>
 
-  <!-- ================= HOME ================= -->
+  <!-- ================= 首页 ================= -->
   <section class="screen on" id="screen-home">
-    <div class="constellation" aria-hidden="true">
-      <svg viewBox="0 0 1000 214" preserveAspectRatio="xMidYMid meet">
-        <g class="clink hair">
-          <path d="M96 132 L232 74 L372 128 L494 58 L636 122 L774 66 L914 126"/>
-          <path d="M232 74 L300 158 L494 58 L560 162 L774 66"/>
-          <path d="M96 132 L300 158 L372 128 L560 162 L636 122 L914 126"/>
+    <div class="star-chart" aria-hidden="true">
+      <svg viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+        <g class="al faint">
+          <path d="M96 124 L232 66 L372 120 L494 52 L636 114 L774 58 L914 118"/>
+          <path d="M232 66 L300 150 L494 52 L560 154 L774 58"/>
+          <path d="M96 124 L300 150 L372 120 L560 154 L636 114 L914 118"/>
         </g>
-        <g class="clink">
-          <path d="M232 74 L494 58 L774 66"/><path d="M372 128 L636 122"/><path d="M96 132 L636 122"/>
+        <g class="al">
+          <path d="M232 66 L494 52 L774 58"/><path d="M372 120 L636 114"/><path d="M96 124 L636 114"/>
         </g>
-        <g class="stardot">
-          <circle cx="150" cy="50" r="1.4"/><circle cx="418" cy="32" r="1.2"/><circle cx="700" cy="44" r="1.4"/>
-          <circle cx="250" cy="184" r="1.2"/><circle cx="602" cy="190" r="1.3"/><circle cx="862" cy="172" r="1.2"/>
-          <circle cx="70" cy="86" r="1.1"/><circle cx="958" cy="82" r="1.1"/><circle cx="540" cy="104" r="1"/>
+        <g class="sdot">
+          <circle cx="150" cy="44" r="1.3"/><circle cx="418" cy="28" r="1.1"/><circle cx="700" cy="38" r="1.3"/>
+          <circle cx="250" cy="176" r="1.1"/><circle cx="602" cy="182" r="1.2"/><circle cx="862" cy="164" r="1.1"/>
+          <circle cx="70" cy="80" r="1"/><circle cx="958" cy="76" r="1"/><circle cx="540" cy="96" r=".9"/>
         </g>
-        <g class="cnode"><circle cx="300" cy="158" r="2.6"/><circle cx="560" cy="162" r="2.6"/><circle cx="494" cy="58" r="3"/><circle cx="636" cy="122" r="2.4"/></g>
-        <g class="pulse d1"><g class="dnode" tabindex="0" aria-label="机器学习基础"><title>机器学习基础</title>
-          <circle cx="96" cy="132" r="6.5" fill="var(--d1)"/><circle cx="94" cy="130" r="2.2" fill="#fff" opacity=".55"/></g></g>
-        <g class="pulse d2"><g class="dnode" tabindex="0" aria-label="自然语言处理"><title>自然语言处理</title>
-          <circle cx="232" cy="74" r="6.5" fill="var(--d2)"/><circle cx="230" cy="72" r="2.2" fill="#fff" opacity=".55"/></g></g>
-        <g class="pulse d3"><g class="dnode" tabindex="0" aria-label="计算机视觉"><title>计算机视觉</title>
-          <circle cx="372" cy="128" r="6.5" fill="var(--d3)"/><circle cx="370" cy="126" r="2.2" fill="#fff" opacity=".55"/></g></g>
-        <g class="pulse d5"><g class="dnode" tabindex="0" aria-label="大模型与生成"><title>大模型与生成</title>
-          <circle cx="494" cy="58" r="8" fill="var(--d5)"/><circle cx="491" cy="55" r="2.8" fill="#fff" opacity=".6"/></g></g>
-        <g class="pulse d4"><g class="dnode" tabindex="0" aria-label="数学与理论"><title>数学与理论</title>
-          <circle cx="774" cy="66" r="6.5" fill="var(--d4)"/><circle cx="772" cy="64" r="2.2" fill="#fff" opacity=".55"/></g></g>
-        <g class="pulse d6"><g class="dnode" tabindex="0" aria-label="强化学习"><title>强化学习</title>
-          <circle cx="914" cy="126" r="6.5" fill="var(--d6)"/><circle cx="912" cy="124" r="2.2" fill="#fff" opacity=".55"/></g></g>
+        <g class="pulse d1"><g class="astar"><circle class="ring" cx="96" cy="124" r="10" fill="none" stroke="var(--d1)"/><circle cx="96" cy="124" r="4.5" fill="var(--d1)"/></g></g>
+        <g class="pulse d2"><g class="astar"><circle class="ring" cx="232" cy="66" r="10" fill="none" stroke="var(--d2)"/><circle cx="232" cy="66" r="4.5" fill="var(--d2)"/></g></g>
+        <g class="pulse d3"><g class="astar"><circle class="ring" cx="372" cy="120" r="10" fill="none" stroke="var(--d3)"/><circle cx="372" cy="120" r="4.5" fill="var(--d3)"/></g></g>
+        <g class="pulse d5"><g class="astar"><circle class="ring" cx="494" cy="52" r="12" fill="none" stroke="var(--d5)"/><circle cx="494" cy="52" r="5.5" fill="var(--d5)"/></g></g>
+        <g class="pulse d4"><g class="astar"><circle class="ring" cx="774" cy="58" r="10" fill="none" stroke="var(--d4)"/><circle cx="774" cy="58" r="4.5" fill="var(--d4)"/></g></g>
+        <g class="pulse d6"><g class="astar"><circle class="ring" cx="914" cy="118" r="10" fill="none" stroke="var(--d6)"/><circle cx="914" cy="118" r="4.5" fill="var(--d6)"/></g></g>
       </svg>
     </div>
     <div class="eyebrow">1943 — 2026</div>
     <h1 class="hero">一份 AI 知识的<span style="white-space:nowrap">全景星图</span></h1>
-    <p class="lede">以知识点为核心，展示依赖脉络、编年时间线与领域路线——安静地读，随时可漫游。</p>
-
+    <p class="lede">以知识点为核心，展示依赖脉络、编年时间线与领域路线——像翻一本星图册，安静地读，随时漫游。</p>
     <div class="stats mono">
       <span><b>94</b> 知识点</span><span><b>6</b> 领域</span><span><b>72</b> 论文</span><span><b>83</b> 年跨度</span>
     </div>
-
     <div style="margin-top:12px">
-      <div class="domain-row"><span class="dot" style="background:var(--d1)"></span><span>机器学习基础</span>
-        <span class="bar"><span class="faint mono caption">18</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d2)"></span><span>自然语言处理</span>
-        <span class="bar"><span class="faint mono caption">16</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d3)"></span><span>计算机视觉</span>
-        <span class="bar"><span class="faint mono caption">15</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d4)"></span><span>强化学习</span>
-        <span class="bar"><span class="faint mono caption">12</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d5)"></span><span>大模型与生成</span>
-        <span class="bar"><span class="faint mono caption">20</span></span></div>
-      <div class="domain-row"><span class="dot" style="background:var(--d6)"></span><span>数学与理论</span>
-        <span class="bar"><span class="faint mono caption">13</span></span></div>
+      <div class="drow"><span class="dot" style="background:var(--d1)"></span><span>机器学习基础</span><span class="bar"><span class="faint mono caption">18</span></span></div>
+      <div class="drow"><span class="dot" style="background:var(--d2)"></span><span>自然语言处理</span><span class="bar"><span class="faint mono caption">16</span></span></div>
+      <div class="drow"><span class="dot" style="background:var(--d3)"></span><span>计算机视觉</span><span class="bar"><span class="faint mono caption">15</span></span></div>
+      <div class="drow"><span class="dot" style="background:var(--d4)"></span><span>强化学习</span><span class="bar"><span class="faint mono caption">12</span></span></div>
+      <div class="drow"><span class="dot" style="background:var(--d5)"></span><span>大模型与生成</span><span class="bar"><span class="faint mono caption">20</span></span></div>
+      <div class="drow"><span class="dot" style="background:var(--d6)"></span><span>数学与理论</span><span class="bar"><span class="faint mono caption">13</span></span></div>
     </div>
-
     <div class="sec-head">
       <h2>知识流</h2>
-      <div class="seg glass l1">
+      <div class="seg">
         <span class="opt" role="tab" aria-selected="true">最新</span>
         <span class="opt" role="tab" aria-selected="false">重要</span>
       </div>
@@ -539,47 +353,36 @@
       <div class="row"><span class="dot" style="background:var(--d2)"></span><span class="name">词向量</span><span class="desc">把词语映射到连续语义空间</span><span class="yr mono">2013</span></div>
     </div>
     <div style="margin-top:16px"><button class="btn btn-ghost">查看全部
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></div>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></div>
   </section>
-
-  <!-- ================= GRAPH ================= -->
+  <!-- ================= 图谱（星图册）================= -->
   <section class="screen" id="screen-graph">
     <div class="filter-row">
-      <div class="seg glass l1">
+      <div class="seg">
         <span class="opt" role="tab" aria-selected="true"><span class="dot" style="background:var(--ink)"></span>全部</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d1)"></span>机器学习基础</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d2)"></span>NLP</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d5)"></span>大模型与生成</span>
       </div>
-      <div class="seg glass l1" style="margin-left:auto">
+      <div class="seg" style="margin-left:auto">
         <span class="opt" role="tab" aria-selected="true">依赖</span>
         <span class="opt" role="tab" aria-selected="false">相关</span>
       </div>
     </div>
     <div class="graph-wrap">
-      <div class="graph-canvas glass l2">
-        <div class="grid"></div>
+      <div class="graph-canvas paper">
+        <div class="stargrid"></div>
         <svg viewBox="0 0 760 580" width="100%" height="580" style="position:relative;z-index:1">
           <defs>
-            <radialGradient id="nHL" cx="34%" cy="30%" r="72%">
-              <stop offset="0%" stop-color="#fff" stop-opacity=".55"/><stop offset="46%" stop-color="#fff" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="nShadow" cx="50%" cy="72%" r="60%">
-              <stop offset="0%" stop-color="#000" stop-opacity=".28"/><stop offset="100%" stop-color="#000" stop-opacity="0"/>
-            </radialGradient>
+            <radialGradient id="stHL" cx="32%" cy="28%" r="70%"><stop offset="0%" stop-color="#fff" stop-opacity=".5"/><stop offset="45%" stop-color="#fff" stop-opacity="0"/></radialGradient>
+            <radialGradient id="stSh" cx="50%" cy="74%" r="58%"><stop offset="0%" stop-color="#000" stop-opacity=".22"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient>
           </defs>
-
-          <!-- links (curved) -->
           <g>
             <path class="glink rel" d="M150 486 Q205 430 268 392"/>
-            <path class="glink" d="M150 486 Q188 452 205 402"/>
             <path class="glink" d="M268 392 Q226 320 210 268"/>
-            <path class="glink" d="M268 392 Q300 344 330 300"/>
             <path class="glink" d="M210 268 Q272 196 332 156"/>
             <path class="glink" d="M332 156 Q420 150 508 196"/>
             <path class="glink" d="M332 156 Q396 108 452 92"/>
-            <path class="glink" d="M210 268 Q150 372 205 402"/>
-            <path class="glink" d="M205 402 Q262 400 330 300"/>
             <path class="glink" d="M508 196 Q558 156 596 136"/>
             <path class="glink" d="M508 196 Q566 250 630 296"/>
             <path class="glink" d="M330 300 Q432 306 508 196"/>
@@ -587,90 +390,75 @@
             <path class="glink" d="M330 300 Q430 386 512 462"/>
             <path class="glink" d="M630 296 Q604 384 512 462"/>
             <path class="glink rel" d="M205 402 Q340 476 512 462"/>
-            <path class="glink" d="M508 196 Q612 236 660 372"/>
           </g>
-
-          <!-- nodes -->
           <g class="gnode">
-            <circle class="halo" cx="508" cy="196" r="46" fill="none" stroke="var(--d5)" stroke-width="1.5" opacity=".5"/>
-            <circle cx="508" cy="196" r="26" fill="var(--d5)"/><circle cx="508" cy="196" r="26" fill="url(#nShadow)"/>
-            <circle cx="497" cy="183" r="17" fill="url(#nHL)"/>
+            <circle class="halo" cx="508" cy="196" r="44" fill="none" stroke="var(--d5)" stroke-width="1.5" opacity=".55"/>
+            <circle cx="508" cy="196" r="24" fill="var(--d5)"/><circle cx="508" cy="196" r="24" fill="url(#stSh)"/>
+            <circle cx="497" cy="184" r="16" fill="url(#stHL)"/><circle cx="508" cy="196" r="27" fill="none" stroke="color-mix(in srgb,var(--d5) 60%,transparent)" stroke-width="1"/>
             <text class="lbl" x="508" y="160" text-anchor="middle" font-size="15">Transformer</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="330" cy="300" r="34" fill="none" stroke="var(--d5)" stroke-width="1.4" opacity=".5"/>
-            <circle cx="330" cy="300" r="17" fill="var(--d5)"/><circle cx="330" cy="300" r="17" fill="url(#nShadow)"/>
-            <circle cx="323" cy="292" r="11" fill="url(#nHL)"/>
+            <circle class="halo" cx="330" cy="300" r="34" fill="none" stroke="var(--d5)" stroke-width="1.4" opacity=".55"/>
+            <circle cx="330" cy="300" r="16" fill="var(--d5)"/><circle cx="330" cy="300" r="16" fill="url(#stSh)"/>
+            <circle cx="322" cy="292" r="10" fill="url(#stHL)"/>
             <text class="lbl" x="330" y="276" text-anchor="middle" font-size="13">自注意力</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="332" cy="156" r="38" fill="none" stroke="var(--d2)" stroke-width="1.4" opacity=".5"/>
-            <circle cx="332" cy="156" r="19" fill="var(--d2)"/><circle cx="332" cy="156" r="19" fill="url(#nShadow)"/>
-            <circle cx="325" cy="148" r="12" fill="url(#nHL)"/>
+            <circle class="halo" cx="332" cy="156" r="36" fill="none" stroke="var(--d2)" stroke-width="1.4" opacity=".55"/>
+            <circle cx="332" cy="156" r="17" fill="var(--d2)"/><circle cx="332" cy="156" r="17" fill="url(#stSh)"/>
+            <circle cx="325" cy="149" r="11" fill="url(#stHL)"/>
             <text class="lbl" x="332" y="130" text-anchor="middle" font-size="13">注意力机制</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="596" cy="136" r="34" fill="none" stroke="var(--d2)" stroke-width="1.4" opacity=".5"/>
-            <circle cx="596" cy="136" r="15" fill="var(--d2)"/><circle cx="596" cy="136" r="15" fill="url(#nShadow)"/>
-            <circle cx="590" cy="129" r="9" fill="url(#nHL)"/>
-            <text class="lbl" x="596" y="113" text-anchor="middle" font-size="13">BERT</text>
+            <circle class="halo" cx="596" cy="136" r="32" fill="none" stroke="var(--d2)" stroke-width="1.4" opacity=".55"/>
+            <circle cx="596" cy="136" r="14" fill="var(--d2)"/><circle cx="596" cy="136" r="14" fill="url(#stSh)"/>
+            <circle cx="590" cy="130" r="9" fill="url(#stHL)"/>
+            <text class="lbl" x="596" y="112" text-anchor="middle" font-size="13">BERT</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="630" cy="296" r="42" fill="none" stroke="var(--d5)" stroke-width="1.5" opacity=".5"/>
-            <circle cx="630" cy="296" r="21" fill="var(--d5)"/><circle cx="630" cy="296" r="21" fill="url(#nShadow)"/>
-            <circle cx="621" cy="286" r="13" fill="url(#nHL)"/>
+            <circle class="halo" cx="630" cy="296" r="38" fill="none" stroke="var(--d5)" stroke-width="1.5" opacity=".55"/>
+            <circle cx="630" cy="296" r="19" fill="var(--d5)"/><circle cx="630" cy="296" r="19" fill="url(#stSh)"/>
+            <circle cx="622" cy="287" r="12" fill="url(#stHL)"/>
             <text class="lbl" x="630" y="270" text-anchor="middle" font-size="14">GPT</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="210" cy="268" r="34" fill="none" stroke="var(--d1)" stroke-width="1.4" opacity=".5"/>
-            <circle cx="210" cy="268" r="15" fill="var(--d1)"/><circle cx="210" cy="268" r="15" fill="url(#nShadow)"/>
-            <circle cx="204" cy="261" r="9" fill="url(#nHL)"/>
+            <circle class="halo" cx="210" cy="268" r="32" fill="none" stroke="var(--d1)" stroke-width="1.4" opacity=".55"/>
+            <circle cx="210" cy="268" r="14" fill="var(--d1)"/><circle cx="210" cy="268" r="14" fill="url(#stSh)"/>
+            <circle cx="204" cy="262" r="9" fill="url(#stHL)"/>
             <text class="lbl" x="210" y="246" text-anchor="middle" font-size="13">循环神经网络</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="205" cy="402" r="34" fill="none" stroke="var(--d3)" stroke-width="1.4" opacity=".5"/>
-            <circle cx="205" cy="402" r="15" fill="var(--d3)"/><circle cx="205" cy="402" r="15" fill="url(#nShadow)"/>
-            <circle cx="199" cy="395" r="9" fill="url(#nHL)"/>
-            <text class="lbl" x="205" y="380" text-anchor="middle" font-size="13">卷积神经网络</text>
+            <circle class="halo" cx="268" cy="392" r="28" fill="none" stroke="var(--d1)" stroke-width="1.3" opacity=".55"/>
+            <circle cx="268" cy="392" r="12" fill="var(--d1)"/><circle cx="268" cy="392" r="12" fill="url(#stSh)"/>
+            <circle cx="263" cy="387" r="8" fill="url(#stHL)"/>
+            <text class="lbl" x="268" y="414" text-anchor="middle" font-size="12">反向传播</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="268" cy="392" r="30" fill="none" stroke="var(--d1)" stroke-width="1.3" opacity=".5"/>
-            <circle cx="268" cy="392" r="13" fill="var(--d1)"/><circle cx="268" cy="392" r="13" fill="url(#nShadow)"/>
-            <circle cx="263" cy="386" r="8" fill="url(#nHL)"/>
-            <text class="lbl" x="268" y="378" text-anchor="middle" font-size="13">反向传播</text>
-          </g>
-          <g class="gnode">
-            <circle class="halo" cx="150" cy="486" r="28" fill="none" stroke="var(--d1)" stroke-width="1.3" opacity=".5"/>
-            <circle cx="150" cy="486" r="12" fill="var(--d1)"/><circle cx="150" cy="486" r="12" fill="url(#nShadow)"/>
-            <circle cx="146" cy="481" r="7" fill="url(#nHL)"/>
+            <circle class="halo" cx="150" cy="486" r="26" fill="none" stroke="var(--d1)" stroke-width="1.3" opacity=".55"/>
+            <circle cx="150" cy="486" r="11" fill="var(--d1)"/><circle cx="150" cy="486" r="11" fill="url(#stSh)"/>
+            <circle cx="146" cy="481" r="7" fill="url(#stHL)"/>
             <text class="lbl" x="150" y="508" text-anchor="middle" font-size="12">梯度下降</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="452" cy="92" r="28" fill="none" stroke="var(--d4)" stroke-width="1.3" opacity=".5"/>
-            <circle cx="452" cy="92" r="12" fill="var(--d4)"/><circle cx="452" cy="92" r="12" fill="url(#nShadow)"/>
-            <circle cx="448" cy="87" r="7" fill="url(#nHL)"/>
+            <circle class="halo" cx="452" cy="92" r="26" fill="none" stroke="var(--d4)" stroke-width="1.3" opacity=".55"/>
+            <circle cx="452" cy="92" r="11" fill="var(--d4)"/><circle cx="452" cy="92" r="11" fill="url(#stSh)"/>
+            <circle cx="448" cy="87" r="7" fill="url(#stHL)"/>
             <text class="lbl" x="452" y="70" text-anchor="middle" font-size="12">位置编码</text>
           </g>
           <g class="gnode">
-            <circle class="halo" cx="512" cy="462" r="30" fill="none" stroke="var(--d2)" stroke-width="1.3" opacity=".5"/>
-            <circle cx="512" cy="462" r="14" fill="var(--d2)"/><circle cx="512" cy="462" r="14" fill="url(#nShadow)"/>
-            <circle cx="507" cy="456" r="8" fill="url(#nHL)"/>
+            <circle class="halo" cx="512" cy="462" r="28" fill="none" stroke="var(--d2)" stroke-width="1.3" opacity=".55"/>
+            <circle cx="512" cy="462" r="13" fill="var(--d2)"/><circle cx="512" cy="462" r="13" fill="url(#stSh)"/>
+            <circle cx="507" cy="456" r="8" fill="url(#stHL)"/>
             <text class="lbl" x="512" y="486" text-anchor="middle" font-size="12">词向量</text>
           </g>
-          <g class="gnode">
-            <circle class="halo" cx="660" cy="372" r="30" fill="none" stroke="var(--d4)" stroke-width="1.3" opacity=".5"/>
-            <circle cx="660" cy="372" r="14" fill="var(--d4)"/><circle cx="660" cy="372" r="14" fill="url(#nShadow)"/>
-            <circle cx="655" cy="366" r="8" fill="url(#nHL)"/>
-            <text class="lbl" x="660" y="396" text-anchor="middle" font-size="12">强化学习</text>
-          </g>
         </svg>
-        <div class="graph-legend">
-          <span class="item"><svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="color-mix(in srgb,var(--ink) 30%,transparent)" stroke-width="1.3"/></svg>依赖</span>
-          <span class="item"><svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="color-mix(in srgb,var(--ink) 20%,transparent)" stroke-width="1.3" stroke-dasharray="2 4"/></svg>相关</span>
-          <span class="item faint">· 节点越大 = 被依赖越多</span>
+        <div class="glegend">
+          <span><svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="color-mix(in srgb,var(--ink) 30%,transparent)" stroke-width="1.2"/></svg>依赖</span>
+          <span><svg width="20" height="6"><line x1="0" y1="3" x2="20" y2="3" stroke="color-mix(in srgb,var(--ink) 20%,transparent)" stroke-width="1.2" stroke-dasharray="2 4"/></svg>相关</span>
+          <span class="faint">星越大 = 被依赖越多</span>
         </div>
       </div>
-      <aside class="rail glass l2">
+      <aside class="rail glass">
         <span class="dot" style="background:var(--d5);width:10px;height:10px"></span>
         <h3>Transformer</h3>
         <div class="faint mono caption">大模型与生成 · 2017</div>
@@ -679,16 +467,15 @@
         <div class="muted" style="font-size:14px">← 注意力机制 · 循环神经网络</div>
         <div class="sec">相关</div>
         <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="chip">BERT</span><span class="chip">GPT</span><span class="chip">位置编码</span></div>
-        <p style="margin-top:24px"><button class="btn btn-ghost" onclick="go('detail')">查看完整详情
+        <p style="margin-top:22px"><button class="btn btn-ghost" onclick="go('detail')">查看完整详情
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></p>
       </aside>
     </div>
   </section>
-
-  <!-- ================= TIMELINE ================= -->
+  <!-- ================= 时间线 ================= -->
   <section class="screen" id="screen-timeline">
     <div class="filter-row">
-      <div class="seg glass l1">
+      <div class="seg">
         <span class="opt" role="tab" aria-selected="true">全部</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d2)"></span>NLP</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d3)"></span>CV</span>
@@ -703,24 +490,21 @@
     <div class="row"><span class="yr mono">2023</span><span class="dot" style="background:var(--d4)"></span><span class="name">RLHF</span><span class="desc">用人类反馈微调对齐模型行为</span></div>
   </section>
 
-  <!-- ================= ROADMAP ================= -->
+  <!-- ================= 路线 ================= -->
   <section class="screen" id="screen-roadmap">
     <div class="filter-row">
-      <div class="seg glass l1">
+      <div class="seg">
         <span class="opt" role="tab" aria-selected="true"><span class="dot" style="background:var(--d1)"></span>机器学习基础</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d2)"></span>自然语言处理</span>
         <span class="opt" role="tab" aria-selected="false"><span class="dot" style="background:var(--d5)"></span>大模型与生成</span>
       </div>
     </div>
-    <div class="lane glass l2"><h4>基础</h4><div class="steps"><span><span class="n">01</span>线性回归</span><span><span class="n">02</span>逻辑回归</span><span><span class="n">03</span>梯度下降</span></div></div>
-    <div class="lane glass l2"><h4>进阶</h4><div class="steps"><span><span class="n">04</span>反向传播</span><span><span class="n">05</span>卷积网络</span><span><span class="n">06</span>循环网络</span></div></div>
-    <div class="lane glass l2"><h4>前沿</h4><div class="steps"><span><span class="n">07</span>Transformer</span><span><span class="n">08</span>自监督学习</span></div></div>
-    <div class="lane glass l2" style="background:linear-gradient(176deg, color-mix(in srgb,var(--accent) 12%,var(--g-hi)), var(--g-lo))">
-      <h4>领域趋势</h4><div class="muted" style="font-size:14.5px">向自监督与基础模型统一演进；表示学习与规模化仍是主线。</div>
-    </div>
+    <div class="lane"><h4>基础</h4><div class="steps"><span><span class="n">01</span>线性回归</span><span><span class="n">02</span>逻辑回归</span><span><span class="n">03</span>梯度下降</span></div></div>
+    <div class="lane"><h4>进阶</h4><div class="steps"><span><span class="n">04</span>反向传播</span><span><span class="n">05</span>卷积网络</span><span><span class="n">06</span>循环网络</span></div></div>
+    <div class="lane"><h4>前沿</h4><div class="steps"><span><span class="n">07</span>Transformer</span><span><span class="n">08</span>自监督学习</span></div></div>
+    <div class="lane trend"><h4>领域趋势</h4><div class="muted" style="font-size:14.5px">向自监督与基础模型统一演进；表示学习与规模化仍是主线。</div></div>
   </section>
-
-  <!-- ================= DETAIL ================= -->
+  <!-- ================= 详情（展柜 · 衬线读书）================= -->
   <section class="screen" id="screen-detail">
     <h1 class="article-title">Transformer</h1>
     <div class="alias">别名：Transformer 模型 · Attention Is All You Need</div>
@@ -732,27 +516,24 @@
       <span class="plain mono">~45 min</span>
       <span class="chip">#注意力</span><span class="chip">#Seq2Seq</span>
     </div>
-    <div class="paper" style="margin-top:22px;padding:30px 34px">
-      <div class="paper-inner">
+    <div class="paper" style="margin-top:20px;padding:30px 34px">
       <div class="reading">
         <p>一种完全基于 <a class="wiki">注意力机制</a> 的序列到序列架构，抛弃了 <a class="wiki">循环神经网络</a> 的循环结构，使训练可以充分并行化。</p>
         <div class="formula">Attention(Q, K, V) = softmax( QKᵀ / √d_k ) · V</div>
         <p>它把序列建模从「逐步递归」改写为「全局加权」，成为此后所有 <a class="wiki">大语言模型</a> 的骨架。</p>
       </div>
       <div class="block-sec">关键论文</div>
-      <div class="row" style="padding-left:0;padding-right:0"><span class="name">Attention Is All You Need</span><span class="desc">Vaswani et al. · 2017 · NeurIPS</span>
-        <span class="yr"><a class="wiki" href="#" onclick="return false">↗</a></span></div>
+      <div class="row" style="padding-left:0;padding-right:0"><span class="name">Attention Is All You Need</span><span class="desc">Vaswani et al. · 2017 · NeurIPS</span><span class="yr"><a class="wiki" href="#" onclick="return false">↗</a></span></div>
       <div class="block-sec">依赖关系</div>
       <div class="dep-chain"><a class="wiki">循环神经网络</a><span class="arrow">▸</span><span class="me">Transformer</span><span class="arrow">▸</span><a class="wiki">BERT</a><a class="wiki">GPT</a></div>
       <div class="block-sec">相关知识点</div>
       <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="chip">注意力机制</span><span class="chip">BERT</span><span class="chip">位置编码</span></div>
       <div class="block-sec">反向链接</div>
       <div class="backlinks">被 <a class="wiki">BERT</a>、<a class="wiki">GPT</a>、<a class="wiki">自注意力</a> 引用</div>
-      </div>
     </div>
-    <div class="fab glass l3">
+    <div class="fab glass">
       <button class="btn" aria-pressed="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.7 12 20 12 20z"/></svg>收藏</button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6zM15 4v5h4"/></svg>收藏</button>
       <button class="btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>已读</button>
       <button class="btn">
@@ -760,15 +541,15 @@
     </div>
   </section>
 
-  <!-- ================= PROFILE ================= -->
+  <!-- ================= 档案 ================= -->
   <section class="screen" id="screen-profile">
     <div class="who">
       <div class="avatar"></div>
-      <div><div style="font-family:var(--font-serif);font-weight:600;font-size:22px">学习者</div>
+      <div><div style="font-family:var(--font-disp);font-weight:700;font-size:21px">学习者</div>
         <div class="faint caption">数据仅存本机 · 无账号 · 无上传</div></div>
     </div>
-    <div class="sec-head" style="margin-top:28px">
-      <div class="seg glass l1">
+    <div class="sec-head" style="margin-top:26px">
+      <div class="seg">
         <span class="opt" role="tab" aria-selected="true">我的收藏</span>
         <span class="opt" role="tab" aria-selected="false">阅读进度</span>
         <span class="opt" role="tab" aria-selected="false">我的笔记</span>
@@ -776,22 +557,21 @@
     </div>
     <div>
       <div class="row" onclick="go('detail')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.7 12 20 12 20z"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6zM15 4v5h4"/></svg>
         <span class="dot" style="background:var(--d5)"></span><span class="name">Transformer</span><span class="yr mono">2017</span></div>
       <div class="row">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.7 12 20 12 20z"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6zM15 4v5h4"/></svg>
         <span class="dot" style="background:var(--d5)"></span><span class="name">注意力机制</span><span class="yr mono">2014</span></div>
     </div>
   </section>
 </div>
 
-<!-- ================= SEARCH OVERLAY ================= -->
+<!-- ================= 搜索浮层 ================= -->
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeSearch()">
-  <div class="searchbox glass l3">
+  <div class="searchbox glass">
     <div class="field">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-      <input id="q" placeholder="搜索知识点、别名或标签…" oninput="filterHits()" />
-      <span class="kbd">Esc</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/><path d="M11 8v6M8 11h6"/></svg>
+      <input id="q" placeholder="搜索知识点、别名或标签…" oninput="filterHits()" /><span class="kbd">Esc</span>
     </div>
     <div id="hits" style="padding-top:6px">
       <div class="hit" data-t="注意力机制 自注意力 Transformer" onclick="go('detail');closeSearch()"><span class="dot" style="background:var(--d5)"></span><div><div>注意力机制</div><div class="faint caption">让模型关注输入的相关部分</div></div><span class="faint mono caption" style="margin-left:auto">2014</span></div>
@@ -803,87 +583,52 @@
 </div>
 
 <script>
-  // ── cursor light + per-surface specular tracking (hover glow) ──
-  const cl = document.getElementById('cursorlight');
-  let mx=0,my=0;
-  window.addEventListener('pointermove', e=>{
-    mx = e.clientX; my = e.clientY;
-    cl.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-    const el = e.target.closest && e.target.closest('.glass,.paper');
-    if(el){
-      const r = el.getBoundingClientRect();
-      el.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-      el.style.setProperty('--my', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
-    }
-  }, {passive:true});
-
-  // ── theme: ONE product control, 3 modes; default follows system ──
-  const root = document.documentElement;
-  let themeMode = 'system';
-  const mql = window.matchMedia('(prefers-color-scheme: dark)');
-  function applyTheme(){
-    const night = themeMode === 'night' || (themeMode === 'system' && mql.matches);
-    root.dataset.theme = night ? 'night' : 'day';
-  }
-  mql.addEventListener && mql.addEventListener('change', ()=>{ if(themeMode==='system') applyTheme(); });
+  // 台灯（主题）：唯一入口，三选一
+  const root=document.documentElement; let themeMode='system';
+  const mql=window.matchMedia('(prefers-color-scheme: dark)');
+  function applyTheme(){ root.dataset.theme = (themeMode==='night'||(themeMode==='system'&&mql.matches))?'night':'day'; }
+  mql.addEventListener && mql.addEventListener('change',()=>{ if(themeMode==='system')applyTheme(); });
   applyTheme();
+  const tb=document.getElementById('themeBtn'), tp=document.getElementById('themePop');
+  tb.onclick=(e)=>{e.stopPropagation(); const on=tp.classList.toggle('on'); tb.setAttribute('aria-expanded',on);};
+  tp.querySelectorAll('.pop-item').forEach(it=>it.onclick=()=>{
+    themeMode=it.dataset.mode; applyTheme();
+    tp.querySelectorAll('.pop-item').forEach(o=>o.setAttribute('aria-checked',o===it));
+    tp.classList.remove('on'); tb.setAttribute('aria-expanded','false');});
+  document.addEventListener('click',()=>{tp.classList.remove('on'); tb.setAttribute('aria-expanded','false');});
 
-  const themeBtn = document.getElementById('themeBtn');
-  const themePop = document.getElementById('themePop');
-  themeBtn.onclick = (e)=>{ e.stopPropagation();
-    const on = themePop.classList.toggle('on');
-    themeBtn.setAttribute('aria-expanded', on); };
-  themePop.querySelectorAll('.pop-item').forEach(it=>{
-    it.onclick = ()=>{
-      themeMode = it.dataset.mode; applyTheme();
-      themePop.querySelectorAll('.pop-item').forEach(o=>o.setAttribute('aria-checked', o===it));
-      themePop.classList.remove('on'); themeBtn.setAttribute('aria-expanded','false');
-    };
-  });
-  document.addEventListener('click', ()=>{ themePop.classList.remove('on'); themeBtn.setAttribute('aria-expanded','false'); });
+  // 悬浮透镜光泽（玻璃面跟随光标）
+  window.addEventListener('pointermove',e=>{ const el=e.target.closest&&e.target.closest('.glass,.paper');
+    if(el){ const r=el.getBoundingClientRect();
+      el.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+      el.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%'); } }, {passive:true});
 
-  // ── screens ──
-  function go(id){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
-    const el = document.getElementById('screen-'+id); if(el) el.classList.add('on');
-    document.querySelectorAll('.htab[data-screen]').forEach(t=>t.classList.toggle('on', t.dataset.screen===id));
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
+  // 屏切换
+  function go(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+    const el=document.getElementById('screen-'+id); if(el)el.classList.add('on');
+    document.querySelectorAll('.htab[data-screen]').forEach(t=>t.classList.toggle('on',t.dataset.screen===id));
+    window.scrollTo({top:0,behavior:'smooth'}); }
   document.querySelectorAll('.htab[data-screen]').forEach(t=>t.onclick=()=>go(t.dataset.screen));
 
-  // ── palette variants (DEV only: warm / cool / mono) ──
-  document.querySelectorAll('.htab[data-palette]').forEach(b=>b.onclick=()=>{
-    root.dataset.palette = b.dataset.palette;
-    document.querySelectorAll('.htab[data-palette]').forEach(o=>o.classList.toggle('on', o===b));
-  });
+  // 分段控件
+  document.querySelectorAll('.seg').forEach(seg=>seg.querySelectorAll('.opt').forEach(opt=>
+    opt.onclick=()=>seg.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-selected',o===opt))));
 
-  // ── segmented controls (track + thumb) ──
-  document.querySelectorAll('.seg').forEach(seg=>{
-    seg.querySelectorAll('.opt').forEach(opt=>{
-      opt.onclick = ()=>seg.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-selected', o===opt));
-    });
-  });
-
-  // ── graph node hover: highlight incident links + node ──
-  document.querySelectorAll('.gnode').forEach(n=>{
-    n.addEventListener('pointerenter', ()=>n.classList.add('on'));
-    n.addEventListener('pointerleave', ()=>n.classList.remove('on'));
-  });
-
-  // ── search ──
-  const overlay = document.getElementById('overlay');
-  function openSearch(){ overlay.classList.add('on'); document.getElementById('q').focus(); }
-  function closeSearch(){ overlay.classList.remove('on'); }
-  document.addEventListener('keydown', e=>{
-    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openSearch(); }
-    if(e.key==='Escape') closeSearch();
-  });
-  function filterHits(){
-    const q = document.getElementById('q').value.trim().toLowerCase();
-    document.querySelectorAll('#hits .hit').forEach(h=>{
-      h.style.display = (!q || h.dataset.t.toLowerCase().includes(q)) ? '' : 'none';
-    });
-  }
+  // 搜索
+  const ov=document.getElementById('overlay');
+  function openSearch(){ov.classList.add('on'); document.getElementById('q').focus();}
+  function closeSearch(){ov.classList.remove('on');}
+  document.addEventListener('keydown',e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch(); });
+  function filterHits(){ const q=document.getElementById('q').value.trim().toLowerCase();
+    document.querySelectorAll('#hits .hit').forEach(h=>h.style.display=(!q||h.dataset.t.toLowerCase().includes(q))?'':'none'); }
 </script>
 </body>
 </html>
+
+
+
+
+
+

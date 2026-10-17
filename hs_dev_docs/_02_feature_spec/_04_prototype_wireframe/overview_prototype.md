@@ -1,7 +1,7 @@
 # 双轨原型总览：AI 知识星图（rebuild_v2）
 
-- **介质形式**：双轨原型（Mermaid 空间拓扑 + ASCII 空间比例线框）· 日/夜双主题 · **视觉真理源：`_03_prototype_html/overview_prototype.html`（v6 琉璃）**
-- **宏观品味宪章继承**：`Inherits: /DESIGN.md`（Liuli Glass v6）
+- **介质形式**：双轨原型（Mermaid 空间拓扑 + ASCII 空间比例线框）· 日/夜双主题 · **视觉真理源：`_03_prototype_html/overview_prototype.html`（v7 星图册·台灯下）**
+- **宏观品味宪章继承**：`Inherits: /DESIGN.md`（v7 Star Atlas）
 - **状态**：REVISED（v6 · 待开发者视觉签收）
 - **覆盖屏**：首页 / 领域页 / 图谱 / 时间线 / 路线 / 搜索浮层 / 知识点详情 / 本地档案 / 主题切换 / 内容管线 / 六端
 
@@ -42,10 +42,11 @@ flowchart TB
 
 ## 3. 设计令牌速查（继承 `/DESIGN.md`）
 
-- 玻璃：**三级厚玻璃** `L1 blur14 / L2 blur24 / L3 blur34` + **光边(inset ring) + 底部厚度 + 色散暗示 + 悬浮光泽(跟随光标)**；阅读面用 `--surface`（近不透明 ≥0.90）。**禁止 1px 实描边**。
-- 色：日 `--canvas #EFEBE3` / `--accent #0E7C7B`；夜 `--canvas #0B0D12` / `--accent #5EEAD4`；领域色仅功能点。
-- 字：**四角色** `衬线(Display/Reading) + Inter(Text) + JetBrains Mono(Mono)`；层级 `Display46/H1 32/H2 19/H3 15/Body15/Reading17/Caption12.5`。
-- 圆角：`chip999 / control10 / panel16 / overlay22`（同心圆角）。
+- 玻璃：**仅三种用途**——灯罩（顶栏/浮层）、透镜（悬停/选中聚焦）、展柜（图谱画布/阅读面）；统一 `blur 24` + 光边 + 暖渐变；**列表/卡片/chip 一律纸面 + 发丝线，不贴玻璃**。
+- 色：日 `--canvas #F7F3EA` / `--accent #A96812`（琥珀台灯）；夜 `--canvas #12100B` / `--accent #F2B64B`（台灯暖金）；领域色仅星点/节点。
+- 字：**粗重黑体标题（Space Grotesk）+ Inter 界面 + 衬线只给读书 + Mono 数据**；层级 `Display44/H1 30/H2 18/H3 15/Body15/Reading17.5/Caption12.5`。
+- 圆角：`chip999 / control10 / panel14 / case18`（同心圆角）。
+- 台灯：页面顶部暖金主光源；日/夜 = 灯关/灯开。
 
 ## 4. 四态通用约定（每页适用）
 
