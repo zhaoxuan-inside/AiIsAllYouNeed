@@ -1,6 +1,8 @@
 // FEAT-007 知识点详情：结构化正文（wiki 链接 / 公式 / 媒体）+ 反向链接 + 收藏/已读/笔记
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { repo } from '../../data/repo';
+import { profileStore } from '../../data/profileStore';
 import type { BodyBlock, KnowledgePoint } from '../../data/types';
 import { IconBookmark, IconCheck, IconPen } from '../../components/icons';
 
@@ -74,6 +76,25 @@ function Block({ b }: { b: BodyBlock }) {
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
   const p: KnowledgePoint | null = id ? repo.getPoint(id) : null;
+  const [fav, setFav] = useState(false);
+  const [read, setRead] = useState(false);
+
+  useEffect(() => {
+    if (!p) return;
+    const apply = (prof: { favorites: string[]; readStates: Record<string, number> }) => {
+      setFav(prof.favorites.includes(p.id));
+      setRead(p.id in prof.readStates);
+    };
+    apply(profileStore.get());
+    return profileStore.subscribe(apply);
+  }, [p]);
+
+  const onNote = () => {
+    if (!p) return;
+    const cur = profileStore.get().notes[p.id] ?? '';
+    const text = window.prompt(`为「${p.title}」记一句笔记：`, cur);
+    if (text !== null) profileStore.setNote(p.id, text);
+  };
   if (!p) {
     return (
       <main>
@@ -189,13 +210,13 @@ export default function DetailPage() {
       </div>
 
       <div className="fab glass">
-        <button className="btn" aria-pressed="true">
+        <button className="btn" aria-pressed={fav} onClick={() => profileStore.toggleFavorite(p.id)}>
           <IconBookmark size={16} /> 收藏
         </button>
-        <button className="btn">
+        <button className="btn" aria-pressed={read} onClick={() => profileStore.toggleRead(p.id)}>
           <IconCheck size={16} /> 已读
         </button>
-        <button className="btn">
+        <button className="btn" onClick={onNote}>
           <IconPen size={16} /> 笔记
         </button>
       </div>

@@ -255,6 +255,12 @@
 - **采纳**：TS-01/TS-02 完成；TS-03 检索进行中；后续 TS-04..11 依序实现（阶段 6 统一验收）。
 - **关联落盘**：`src/**`、`scripts/content/**`、`public/data/**`、`package.json`。
 
+### Q27. 阶段 5 实现：TS-03..TS-08 通过（检索/图谱/时间线/路线/档案）
+
+- **证据（运行）**：`npm run build`（263KB/gzip82KB）+ `npm test` 8/8；浏览器实测：图谱 12 节点/26 连线渲染、筛选/透镜正常；时间线 4 时代分段；路线 llm-gen 三阶段+趋势；详情点「收藏」→ 档案页可见（端到端可写闭环）。
+- **采纳**：TS-03/04/05/06/08 完成；TS-09 部分（媒体/反向链接已通，KaTeX 待接入）；TS-07 领域页、TS-10 Tauri 壳、TS-11 阶段6 验证待续。
+- **关联落盘**：`src/features/{graph,timeline,roadmap,profile,detail}`、`src/data/profileStore.ts`。
+
 ---
 
 ## 变更请求登记（CR）

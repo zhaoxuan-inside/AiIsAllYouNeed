@@ -106,9 +106,9 @@ export default function HomePage() {
         ))}
       </div>
       <div style={{ marginTop: 16 }}>
-        <button className="btn btn-ghost" onClick={() => document.getElementById('search-trigger')?.focus()}>
-          查看全部 <IconArrow size={15} />
-        </button>
+        <Link className="btn btn-ghost" to="/point/transformer">
+          从 Transformer 读起 <IconArrow size={15} />
+        </Link>
       </div>
     </main>
   );

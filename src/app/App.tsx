@@ -1,5 +1,5 @@
 // app_shell：顶栏（灯罩）/ 主题唯一控件 / 搜索入口 / 路由出口（DESIGN.md v7）
-import { useMemo, useState, type ReactNode } from 'react';
+import { useMemo, useEffect, useState, type ReactNode } from 'react';
 import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useTheme } from './theme';
 import { IconCompass, IconLamp, IconBook } from '../components/icons';
@@ -8,6 +8,36 @@ import { searchIndex, type SearchHit } from '../search';
 import type { ThemeMode } from '../data/types';
 import HomePage from '../features/home/HomePage';
 import DetailPage from '../features/detail/DetailPage';
+import GraphPage from '../features/graph/GraphPage';
+import TimelinePage from '../features/timeline/TimelinePage';
+import RoadmapPage from '../features/roadmap/RoadmapPage';
+import ProfilePage from '../features/profile/ProfilePage';
+
+const NAV = [
+  { to: '/', label: '首页' },
+  { to: '/graph', label: '图谱' },
+  { to: '/timeline', label: '时间线' },
+  { to: '/roadmap', label: '路线' },
+  { to: '/profile', label: '档案' },
+];
+
+function NavRow() {
+  return (
+    <nav aria-label="主导航" style={{ display: 'flex', gap: 6, margin: '-26px 0 34px' }}>
+      {NAV.map((n) => (
+        <Link
+          key={n.to}
+          to={n.to}
+          className="chip"
+          style={{ textDecoration: 'none', padding: '7px 14px' }}
+          onClick={() => undefined}
+        >
+          {n.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 
 function ThemeControl() {
   const { mode, setTheme } = useTheme();
@@ -59,6 +89,20 @@ function SearchTrigger() {
   const [q, setQ] = useState('');
   const navigate = useNavigate();
   const hits: SearchHit[] = useMemo(() => (q.trim() ? searchIndex.search(q, repo.getTimeline()) : []), [q]);
+
+  // 全局快捷键：⌘K/Ctrl+K 打开，Esc 关闭（FEAT-006）
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setOpen(true);
+      } else if (e.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <>
@@ -140,8 +184,13 @@ export default function App() {
     <HashRouter>
       <div className="shell">
         <Shell>
+          <NavRow />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/graph" element={<GraphPage />} />
+            <Route path="/timeline" element={<TimelinePage />} />
+            <Route path="/roadmap" element={<RoadmapPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/point/:id" element={<DetailPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
