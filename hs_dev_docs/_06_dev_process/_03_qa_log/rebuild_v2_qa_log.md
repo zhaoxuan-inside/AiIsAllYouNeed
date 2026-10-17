@@ -197,6 +197,20 @@
 - **采纳**：待开发者确认 TECH-05a..e；确认后进入阶段 2。
 - **关联落盘**：`_03_architecture_design/_01_technology_selection/tech_select_overview.md`、`ADR_001`、`ADR_002`。
 
+### Q19. 阶段 1 选型确认通过（进入阶段 2）
+
+- **题域**：技术选型验收
+- **开发者裁定**：**「确认，进入阶段 2」**——技术栈（React18+Vite SPA + Tauri2 六端壳 + 自绘 SVG 图谱(d3-force 布局) + 自研 bigram 检索 + 静态 JSON + 构建期管线）验收通过。
+- **采纳**：阶段 1 **ACCEPTED**（TECH-05a..e）；ADR-001/002 转 ACCEPTED；进入**阶段 2：系统架构设计**。
+- **关联落盘**：`tech_select_overview.md` §7、`ADR_001`、`ADR_002`、`rebuild_v2_plan.md`(S2)。
+
+### Q20. 阶段 2 架构设计提交（ARCH-06）
+
+- **题域**：架构验收
+- **内容**：前端 F2（8 业务 feature + data/search/shared/styles）+ 构建期内容管线 B1（无运行时后端）；知识数据只读、档案唯一写方；全局能力单点（主题/搜索）；离线零网络；六端经 Tauri 壳。非 DDD（复杂度不达）。
+- **采纳**：待开发者确认 ARCH-01..06；确认后进入阶段 3。
+- **关联落盘**：`_03_architecture_design/_02_system_architecture/arch_design_overview.md`。
+
 ---
 
 ## 变更请求登记（CR）

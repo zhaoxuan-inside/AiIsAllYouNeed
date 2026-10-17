@@ -4,8 +4,8 @@
 - **标题**：用 hs-dev-skill 从阶段 0 满配重建 AiIsAllYouNeed（AI 知识星图）
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
-- **当前阶段**：`1` — 技术选型（架构范式 + ADR）
-- **断点**：`S1-04` — 技术选型已提交（TECH-05），待开发者确认技术栈后进入阶段 2
+- **当前阶段**：`2` — 系统架构设计（已提交，待确认）
+- **断点**：`S2-03` — 架构设计已提交（ARCH-06），待开发者确认后进入阶段 3
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -37,7 +37,9 @@
 | S1-02 | TECH-03 高风险验证：bigram 中文检索性能实测 | done | 构建 16.75ms / 查询 ≤0.03ms（94 条，Node22）→ 远低于 100ms |
 | S1-03 | TECH-04 锁定实施约束 + ADR | done | `ADR_001_tauri2_shell.md`、`ADR_002_react_vite_spa.md` |
 | S1-04 | TECH-05 提交选型验收（待开发者确认） | submitted | `tech_select_overview.md` §7 |
-| S2 | 阶段 2：系统架构设计 | pending | |
+| S2-01 | ARCH-01/02/03 边界·职责·运行场景 | done | `_03_architecture_design/_02_system_architecture/arch_design_overview.md` §1/§3/§5 |
+| S2-02 | ARCH-04/05 部署与质量安全（离线/零网络/CSP/档案唯一写） | done | 同上 §1/§3/§4 |
+| S2-03 | ARCH-06 权衡与风险 + 提交架构验收 | submitted | 同上 §8（待开发者确认） |
 | S3 | 阶段 3：工程四要素详设（数据/接口/方法/调用链） | pending | 含数据 schema 开发者决策 |
 | S4 | 阶段 4：任务拆解与上下文装配 | pending | |
 | S5 | 阶段 5：实现切片（垂直曳光弹 → 全量） | pending | 含内容生产管线 |
