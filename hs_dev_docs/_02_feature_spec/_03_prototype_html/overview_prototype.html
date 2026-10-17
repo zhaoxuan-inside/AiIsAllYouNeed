@@ -47,6 +47,58 @@
     --noise:.05; --cursorlight:rgba(120,200,255,.5);
   }
 
+  /* ── 配色方向 B：冷白 · 苹果蓝 ── */
+  [data-theme="day"][data-palette="cool"]{
+    --canvas:#F3F4F6; --canvas2:#EBEEF3;
+    --surface:rgba(255,255,255,.93);
+    --g-hi:rgba(255,255,255,.82); --g-mid:rgba(255,255,255,.55); --g-lo:rgba(255,255,255,.40);
+    --rim:rgba(255,255,255,1); --ring:rgba(255,255,255,.60); --ring-d:rgba(70,90,120,.08);
+    --line:rgba(16,20,28,.12);
+    --ink:#10141C; --ink-2:#4C5564; --ink-3:#7C8694;
+    --accent:#0A6CF9; --accent-soft:rgba(10,108,249,.12); --accent-ink:#FFFFFF;
+    --hover:rgba(16,20,28,.05);
+    --bloom1:rgba(140,205,255,.55); --bloom2:rgba(160,220,255,.48);
+    --bloom3:rgba(196,186,255,.45); --bloom4:rgba(255,190,220,.35);
+  }
+  [data-theme="night"][data-palette="cool"]{
+    --canvas:#0A0C12; --canvas2:#0F1420;
+    --surface:rgba(22,26,36,.94);
+    --g-hi:rgba(52,62,84,.66); --g-mid:rgba(24,28,40,.50); --g-lo:rgba(12,15,22,.42);
+    --rim:rgba(255,255,255,.34); --ring:rgba(255,255,255,.14); --ring-d:rgba(0,0,0,.4);
+    --line:rgba(255,255,255,.10);
+    --ink:#E9EDF5; --ink-2:#9AA4B4; --ink-3:#6E7888;
+    --accent:#6FB3FF; --accent-soft:rgba(111,179,255,.15); --accent-ink:#06101F;
+    --hover:rgba(255,255,255,.06);
+    --bloom1:rgba(30,84,190,.62); --bloom2:rgba(42,124,206,.56);
+    --bloom3:rgba(96,84,206,.50); --bloom4:rgba(166,84,186,.46);
+  }
+
+  /* ── 配色方向 C：纯白 · 单色（iA 式，颜色只给领域点/节点）── */
+  [data-theme="day"][data-palette="mono"]{
+    --canvas:#FAFAF8; --canvas2:#F0F0ED;
+    --surface:rgba(255,255,255,.96);
+    --g-hi:rgba(255,255,255,.85); --g-mid:rgba(255,255,255,.60); --g-lo:rgba(255,255,255,.44);
+    --rim:rgba(255,255,255,1); --ring:rgba(255,255,255,.62); --ring-d:rgba(30,30,26,.07);
+    --line:rgba(20,20,16,.12);
+    --ink:#131312; --ink-2:#55554F; --ink-3:#8C8C84;
+    --accent:#0A57C8; --accent-soft:rgba(10,87,200,.10); --accent-ink:#FFFFFF;
+    --hover:rgba(20,20,16,.05);
+    --bloom1:rgba(220,224,230,.55); --bloom2:rgba(214,224,232,.5);
+    --bloom3:rgba(226,224,236,.45); --bloom4:rgba(232,224,228,.4);
+  }
+  [data-theme="night"][data-palette="mono"]{
+    --canvas:#0C0C0A; --canvas2:#13130F;
+    --surface:rgba(22,22,18,.94);
+    --g-hi:rgba(48,48,42,.66); --g-mid:rgba(24,24,20,.52); --g-lo:rgba(12,12,10,.44);
+    --rim:rgba(255,255,255,.20); --ring:rgba(255,255,255,.11); --ring-d:rgba(0,0,0,.45);
+    --line:rgba(255,255,255,.10);
+    --ink:#EDEDE8; --ink-2:#A0A09A; --ink-3:#6E6E68;
+    --accent:#7FB5F0; --accent-soft:rgba(127,181,240,.14); --accent-ink:#07111D;
+    --hover:rgba(255,255,255,.06);
+    --bloom1:rgba(40,52,66,.5); --bloom2:rgba(34,48,60,.46);
+    --bloom3:rgba(52,48,64,.42); --bloom4:rgba(60,48,56,.4);
+  }
+
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
@@ -383,7 +435,11 @@
   <button class="htab" data-screen="roadmap">路线</button>
   <button class="htab" data-screen="detail">详情</button>
   <button class="htab" data-screen="profile">档案</button>
-  <span style="margin-left:auto;color:#8b93a3">主题控件在产品顶栏（唯一入口）</span>
+  <span style="color:#8b93a3;margin-left:auto">配色方向(DEV):</span>
+  <button class="htab on" data-palette="warm">暖纸·琉璃青</button>
+  <button class="htab" data-palette="cool">冷白·苹果蓝</button>
+  <button class="htab" data-palette="mono">纯白·单色</button>
+  <span style="color:#8b93a3">主题控件在产品顶栏（唯一入口）</span>
 </div>
 
 <div class="shell">
@@ -418,9 +474,6 @@
   <section class="screen on" id="screen-home">
     <div class="constellation" aria-hidden="true">
       <svg viewBox="0 0 1000 214" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <radialGradient id="glowg"><stop offset="0%" stop-color="#fff" stop-opacity=".9"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient>
-        </defs>
         <g class="clink hair">
           <path d="M96 132 L232 74 L372 128 L494 58 L636 122 L774 66 L914 126"/>
           <path d="M232 74 L300 158 L494 58 L560 162 L774 66"/>
@@ -436,17 +489,17 @@
         </g>
         <g class="cnode"><circle cx="300" cy="158" r="2.6"/><circle cx="560" cy="162" r="2.6"/><circle cx="494" cy="58" r="3"/><circle cx="636" cy="122" r="2.4"/></g>
         <g class="pulse d1"><g class="dnode" tabindex="0" aria-label="机器学习基础"><title>机器学习基础</title>
-          <circle class="glow" cx="96" cy="132" r="22" fill="url(#glowg)"/><circle cx="96" cy="132" r="6.5" fill="var(--d1)"/><circle cx="94" cy="130" r="2.2" fill="#fff" opacity=".55"/></g></g>
+          <circle cx="96" cy="132" r="6.5" fill="var(--d1)"/><circle cx="94" cy="130" r="2.2" fill="#fff" opacity=".55"/></g></g>
         <g class="pulse d2"><g class="dnode" tabindex="0" aria-label="自然语言处理"><title>自然语言处理</title>
-          <circle class="glow" cx="232" cy="74" r="22" fill="url(#glowg)"/><circle cx="232" cy="74" r="6.5" fill="var(--d2)"/><circle cx="230" cy="72" r="2.2" fill="#fff" opacity=".55"/></g></g>
+          <circle cx="232" cy="74" r="6.5" fill="var(--d2)"/><circle cx="230" cy="72" r="2.2" fill="#fff" opacity=".55"/></g></g>
         <g class="pulse d3"><g class="dnode" tabindex="0" aria-label="计算机视觉"><title>计算机视觉</title>
-          <circle class="glow" cx="372" cy="128" r="22" fill="url(#glowg)"/><circle cx="372" cy="128" r="6.5" fill="var(--d3)"/><circle cx="370" cy="126" r="2.2" fill="#fff" opacity=".55"/></g></g>
+          <circle cx="372" cy="128" r="6.5" fill="var(--d3)"/><circle cx="370" cy="126" r="2.2" fill="#fff" opacity=".55"/></g></g>
         <g class="pulse d5"><g class="dnode" tabindex="0" aria-label="大模型与生成"><title>大模型与生成</title>
-          <circle class="glow" cx="494" cy="58" r="26" fill="url(#glowg)"/><circle cx="494" cy="58" r="8" fill="var(--d5)"/><circle cx="491" cy="55" r="2.8" fill="#fff" opacity=".6"/></g></g>
+          <circle cx="494" cy="58" r="8" fill="var(--d5)"/><circle cx="491" cy="55" r="2.8" fill="#fff" opacity=".6"/></g></g>
         <g class="pulse d4"><g class="dnode" tabindex="0" aria-label="数学与理论"><title>数学与理论</title>
-          <circle class="glow" cx="774" cy="66" r="22" fill="url(#glowg)"/><circle cx="774" cy="66" r="6.5" fill="var(--d4)"/><circle cx="772" cy="64" r="2.2" fill="#fff" opacity=".55"/></g></g>
+          <circle cx="774" cy="66" r="6.5" fill="var(--d4)"/><circle cx="772" cy="64" r="2.2" fill="#fff" opacity=".55"/></g></g>
         <g class="pulse d6"><g class="dnode" tabindex="0" aria-label="强化学习"><title>强化学习</title>
-          <circle class="glow" cx="914" cy="126" r="22" fill="url(#glowg)"/><circle cx="914" cy="126" r="6.5" fill="var(--d6)"/><circle cx="912" cy="124" r="2.2" fill="#fff" opacity=".55"/></g></g>
+          <circle cx="914" cy="126" r="6.5" fill="var(--d6)"/><circle cx="912" cy="124" r="2.2" fill="#fff" opacity=".55"/></g></g>
       </svg>
     </div>
     <div class="eyebrow">1943 — 2026</div>
@@ -459,17 +512,17 @@
 
     <div style="margin-top:12px">
       <div class="domain-row"><span class="dot" style="background:var(--d1)"></span><span>机器学习基础</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L10 9 L20 10 L30 5 L40 7 L54 2 L66 4" stroke="var(--d1)" stroke-width="1.5"/></svg><span class="faint mono caption">18</span></span></div>
+        <span class="bar"><span class="faint mono caption">18</span></span></div>
       <div class="domain-row"><span class="dot" style="background:var(--d2)"></span><span>自然语言处理</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 11 L12 10 L24 6 L36 8 L48 3 L66 3" stroke="var(--d2)" stroke-width="1.5"/></svg><span class="faint mono caption">16</span></span></div>
+        <span class="bar"><span class="faint mono caption">16</span></span></div>
       <div class="domain-row"><span class="dot" style="background:var(--d3)"></span><span>计算机视觉</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L14 11 L28 9 L40 6 L52 6 L66 5" stroke="var(--d3)" stroke-width="1.5"/></svg><span class="faint mono caption">15</span></span></div>
+        <span class="bar"><span class="faint mono caption">15</span></span></div>
       <div class="domain-row"><span class="dot" style="background:var(--d4)"></span><span>强化学习</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 13 L12 11 L24 12 L36 8 L48 9 L66 4" stroke="var(--d4)" stroke-width="1.5"/></svg><span class="faint mono caption">12</span></span></div>
+        <span class="bar"><span class="faint mono caption">12</span></span></div>
       <div class="domain-row"><span class="dot" style="background:var(--d5)"></span><span>大模型与生成</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L12 12 L24 8 L36 5 L48 2 L66 1" stroke="var(--d5)" stroke-width="1.5"/></svg><span class="faint mono caption">20</span></span></div>
+        <span class="bar"><span class="faint mono caption">20</span></span></div>
       <div class="domain-row"><span class="dot" style="background:var(--d6)"></span><span>数学与理论</span>
-        <span class="bar"><svg class="spark" viewBox="0 0 66 14" fill="none"><path d="M0 12 L12 9 L24 10 L36 7 L48 5 L66 6" stroke="var(--d6)" stroke-width="1.5"/></svg><span class="faint mono caption">13</span></span></div>
+        <span class="bar"><span class="faint mono caption">13</span></span></div>
     </div>
 
     <div class="sec-head">
@@ -797,6 +850,12 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   document.querySelectorAll('.htab[data-screen]').forEach(t=>t.onclick=()=>go(t.dataset.screen));
+
+  // ── palette variants (DEV only: warm / cool / mono) ──
+  document.querySelectorAll('.htab[data-palette]').forEach(b=>b.onclick=()=>{
+    root.dataset.palette = b.dataset.palette;
+    document.querySelectorAll('.htab[data-palette]').forEach(o=>o.classList.toggle('on', o===b));
+  });
 
   // ── segmented controls (track + thumb) ──
   document.querySelectorAll('.seg').forEach(seg=>{

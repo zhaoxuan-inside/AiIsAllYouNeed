@@ -9,7 +9,7 @@
   - 双轨原型：`_02_feature_spec/_04_prototype_wireframe/overview_prototype.md` + 11 份特性原型
   - 机器契约：`_02_feature_spec/_02_vibe_spec/feat001..011_*_vibe_spec.md`（11 份）
   - 分阶段规划：`_01_product_vision/_02_phased_roadmap/rebuild_v2_phased_plan.md`
-  - 决策日志：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md`（Q1–Q10）
+  - 决策日志：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md`（Q1–Q11）
 - **DISC / PROD 检查表与证据位置**：见本单 §D 自审
 - **场景演练及预期对账记录**：见各子 PRD 的 Gherkin；待开发者按真实样例走查
 

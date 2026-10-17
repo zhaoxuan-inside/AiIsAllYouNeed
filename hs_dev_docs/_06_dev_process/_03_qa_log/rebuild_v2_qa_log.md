@@ -125,6 +125,19 @@
   - 数据规模：**Demo 少量数据即可**（足以看布局 / 字体 / 颜色），完整标题清单后续提供（不阻断设计冻结，亦不阻断阶段 1）。
 - **关联落盘**：`/DESIGN.md`(v6.1)、`overview_prototype.html`(v6.1 视觉真理源)、`design_charter.md`、`overview_prototype.md`、`feat007_point_detail_prototype.md`、CR-rebuild_v2-05。
 
+### Q11. 视觉三轮（v6.2）：配色方向对比 + 细节收敛
+
+- **题域**：视觉细则
+- **开发者裁定**：**仍不通过**（选择「说明哪里」但未填写具体点）
+- **处理（消除"模糊不满"）**：既然开发者已明确对标（**Apple 液态玻璃 + iA Writer 布局哲学**），而具体不满未指明，本轮提供**三套可直接对比的配色方向**（经 DEV 演示壳一键切换），并做细节收敛：
+  - 配色方向 A · **暖纸·琉璃青**（现状默认）
+  - 配色方向 B · **冷白·苹果蓝**（冷调、接近 Apple 系统蓝）
+  - 配色方向 C · **纯白·单色**（iA 式：颜色只给领域点/节点，界面近乎单色）
+  - 星座主视觉**去除光晕气泡**，改为纤细环境线 + 小节点（更高级、不幼稚）
+  - 领域行**去除装饰性 sparkline**（回归简洁）
+- **待开发者**：在三套方向中**指定一套**（或继续给出具体不满点）。
+- **关联落盘**：`overview_prototype.html`(v6.2)、`/DESIGN.md` §2 候选配色说明、`rebuild_v2_plan.md`(S0-14)。
+
 ---
 
 ## 变更请求登记（CR）
@@ -136,3 +149,4 @@
 | `CR-rebuild_v2-03` | 视觉基线 v5(极光玻璃) 被否，重做为 v6「琉璃」高保真液态玻璃（字体/配色/材质/边框全改） | DESIGN.md、HTML 原型、design_charter、全部原型与前端 | 高 | APPROVED | `/DESIGN.md`(v6) |
 | `CR-rebuild_v2-04` | 业务语义收敛：单一呈现铁律（主题控件唯一、搜索入口唯一、领域趋势主呈现唯一） | overview PRD §6、FEAT-001/002/009、原型/演示壳 | 中 | APPROVED | `overview_prd.md` §6 |
 | `CR-rebuild_v2-05` | 视觉二轮：玻璃升级为「厚玻璃 + 悬浮光效」、布局对齐 iA Writer、图谱重做（曲线边/节点高光/点阵/图例） | DESIGN.md(v6.1)、HTML 原型、design_charter、原型线框 | 高 | APPROVED | `/DESIGN.md`(v6.1) |
+| `CR-rebuild_v2-06` | 视觉三轮：新增三套配色方向对比（暖纸/冷白/单色）+ 星座去气泡、领域行去 sparkline | HTML 原型(v6.2)、qa_log(Q11) | 高 | PENDING（待开发者敲定方向） | `overview_prototype.html` |
