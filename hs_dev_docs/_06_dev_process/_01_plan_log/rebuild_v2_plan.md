@@ -4,8 +4,8 @@
 - **标题**：用 hs-dev-skill 从阶段 0 满配重建 AiIsAllYouNeed（AI 知识星图）
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
-- **当前阶段**：`0` — 产品与需求对齐（discovery + product）
-- **断点**：`S0-18` — v7 哲学重开视觉已重提，冻结确认单待开发者签署
+- **当前阶段**：`1` — 技术选型（架构范式 + ADR）
+- **断点**：`S1-00` — 阶段 1 启动：读取 skill 阶段 1 规范并产出技术选型 ADR
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -32,7 +32,7 @@
 | S0-15 | v6.2 重提冻结确认单（待开发者指定配色方向或通过） | rejected | **REJECTED（Q12：推倒重来，从设计哲学重头）** |
 | S0-16 | 设计哲学重开：先定 Design DNA（方向+硬约束）→ 再产出全新视觉 | done | Q12 推倒 → Q13 拍板 **W1「星图册·台灯下」** |
 | S0-17 | v7 全新视觉（星图册·台灯下）：DESIGN.md + HTML 原型重写 + 文档同步 | done | `/DESIGN.md`(v7)、`overview_prototype.html`(v7)、design_charter(v7)、overview_prototype.md、freeze_signoff |
-| S0-18 | v7 重提冻结确认单 | doing | `freeze_signoff.md` |
+| S0-18 | v7 重提冻结确认单 | done | **APPROVED（Q17 开发者拍板）** → 进入阶段 1 |
 | S1 | 阶段 1：技术选型（架构范式 + ADR） | pending | 冻结后开始 |
 | S2 | 阶段 2：系统架构设计 | pending | |
 | S3 | 阶段 3：工程四要素详设（数据/接口/方法/调用链） | pending | 含数据 schema 开发者决策 |

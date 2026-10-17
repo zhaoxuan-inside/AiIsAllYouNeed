@@ -1,6 +1,6 @@
 # 阶段 0 冻结确认单（AI 知识星图 · rebuild_v2）
 
-- **验收状态**：SUBMITTED（v7 哲学重开重提，待开发者确认 → ACCEPTED）
+- **验收状态**：**APPROVED**（Q17 开发者拍板通过，阶段 0 冻结；正式签字栏见文末）
 - **本次 PRD / 原型 / Vibe Spec 版本或内容摘要**：
   - 宏观品味宪章：`/DESIGN.md`（**v7 星图册·台灯下 / Star Atlas Under the Lamp**：日/夜=灯关/灯开；玻璃仅灯罩/透镜/展柜；星图册线条；暖金台灯强调）
   - 视觉真理源（可打开）：`_02_feature_spec/_03_prototype_html/overview_prototype.html`（v7，日/夜、多屏）
@@ -92,5 +92,5 @@
 
 ---
 
-> **冻结结论**：`[ ] APPROVED（可进入阶段 1 选型）` / `[ ] REJECTED（回切 DESIGN）`
+> **冻结结论**：`[x] APPROVED（可进入阶段 1 选型）` —— 经 Q&A Q17 开发者拍板「通过，冻结进入阶段 1」（证据：`_06_dev_process/_03_qa_log/rebuild_v2_qa_log.md` Q17）
 > **开发者签名**：__________ **日期**：__________
