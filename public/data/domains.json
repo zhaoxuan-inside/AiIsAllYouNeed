@@ -1,0 +1,37 @@
+[
+  {
+    "key": "ml",
+    "name": "机器学习基础",
+    "colorIndex": 0,
+    "order": 0,
+    "summary": "模型训练的共同地基：优化、损失与泛化。"
+  },
+  {
+    "key": "nlp",
+    "name": "自然语言处理",
+    "colorIndex": 1,
+    "order": 1,
+    "summary": "让机器理解与生成语言。"
+  },
+  {
+    "key": "cv",
+    "name": "计算机视觉",
+    "colorIndex": 2,
+    "order": 2,
+    "summary": "让机器看见并理解图像。"
+  },
+  {
+    "key": "rl",
+    "name": "强化学习",
+    "colorIndex": 3,
+    "order": 3,
+    "summary": "在交互与奖励中学习决策。"
+  },
+  {
+    "key": "llm-gen",
+    "name": "大模型与生成",
+    "colorIndex": 4,
+    "order": 4,
+    "summary": "Transformer 之后的大规模生成模型。"
+  }
+]

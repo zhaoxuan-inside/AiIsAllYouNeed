@@ -47,8 +47,10 @@
 | S4-01 | TASK-01/02 需求全覆盖切片（TS-01..11）+ DoD | done | `_04_task_planning/stage4_task_breakdown.md` §1 |
 | S4-02 | TASK-03/04 依赖·风险 + Context Pack 绑定 | done | 同上 §2/§3 |
 | S4-03 | TASK-05 执行计划 + 提交拆解验收 | done | **APPROVED（Q25 开发者拍板）** |
-| S5-TS01 | 地基：脚手架 + tokens.css + 全局壳（顶栏/主题唯一控件/导航/路由）+ 图标族骨架 + 测试 | doing | 阶段5 切片 1 |
-| S5-TS02 | 曳光弹：内容管线(静态源)→zod→JSON+索引 → data 加载 → 首页列表 → 详情 | pending | 阶段5 切片 2 |
+| S5-TS01 | 地基：脚手架 + tokens.css + 全局壳（顶栏/主题唯一控件/导航/路由）+ 图标族骨架 + 测试 | done | 构建通过；8 测试通过；日/夜切换 + 主题唯一控件 |
+| S5-TS02 | 曳光弹：内容管线(静态源)→zod→JSON+索引 → data 加载 → 首页列表 → 详情 | done | 12 知识点产出；首页→详情端到端；wiki/公式/反向链接验证通过 |
+| S5-TS03 | 检索（bigram + ⌘K 浮层 + 高亮） | doing | 索引已建；浮层已接入 |
+| S5-TS04 | 图谱（星图册 SVG + d3-force + 透镜 + 详情栏） | pending | — |
 | S5 | 阶段 5：实现切片（垂直曳光弹 → 全量） | pending | 含内容生产管线 |
 | S6 | 阶段 6：验收与交付 | pending | |
 

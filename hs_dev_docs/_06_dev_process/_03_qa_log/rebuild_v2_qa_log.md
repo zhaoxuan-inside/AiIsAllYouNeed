@@ -247,6 +247,14 @@
 - **采纳**：阶段 4 **ACCEPTED**（TASK-01..05）；**work_mode → IMPLEMENT**，阶段 5 实现切片开始（TS-01 地基起，按 TS-01→TS-02→…→TS-11）。
 - **关联落盘**：`stage4_task_breakdown.md`、`rebuild_v2_plan.md`(S5)。
 
+### Q26. 阶段 5 实现：TS-01 地基 + TS-02 曳光弹通过
+
+- **题域**：实现切片验收证据
+- **证据（运行）**：`npm run content:build`（12 知识点产出）；`npm test` 8/8 通过；`npm run build` 产物 180KB/gzip 59KB；浏览器实测首页（星图页/5 领域/6 知识流）与详情（15 wiki 链接、公式、反向链接自动反解 6 源）。
+- **过程中修正**：`year` 下限 1900→1800（梯度下降 1847），同步 `data_schema.md`。
+- **采纳**：TS-01/TS-02 完成；TS-03 检索进行中；后续 TS-04..11 依序实现（阶段 6 统一验收）。
+- **关联落盘**：`src/**`、`scripts/content/**`、`public/data/**`、`package.json`。
+
 ---
 
 ## 变更请求登记（CR）

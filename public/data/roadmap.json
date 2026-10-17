@@ -1,0 +1,34 @@
+[
+  {
+    "domainKey": "llm-gen",
+    "trend": "向自监督与基础模型统一演进；表示学习与规模化仍是主线。",
+    "stages": [
+      {
+        "key": "basic",
+        "name": "基础",
+        "pointIds": [
+          "attention-mechanism",
+          "word-embedding",
+          "recurrent-neural-network"
+        ]
+      },
+      {
+        "key": "intermediate",
+        "name": "进阶",
+        "pointIds": [
+          "self-attention",
+          "positional-encoding"
+        ]
+      },
+      {
+        "key": "frontier",
+        "name": "前沿",
+        "pointIds": [
+          "transformer",
+          "bert",
+          "gpt"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,434 @@
+[
+  {
+    "id": "transformer",
+    "title": "Transformer",
+    "aliases": [
+      "Transformer 模型"
+    ],
+    "domain": "llm-gen",
+    "year": 2017,
+    "importance": 5,
+    "difficulty": "高",
+    "learnTime": 45,
+    "tags": [
+      "注意力",
+      "Seq2Seq"
+    ],
+    "media": [],
+    "summary": "完全基于注意力机制的序列到序列架构，抛弃循环结构，使训练可充分并行化。",
+    "body": [
+      {
+        "t": "p",
+        "text": "一种完全基于 [[attention-mechanism|注意力机制]] 的序列到序列架构，抛弃了 [[recurrent-neural-network|循环神经网络]] 的循环结构，使训练可以充分并行化。"
+      },
+      {
+        "t": "formula",
+        "tex": "Attention(Q, K, V) = softmax( QKᵀ / √d_k ) · V"
+      },
+      {
+        "t": "p",
+        "text": "它把序列建模从「逐步递归」改写为「全局加权」。[[self-attention|自注意力]] 与 [[positional-encoding|位置编码]] 是它的两个核心部件，并成为此后 [[bert|BERT]]、[[gpt|GPT]] 等 [[-|大语言模型]] 的骨架。"
+      }
+    ],
+    "papers": [
+      {
+        "title": "Attention Is All You Need",
+        "authors": [
+          "Vaswani",
+          "Shazeer",
+          "Parmar"
+        ],
+        "year": 2017,
+        "venue": "NeurIPS"
+      }
+    ],
+    "deps": [
+      "attention-mechanism",
+      "recurrent-neural-network",
+      "positional-encoding"
+    ],
+    "related": [
+      "self-attention",
+      "bert",
+      "gpt"
+    ],
+    "backlinks": [
+      "attention-mechanism",
+      "bert",
+      "gpt",
+      "positional-encoding",
+      "recurrent-neural-network",
+      "self-attention"
+    ]
+  },
+  {
+    "id": "attention-mechanism",
+    "title": "注意力机制",
+    "aliases": [
+      "Attention"
+    ],
+    "domain": "llm-gen",
+    "year": 2014,
+    "importance": 5,
+    "difficulty": "进阶",
+    "learnTime": 30,
+    "tags": [
+      "注意力"
+    ],
+    "media": [],
+    "summary": "让模型在生成每一步时关注输入中最相关的部分。",
+    "body": [
+      {
+        "t": "p",
+        "text": "注意力机制让解码器在每个时间步对输入序列做「加权求和」，权重取决于当前查询与各输入的相关度。它是 [[transformer|Transformer]] 与 [[word-embedding|词向量]] 时代连接序列建模的关键。"
+      },
+      {
+        "t": "list",
+        "items": [
+          "用于机器翻译，替代固定长度语义向量",
+          "注意力权重可解释，常用于可视化"
+        ]
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "word-embedding"
+    ],
+    "related": [
+      "self-attention",
+      "transformer"
+    ],
+    "backlinks": [
+      "self-attention",
+      "transformer",
+      "word-embedding"
+    ]
+  },
+  {
+    "id": "self-attention",
+    "title": "自注意力",
+    "aliases": [],
+    "domain": "llm-gen",
+    "year": 2017,
+    "importance": 4,
+    "difficulty": "进阶",
+    "learnTime": 25,
+    "tags": [
+      "注意力"
+    ],
+    "media": [],
+    "summary": "序列内部两两计算注意力，让每个位置看到全序列。",
+    "body": [
+      {
+        "t": "p",
+        "text": "[[attention-mechanism|注意力机制]] 的变体：查询、键、值都来自同一个序列自身。每个 token 都能直接「看到」序列中任意其他 token，这是 [[transformer|Transformer]] 并行与长程依赖的根基。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "attention-mechanism"
+    ],
+    "related": [
+      "transformer"
+    ],
+    "backlinks": [
+      "attention-mechanism",
+      "positional-encoding",
+      "transformer"
+    ]
+  },
+  {
+    "id": "positional-encoding",
+    "title": "位置编码",
+    "aliases": [],
+    "domain": "llm-gen",
+    "year": 2017,
+    "importance": 3,
+    "difficulty": "进阶",
+    "learnTime": 20,
+    "tags": [
+      "注意力"
+    ],
+    "media": [],
+    "summary": "为不含位置信息的自注意力补充序列顺序。",
+    "body": [
+      {
+        "t": "p",
+        "text": "自注意力对输入的顺序不敏感，因此 [[transformer|Transformer]] 通过正弦位置编码把位置信息注入表示，使模型能区分词序。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "self-attention"
+    ],
+    "related": [
+      "transformer"
+    ],
+    "backlinks": [
+      "transformer"
+    ]
+  },
+  {
+    "id": "bert",
+    "title": "BERT",
+    "aliases": [],
+    "domain": "nlp",
+    "year": 2018,
+    "importance": 5,
+    "difficulty": "高",
+    "learnTime": 40,
+    "tags": [
+      "预训练",
+      "Transformer"
+    ],
+    "media": [],
+    "summary": "双向 Transformer 编码器，用掩码语言模型做预训练，刷新多项 NLP 基准。",
+    "body": [
+      {
+        "t": "p",
+        "text": "[[transformer|Transformer]] 编码器的双向变体：通过掩码语言模型（MLM）与下一句预测做自监督预训练，再对下游任务微调，是「预训练 + 微调」范式的代表。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "transformer"
+    ],
+    "related": [
+      "gpt"
+    ],
+    "backlinks": [
+      "gpt",
+      "transformer"
+    ]
+  },
+  {
+    "id": "gpt",
+    "title": "GPT",
+    "aliases": [],
+    "domain": "llm-gen",
+    "year": 2018,
+    "importance": 5,
+    "difficulty": "高",
+    "learnTime": 40,
+    "tags": [
+      "预训练",
+      "生成"
+    ],
+    "media": [],
+    "summary": "自回归解码器，以「预测下一个词」为目标预训练，通向大语言模型。",
+    "body": [
+      {
+        "t": "p",
+        "text": "[[transformer|Transformer]] 解码器的自回归变体：只预测下一个词，却在大规模语料下涌现出少样本能力，成为后续大语言模型的直接前身。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "transformer"
+    ],
+    "related": [
+      "bert"
+    ],
+    "backlinks": [
+      "bert",
+      "transformer"
+    ]
+  },
+  {
+    "id": "word-embedding",
+    "title": "词向量",
+    "aliases": [
+      "Word2Vec"
+    ],
+    "domain": "nlp",
+    "year": 2013,
+    "importance": 4,
+    "difficulty": "入门",
+    "learnTime": 20,
+    "tags": [
+      "表示学习"
+    ],
+    "media": [],
+    "summary": "把词语映射到连续语义向量，相似词距离更近。",
+    "body": [
+      {
+        "t": "p",
+        "text": "把离散词表映射到稠密向量，使语义相近的词在向量空间中邻近。它是 [[attention-mechanism|注意力机制]] 与后续大模型的输入表示基础。"
+      }
+    ],
+    "papers": [],
+    "deps": [],
+    "related": [
+      "attention-mechanism"
+    ],
+    "backlinks": [
+      "attention-mechanism"
+    ]
+  },
+  {
+    "id": "recurrent-neural-network",
+    "title": "循环神经网络",
+    "aliases": [
+      "RNN"
+    ],
+    "domain": "nlp",
+    "year": 1986,
+    "importance": 4,
+    "difficulty": "进阶",
+    "learnTime": 30,
+    "tags": [
+      "序列模型"
+    ],
+    "media": [],
+    "summary": "沿时间步共享参数处理序列，但难以并行且易梯度消失。",
+    "body": [
+      {
+        "t": "p",
+        "text": "沿时间步共享参数的序列模型。串行计算限制了并行，长程依赖下的梯度消失促使后续出现 [[attention-mechanism|注意力机制]] 与 [[transformer|Transformer]]。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "backpropagation"
+    ],
+    "related": [
+      "transformer"
+    ],
+    "backlinks": [
+      "backpropagation",
+      "transformer"
+    ]
+  },
+  {
+    "id": "backpropagation",
+    "title": "反向传播",
+    "aliases": [
+      "Backpropagation"
+    ],
+    "domain": "ml",
+    "year": 1986,
+    "importance": 5,
+    "difficulty": "进阶",
+    "learnTime": 30,
+    "tags": [
+      "训练"
+    ],
+    "media": [],
+    "summary": "用链式法则从损失反向传播梯度，是神经网络训练的核心算法。",
+    "body": [
+      {
+        "t": "p",
+        "text": "通过链式法则逐层计算损失对各参数的梯度，配合 [[gradient-descent|梯度下降]] 更新权重。一切深度网络训练都依赖它。"
+      },
+      {
+        "t": "formula",
+        "tex": "w ← w − η · ∂L / ∂w"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "gradient-descent"
+    ],
+    "related": [
+      "recurrent-neural-network",
+      "convolutional-neural-network"
+    ],
+    "backlinks": [
+      "convolutional-neural-network",
+      "gradient-descent",
+      "recurrent-neural-network",
+      "reinforcement-learning"
+    ]
+  },
+  {
+    "id": "gradient-descent",
+    "title": "梯度下降",
+    "aliases": [
+      "Gradient Descent"
+    ],
+    "domain": "ml",
+    "year": 1847,
+    "importance": 4,
+    "difficulty": "入门",
+    "learnTime": 20,
+    "tags": [
+      "优化"
+    ],
+    "media": [],
+    "summary": "沿损失函数负梯度方向迭代更新参数。",
+    "body": [
+      {
+        "t": "p",
+        "text": "沿损失函数负梯度方向迭代更新参数，学习率 η 控制步长。随机与批量变体构成深度学习优化的基础。"
+      }
+    ],
+    "papers": [],
+    "deps": [],
+    "related": [
+      "backpropagation"
+    ],
+    "backlinks": [
+      "backpropagation"
+    ]
+  },
+  {
+    "id": "convolutional-neural-network",
+    "title": "卷积神经网络",
+    "aliases": [
+      "CNN"
+    ],
+    "domain": "cv",
+    "year": 1998,
+    "importance": 4,
+    "difficulty": "进阶",
+    "learnTime": 30,
+    "tags": [
+      "图像"
+    ],
+    "media": [],
+    "summary": "以卷积核提取局部特征，参数共享、平移等变，是视觉的骨干。",
+    "body": [
+      {
+        "t": "p",
+        "text": "用共享卷积核在局部感受野上提取特征，显著降低参数并保持平移等变，主导了图像识别。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "backpropagation"
+    ],
+    "related": [],
+    "backlinks": [
+      "backpropagation"
+    ]
+  },
+  {
+    "id": "reinforcement-learning",
+    "title": "强化学习",
+    "aliases": [
+      "Reinforcement Learning"
+    ],
+    "domain": "rl",
+    "year": 1992,
+    "importance": 4,
+    "difficulty": "高",
+    "learnTime": 45,
+    "tags": [
+      "决策"
+    ],
+    "media": [],
+    "summary": "智能体在与环境的交互中依据奖励信号学习最优策略。",
+    "body": [
+      {
+        "t": "p",
+        "text": "智能体通过试错与奖励信号学习决策策略，近年与深度学习结合（如 DQN、策略梯度）在博弈与机器人领域取得突破。"
+      }
+    ],
+    "papers": [],
+    "deps": [
+      "backpropagation"
+    ],
+    "related": [],
+    "backlinks": []
+  }
+]

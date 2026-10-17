@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI 知识星图 · 星图册 · 台灯下 —— 以知识点为核心，展示依赖脉络、编年时间线与领域路线。" />
+  <title>AI 知识星图</title>
+  <style>
+    /* 首帧前内联引导主题，避免「先亮后暗」闪烁（DESIGN.md §8） */
+    html[data-theme="night"] body { background: #12100B; }
+  </style>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('atlas.theme') || 'system';
+        var dark = t === 'night' || (t === 'system' && (window.matchMedia('(prefers-color-scheme: dark)').matches));
+        document.documentElement.dataset.theme = dark ? 'night' : 'day';
+      } catch (e) { document.documentElement.dataset.theme = 'day'; }
+    })();
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

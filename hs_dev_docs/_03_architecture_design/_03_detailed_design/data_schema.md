@@ -25,7 +25,7 @@
 | `title` | string | ✔ | — | 语义唯一（允许重复时以 id 区分） | 显示名 |
 | `aliases` | string[] | ✘ | `[]` | 别名不得与其他点 id/title/alias 冲突 | 可跳转（FEAT-007） |
 | `domain` | enum(domain.key) | ✔ | — | — | 属某领域 |
-| `year` | int | ✔ | — | — | 提出年份（时间线轴） |
+| `year` | int | ✔ | — | — | 提出年份（时间线轴）；下限 1800（数学/理论基础可早于 AI 学科诞生，如梯度下降 1847） |
 | `importance` | 1..5 | ✔ | — | — | 星级（详情 meta） |
 | `difficulty` | enum(入门/进阶/高) | ✔ | — | — | — |
 | `learnTime` | int(minutes) | ✔ | — | 1..1440 | 阅读时长 |
@@ -62,7 +62,7 @@
   1. `id` 唯一且符合 slug；引用完整性：`deps/related` 指向存在的 `id`；
   2. `backlinks` 必须由管线反解结果覆盖（手填即失败）；
   3. `domain` 必须存在于 domains；`Roadmap.stages.pointIds` 必须在该领域内且不重复；
-  4. `year` 在 1900..今年+2；`importance`/`difficulty`/`learnTime` 越界即失败；
+  4. `year` 在 1800..今年+2；`importance`/`difficulty`/`learnTime` 越界即失败；
   5. wiki 链接 `[[id]]` 目标必须存在（解析 body 校验）。
 - **前端（加载）**：加载 JSON 时二次校验，异常则以「数据损坏」空态呈现并禁用跳转（不崩溃）。
 
