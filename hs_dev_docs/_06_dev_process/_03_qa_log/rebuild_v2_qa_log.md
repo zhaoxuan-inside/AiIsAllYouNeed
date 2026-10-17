@@ -166,6 +166,16 @@
 - **约束**：本方向定死后不再换；以「反例教训（Q12）」+ W1 七要点为新视觉的唯一准则。
 - **关联落盘**：`/DESIGN.md`（将重写为 v7）、`overview_prototype.html`（将重写）、`rebuild_v2_plan.md`(S0-17)。
 
+### Q14. 视觉四轮（v7 增补）：全页面鼠标光效
+
+- **题域**：视觉细则
+- **开发者裁定**：**「全页面鼠标都要有光效」**（对 v7 的增补要求，方向本身未被否决）
+- **采纳**：在 v7 世界观内实现「手持台灯」：
+  - 全局一层暖光 `#cursorlight` **常驻跟随光标**（日 `soft-light` / 夜 `screen` 混合），覆盖任意元素。
+  - 玻璃面/展柜保持透镜 specular；纸面行、领域行、路线 lane、chip、分段控件 hover 时出现**跟随光点的暖光斑**。
+  - 规则写入 `/DESIGN.md` §4：**任何页面、任何元素：鼠标所到之处必有光回应**。
+- **关联落盘**：`overview_prototype.html`(v7.1)、`/DESIGN.md` §4、CR-rebuild_v2-08。
+
 ---
 
 ## 变更请求登记（CR）
@@ -179,3 +189,4 @@
 | `CR-rebuild_v2-05` | 视觉二轮：玻璃升级为「厚玻璃 + 悬浮光效」、布局对齐 iA Writer、图谱重做（曲线边/节点高光/点阵/图例） | DESIGN.md(v6.1)、HTML 原型、design_charter、原型线框 | 高 | APPROVED | `/DESIGN.md`(v6.1) |
 | `CR-rebuild_v2-06` | 视觉三轮：新增三套配色方向对比（暖纸/冷白/单色）+ 星座去气泡、领域行去 sparkline | HTML 原型(v6.2)、qa_log(Q11) | 高 | PENDING（待开发者敲定方向） | `overview_prototype.html` |
 | `CR-rebuild_v2-07` | **视觉推翻重来**：Q12 弃用 v6.x 全部骨架；Q13 定稿新哲学 **W1「星图册·台灯下」**（日/夜=灯关/灯开；玻璃仅灯罩/透镜/展柜；星图册线条；暖金台灯强调；自绘天文制图图标） | `/DESIGN.md`(v7)、`overview_prototype.html`(v7)、design_charter、全部原型 | 高 | APPROVED（哲学已拍板） | qa_log(Q12/Q13) |
+| `CR-rebuild_v2-08` | v7 增补：**全页面鼠标光效**（全局光标光常驻跟随 + 纸面元素跟随光点） | HTML 原型(v7.1)、`/DESIGN.md` §4 | 高 | APPROVED（已实现） | qa_log(Q14) |
