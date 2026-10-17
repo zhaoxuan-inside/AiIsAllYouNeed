@@ -268,6 +268,13 @@
 - **采纳**：TS-01..TS-09 + TS-11 完成；阶段 6 需求验证矩阵提交（11 FEAT：10 PASS + FEAT-011 部分[Web PASS/壳 PENDING]）。
 - **关联落盘**：`_05_verification/verification_matrix.md`、`docs/tauri_onboarding.md`、`src/features/domain`、`src/components/math.ts`。
 
+### Q29. 交付验收通过（任务完成）
+
+- **题域**：阶段 6 交付验收
+- **开发者裁定**：**「接受交付」**——Web MVP 满足预期，记录交付 ACCEPTED。
+- **采纳**：DELIV-05 **ACCEPTED**，任务归档；**遗留开放项**（不阻断）：① 正式知识内容待开发者提供标题清单（管线可插拔，`scripts/content/source.ts` 换源即可）；② 桌面/移动 Tauri 壳待工具链（`docs/tauri_onboarding.md`）。
+- **关联落盘**：`_05_verification/verification_matrix.md`、`rebuild_v2_plan.md`（任务 COMPLETED）。
+
 ---
 
 ## 变更请求登记（CR）
