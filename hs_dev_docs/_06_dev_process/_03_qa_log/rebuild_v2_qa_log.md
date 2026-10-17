@@ -190,6 +190,13 @@
 - **采纳**：阶段 0 冻结 **ACCEPTED**；进入**阶段 1：技术选型（架构范式 + ADR）**。
 - **关联落盘**：`freeze_signoff.md`、`rebuild_v2_plan.md`(S0-18 冻结、S1 启动)。
 
+### Q18. 阶段 1 技术选型提交（TECH-05）
+
+- **题域**：技术选型验收
+- **内容**：六端壳 Tauri 2（否决 Electron/Capacitor）；前端 React18+Vite SPA（否决 Next.js SSR）；图谱自绘 SVG + d3-force 布局（否决 G6/sigma）；搜索自研 bigram 倒排（构建 16.75ms/查询 ≤0.03ms 实测，否决运行时全文库）；数据静态 JSON + 构建期管线；本机无 Rust 工具链已登记为打包期环境约束。
+- **采纳**：待开发者确认 TECH-05a..e；确认后进入阶段 2。
+- **关联落盘**：`_03_architecture_design/_01_technology_selection/tech_select_overview.md`、`ADR_001`、`ADR_002`。
+
 ---
 
 ## 变更请求登记（CR）

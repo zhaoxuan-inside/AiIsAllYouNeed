@@ -5,7 +5,7 @@
 - **change_size**：`L`
 - **work_mode**：`DESIGN`（阶段 0～4）；阶段 5 起 `IMPLEMENT`
 - **当前阶段**：`1` — 技术选型（架构范式 + ADR）
-- **断点**：`S1-00` — 阶段 1 启动：读取 skill 阶段 1 规范并产出技术选型 ADR
+- **断点**：`S1-04` — 技术选型已提交（TECH-05），待开发者确认技术栈后进入阶段 2
 - **更新时间**：2026-10-17T00:00:00Z
 
 ---
@@ -33,7 +33,10 @@
 | S0-16 | 设计哲学重开：先定 Design DNA（方向+硬约束）→ 再产出全新视觉 | done | Q12 推倒 → Q13 拍板 **W1「星图册·台灯下」** |
 | S0-17 | v7 全新视觉（星图册·台灯下）：DESIGN.md + HTML 原型重写 + 文档同步 | done | `/DESIGN.md`(v7)、`overview_prototype.html`(v7)、design_charter(v7)、overview_prototype.md、freeze_signoff |
 | S0-18 | v7 重提冻结确认单 | done | **APPROVED（Q17 开发者拍板）** → 进入阶段 1 |
-| S1 | 阶段 1：技术选型（架构范式 + ADR） | pending | 冻结后开始 |
+| S1-01 | TECH-01/02 约束对照与方案比较（壳/前端/图谱/搜索/数据） | done | `_03_architecture_design/_01_technology_selection/tech_select_overview.md` |
+| S1-02 | TECH-03 高风险验证：bigram 中文检索性能实测 | done | 构建 16.75ms / 查询 ≤0.03ms（94 条，Node22）→ 远低于 100ms |
+| S1-03 | TECH-04 锁定实施约束 + ADR | done | `ADR_001_tauri2_shell.md`、`ADR_002_react_vite_spa.md` |
+| S1-04 | TECH-05 提交选型验收（待开发者确认） | submitted | `tech_select_overview.md` §7 |
 | S2 | 阶段 2：系统架构设计 | pending | |
 | S3 | 阶段 3：工程四要素详设（数据/接口/方法/调用链） | pending | 含数据 schema 开发者决策 |
 | S4 | 阶段 4：任务拆解与上下文装配 | pending | |
